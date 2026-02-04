@@ -1,25 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt" data-lang="pt">
 <head>
   <meta charset="UTF-8" />
-  <title>ActivEU – Young, Structured, Serious</title>
+  <title>ActivEU – Solidarity Action Day em Portugal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="ActivEU is a youth-led non-profit based in Portugal, implementing the Solidarity Action Day model, structured volunteering and youth participation with institutional reliability."
+    content="ActivEU é uma associação jovem que traz para Portugal o modelo Solidarity Action Day: um dia em que os jovens trocam aulas por experiência real, doando o valor a causas solidárias."
   />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   />
   <style>
     :root {
-      --activ-blue: #2563eb;
-      --activ-yellow: #facc15;
-      --activ-dark: #020617;
-      --activ-soft: #0b1220;
+      --bg-cream: #fff7e5;
+      --bg-cream-soft: #fff9ed;
+      --bg-mint: #e7fff4;
+      --bg-lilac: #fce7ff;
+      --bg-hero: #fff7e5;
+      --text-main: #111827;
+      --text-soft: #4b5563;
+      --accent-dark: #4b0b27;
+      --accent-yellow: #ffd644;
+      --accent-mint: #b8ffd8;
+      --accent-pink: #ffbcd8;
+      --accent-outline: #111827;
+      --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.12);
+      --radius-xl: 20px;
     }
 
     * {
@@ -37,8 +47,8 @@
     body {
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
         "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top left, #1f2937 0, #020617 55%);
-      color: #e5e7eb;
+      background: radial-gradient(circle at top, #fff9ed 0, #fff7e5 40%, #fefce8 100%);
+      color: var(--text-main);
       -webkit-font-smoothing: antialiased;
     }
 
@@ -47,30 +57,43 @@
       text-decoration: none;
     }
 
-    .shell {
-      max-width: 1120px;
+    .page-shell {
+      max-width: 1200px;
       margin: 0 auto;
       padding: 16px 16px 64px;
     }
+
+    @media (max-width: 768px) {
+      .page-shell {
+        padding-inline: 12px;
+      }
+    }
+
+    /* LANGUAGE TOGGLE */
+    .lang-pt { display: inline; }
+    .lang-en { display: none; }
+
+    html[data-lang="en"] .lang-pt { display: none; }
+    html[data-lang="en"] .lang-en { display: inline; }
 
     /* NAVBAR */
     header {
       position: sticky;
       top: 0;
-      z-index: 20;
-      backdrop-filter: blur(16px);
+      z-index: 40;
+      backdrop-filter: blur(18px);
       background: linear-gradient(
         to bottom,
-        rgba(2, 6, 23, 0.9),
-        rgba(2, 6, 23, 0.75),
+        rgba(255, 247, 229, 0.95),
+        rgba(255, 247, 229, 0.85),
         transparent
       );
-      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
-      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+      margin-bottom: 18px;
     }
 
     .nav-inner {
-      max-width: 1120px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 10px 16px;
       display: flex;
@@ -81,35 +104,33 @@
 
     .logo-wrap {
       display: flex;
+      gap: 8px;
       align-items: center;
-      gap: 10px;
     }
 
     .logo-mark {
-      width: 32px;
-      height: 32px;
-      border-radius: 18px;
-      background: linear-gradient(
-        135deg,
-        var(--activ-blue),
-        var(--activ-yellow)
-      );
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #ffeeba, #ffb3d1);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 11px;
       font-weight: 700;
-      color: #020617;
+      font-size: 11px;
+      color: var(--accent-dark);
+      border: 1px solid rgba(17, 24, 39, 0.15);
     }
 
-    .logo-text-main {
+    .logo-main {
       font-size: 13px;
       font-weight: 600;
+      letter-spacing: -0.01em;
     }
 
-    .logo-text-sub {
+    .logo-sub {
       font-size: 11px;
-      color: #9ca3af;
+      color: #6b7280;
     }
 
     .nav-links {
@@ -117,83 +138,87 @@
       align-items: center;
       gap: 18px;
       font-size: 12px;
-      color: #cbd5f5;
+      color: #4b5563;
     }
 
     .nav-links a {
-      opacity: 0.85;
+      position: relative;
+      padding-bottom: 2px;
     }
 
-    .nav-links a:hover {
-      opacity: 1;
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 1px;
+      background: #111827;
+      transition: width 0.18s ease-out;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .nav-cta {
       font-size: 12px;
       font-weight: 600;
-      background: #ffffff;
-      color: #020617;
-      padding: 8px 16px;
+      padding: 8px 14px;
       border-radius: 999px;
-      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.45);
+      border: 1px solid #111827;
+      background: #111827;
+      color: #f9fafb;
+      box-shadow: var(--shadow-soft);
     }
 
     .nav-cta:hover {
-      background: #f3f4f6;
+      background: #000;
     }
 
-    @media (max-width: 768px) {
+    .lang-toggle {
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(17, 24, 39, 0.5);
+      background: rgba(255, 255, 255, 0.9);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .lang-toggle span {
+      font-weight: 600;
+    }
+
+    @media (max-width: 900px) {
       .nav-links {
         display: none;
       }
-      .nav-inner {
-        padding-inline: 12px;
-      }
-      .shell {
-        padding-inline: 12px;
-      }
     }
 
-    /* GENERAL SECTIONS */
+    /* HERO */
     section {
       margin-bottom: 80px;
     }
 
-    .section-header {
-      margin-bottom: 20px;
+    .hero {
+      position: relative;
+      padding-top: 12px;
     }
 
-    .eyebrow {
-      display: inline-flex;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(148, 163, 184, 0.12);
-      font-size: 11px;
-      color: #cbd5e1;
-    }
-
-    h2.section-title {
-      margin-top: 10px;
-      font-size: 22px;
-      font-weight: 600;
-      color: #f9fafb;
-      letter-spacing: -0.02em;
-    }
-
-    .section-subtitle {
-      margin-top: 8px;
-      max-width: 640px;
-      font-size: 14px;
-      color: #cbd5e1;
-    }
-
-    /* HERO */
     .hero-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-      gap: 28px;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr);
+      gap: 32px;
       align-items: center;
-      margin-top: 8px;
     }
 
     @media (max-width: 900px) {
@@ -202,351 +227,630 @@
       }
     }
 
-    .pill {
-      display: inline-flex;
-      align-items: center;
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
       gap: 8px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      background: rgba(15, 23, 42, 0.7);
+      margin-bottom: 10px;
       font-size: 11px;
-      color: #e5e7eb;
-      margin-bottom: 14px;
+      color: #4b5563;
     }
 
-    .pill-dot {
+    .hero-badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(17, 24, 39, 0.2);
+      background: rgba(255, 255, 255, 0.8);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-badge-dot {
       width: 6px;
       height: 6px;
       border-radius: 999px;
       background: #22c55e;
     }
 
-    .hero-title {
-      font-size: 32px;
-      line-height: 1.1;
-      font-weight: 600;
-      letter-spacing: -0.03em;
-      color: #f9fafb;
+    .hero-word {
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: clamp(48px, 16vw, 102px);
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+      color: var(--accent-dark);
+      text-transform: uppercase;
       margin-bottom: 8px;
     }
 
-    @media (min-width: 768px) {
-      .hero-title {
-        font-size: 40px;
-      }
+    .hero-subline {
+      font-size: 18px;
+      font-weight: 600;
+      color: #4b0b27;
+      margin-bottom: 6px;
     }
 
-    .hero-title span {
-      color: #e5e7eb;
-    }
-
-    .hero-title .gradient-word {
-      background: linear-gradient(
-        90deg,
-        var(--activ-blue),
-        var(--activ-yellow),
-        var(--activ-blue)
-      );
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .hero-text {
+    .hero-tagline {
       font-size: 14px;
-      color: #cbd5e1;
+      color: #4b5563;
       max-width: 520px;
       margin-bottom: 18px;
     }
 
-    .hero-actions {
+    .hero-actions-row {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       align-items: center;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
-    .btn-primary {
-      background: var(--activ-blue);
-      color: #f9fafb;
-      padding: 10px 18px;
+    .btn-solid {
       border-radius: 999px;
-      font-size: 12px;
+      border: 1px solid #111827;
+      background: var(--accent-yellow);
+      padding: 10px 18px;
+      font-size: 13px;
       font-weight: 600;
-      border: none;
-      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.5);
       cursor: pointer;
+      box-shadow: var(--shadow-soft);
     }
 
-    .btn-primary:hover {
-      background: #1d4ed8;
+    .btn-solid:hover {
+      filter: brightness(1.05);
     }
 
-    .btn-secondary {
+    .btn-ghost {
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      background: rgba(15, 23, 42, 0.6);
-      padding: 10px 18px;
-      font-size: 12px;
+      border: 1px solid #111827;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 9px 16px;
+      font-size: 13px;
       font-weight: 500;
       cursor: pointer;
     }
 
-    .btn-secondary:hover {
-      background: rgba(30, 64, 175, 0.35);
+    .hero-mini {
+      font-size: 12px;
+      color: #4b5563;
     }
 
-    .hero-tag-rotating {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 10px;
+    /* floating stickers around hero word */
+    .hero-sticker {
+      position: absolute;
+      font-size: 11px;
+      padding: 4px 10px;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      font-size: 11px;
-      color: #e5e7eb;
+      background: #ffe4f3;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      transform: rotate(-10deg);
     }
 
-    .hero-tag-rotating span:last-child {
-      font-weight: 600;
-      color: #f9fafb;
+    .hero-sticker.mint {
+      background: #dcfce7;
+      transform: rotate(8deg);
     }
 
-    .hero-cards {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 10px;
-      font-size: 11px;
+    .hero-sticker.blue {
+      background: #e0f2fe;
+      transform: rotate(-6deg);
+    }
+
+    .hero-sticker.top-left {
+      top: 80px;
+      left: 10%;
+    }
+
+    .hero-sticker.left {
+      top: 170px;
+      left: 3%;
+    }
+
+    .hero-sticker.right {
+      top: 130px;
+      right: 6%;
+    }
+
+    .hero-sticker.top-right {
+      top: 40px;
+      right: 12%;
     }
 
     @media (max-width: 900px) {
-      .hero-cards {
+      .hero-sticker {
+        display: none;
+      }
+    }
+
+    /* hero side panel */
+    .hero-panel {
+      position: relative;
+      border-radius: 40px 40px 0 0;
+      padding: 24px 20px 20px;
+      background-image:
+        radial-gradient(circle at top, #ffe2ff 0, #fff7e5 50%, #fff7e5 80%),
+        repeating-radial-gradient(circle at center, #fcb4ff 0, #fcb4ff 4px, #ffe7ff 4px, #ffe7ff 10px);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .hero-panel-inner {
+      border-radius: 28px 28px 0 0;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 16px 16px 18px;
+    }
+
+    .hero-panel-textbox {
+      border: 2px solid #111827;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #fff;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    .hero-panel-textbox strong {
+      font-weight: 600;
+    }
+
+    .hero-panel-belt {
+      margin-top: 10px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(148, 163, 184, 0.6);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 11px;
+      color: #4b5563;
+    }
+
+    .hero-panel-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #f9fafb;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+    }
+
+    /* SECTION GENERIC */
+    .section-header {
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #111827;
+      color: #f9fafb;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-title {
+      margin-top: 10px;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #111827;
+    }
+
+    .section-subtitle {
+      margin-top: 8px;
+      max-width: 680px;
+      font-size: 14px;
+      color: #4b5563;
+    }
+
+    /* WHY WE ARE THE BEST – STRIPE OF 7 */
+    .stripe {
+      border-radius: 30px;
+      background: linear-gradient(
+        to right,
+        #fef9c3,
+        #e0f2fe,
+        #fce7f3,
+        #dcfce7
+      );
+      padding: 16px 14px;
+      box-shadow: var(--shadow-soft);
+      overflow-x: auto;
+    }
+
+    .stripe-inner {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(220px, 260px);
+      gap: 14px;
+    }
+
+    .stripe-card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 18px;
+      border: 1px solid rgba(17, 24, 39, 0.1);
+      padding: 12px 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 13px;
+    }
+
+    .stripe-tag {
+      font-size: 11px;
+      font-weight: 600;
+      color: #374151;
+      opacity: 0.9;
+    }
+
+    .stripe-title {
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .stripe-text {
+      font-size: 12px;
+      color: #4b5563;
+    }
+
+    /* WHAT WE DO – 5 CARDS */
+    .grid-2,
+    .grid-3 {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (max-width: 900px) {
+      .grid-2,
+      .grid-3 {
         grid-template-columns: minmax(0, 1fr);
       }
     }
 
     .card {
-      border-radius: 18px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      background: rgba(15, 23, 42, 0.8);
-      padding: 12px;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(255, 255, 255, 0.95);
+      padding: 14px 16px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    .card-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .pill-tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: #f9fafb;
+      color: #374151;
     }
 
     .card-title {
-      font-size: 12px;
+      font-size: 15px;
       font-weight: 600;
+      color: #111827;
       margin-bottom: 4px;
-      color: #f9fafb;
+    }
+
+    .card-lead {
+      font-size: 12px;
+      font-weight: 500;
+      color: #4b0b27;
+      margin-bottom: 6px;
     }
 
     .card-text {
-      font-size: 11px;
-      color: #cbd5e1;
+      font-size: 13px;
+      color: #4b5563;
     }
 
-    .hero-panel {
-      position: relative;
-      border-radius: 24px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      background: radial-gradient(
-          circle at top left,
-          rgba(37, 99, 235, 0.18),
-          transparent
+    /* GLOBAL IMPACT BAND */
+    .impact-band {
+      margin-top: 20px;
+      border-radius: 32px;
+      padding: 24px 20px;
+      background-image: linear-gradient(
+          to bottom,
+          rgba(224, 242, 254, 0.8),
+          rgba(221, 239, 253, 0.9)
         ),
-        rgba(15, 23, 42, 0.95);
-      padding: 16px;
-      box-shadow: 0 28px 80px rgba(15, 23, 42, 0.8);
-      font-size: 11px;
+        repeating-linear-gradient(
+          135deg,
+          rgba(14, 116, 144, 0.05),
+          rgba(14, 116, 144, 0.05) 4px,
+          transparent 4px,
+          transparent 10px
+        );
+      box-shadow: var(--shadow-soft);
     }
 
-    .hero-panel-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-      color: #cbd5e1;
+    .impact-header {
+      text-align: center;
+      margin-bottom: 14px;
     }
 
-    .hero-panel-header span:last-child {
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: rgba(16, 185, 129, 0.15);
-      color: #6ee7b7;
-      font-size: 10px;
-    }
-
-    .info-row {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 4px;
-    }
-
-    .info-label {
-      width: 110px;
-      color: #9ca3af;
-      font-size: 11px;
-    }
-
-    .info-value {
-      color: #e5e7eb;
-      font-size: 11px;
-    }
-
-    .mini-stats {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .mini-stat-label {
-      color: #9ca3af;
-      font-size: 10px;
-    }
-
-    .mini-stat-value {
-      color: #f9fafb;
-      font-weight: 600;
-      font-size: 12px;
-    }
-
-    .hero-panel-footer {
-      margin-top: 10px;
-      font-size: 11px;
-      color: #9ca3af;
-    }
-
-    @media (max-width: 900px) {
-      .mini-stats {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    /* GRID UTILITIES */
-    .grid-cols-2 {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .grid-cols-3 {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .grid-cols-4 {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    @media (max-width: 900px) {
-      .grid-cols-2,
-      .grid-cols-3,
-      .grid-cols-4 {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: rgba(148, 163, 184, 0.18);
-      color: #e5e7eb;
-      font-size: 10px;
-      margin-bottom: 4px;
-    }
-
-    .stat-card {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 8px;
-      border-radius: 18px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      background: rgba(15, 23, 42, 0.9);
-      padding: 14px;
-    }
-
-    .stat-label {
-      font-size: 11px;
-      color: #cbd5e1;
-    }
-
-    .stat-value {
+    .impact-title {
       font-size: 22px;
       font-weight: 600;
-      color: #f9fafb;
-      margin-top: 4px;
+      color: #111827;
+      letter-spacing: -0.02em;
     }
 
-    .stat-detail {
+    .impact-sub {
+      margin-top: 6px;
+      font-size: 13px;
+      color: #374151;
+    }
+
+    .impact-grid {
+      margin-top: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .impact-row {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    @media (max-width: 900px) {
+      .impact-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .impact-card {
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 10px 12px;
+      text-align: center;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+    }
+
+    .impact-number {
+      font-size: 18px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .impact-label {
       font-size: 11px;
-      color: #9ca3af;
+      color: #4b5563;
+      margin-top: 2px;
     }
 
-    /* CTA SECTION */
-    .cta-band {
-      margin-top: 24px;
-      border-radius: 24px;
-      border: 1px dashed rgba(148, 163, 184, 0.7);
-      background: rgba(15, 23, 42, 0.9);
-      padding: 16px 18px;
-      display: flex;
-      flex-wrap: wrap;
+    .impact-note {
+      margin-top: 10px;
+      text-align: right;
+      font-size: 11px;
+      color: #374151;
+      opacity: 0.9;
+    }
+
+    /* PROCESSO */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 14px;
-      align-items: center;
-      justify-content: space-between;
     }
 
-    .cta-band h3 {
+    @media (max-width: 900px) {
+      .process-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .step {
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: #ffffff;
+      padding: 12px 14px 14px;
+      position: relative;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+      font-size: 13px;
+    }
+
+    .step-number {
+      position: absolute;
+      top: 8px;
+      left: 10px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #6b7280;
+    }
+
+    .step-title {
+      margin-top: 20px;
       font-size: 14px;
       font-weight: 600;
-      color: #f9fafb;
+      color: #111827;
+      margin-bottom: 6px;
     }
 
-    .cta-band p {
-      font-size: 11px;
-      color: #cbd5e1;
-      max-width: 540px;
-    }
-
-    .cta-email {
-      background: #ffffff;
-      color: #020617;
-      padding: 9px 18px;
-      border-radius: 999px;
+    .step-text {
       font-size: 12px;
-      font-weight: 600;
-      box-shadow: 0 10px 30px rgba(148, 163, 184, 0.6);
+      color: #4b5563;
     }
 
-    .cta-email:hover {
-      background: #f3f4f6;
+    /* PROJECTS PLACEHOLDER */
+    .projects-placeholder {
+      border-radius: 26px;
+      border: 2px dashed rgba(148, 163, 184, 0.9);
+      background: rgba(255, 255, 255, 0.85);
+      padding: 18px 16px;
+      font-size: 13px;
+      color: #4b5563;
+    }
+
+    /* TESTIMONIALS PLACEHOLDER */
+    .testimonials {
+      border-radius: 26px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: linear-gradient(
+        135deg,
+        rgba(252, 231, 243, 0.85),
+        rgba(219, 234, 254, 0.9)
+      );
+      padding: 18px 18px 16px;
+      box-shadow: var(--shadow-soft);
+      font-size: 13px;
+      color: #4b5563;
+    }
+
+    /* YOUTHREACH */
+    .youthreach-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr);
+    }
+
+    @media (max-width: 900px) {
+      .youthreach-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .youthreach-list {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #4b5563;
+    }
+
+    .youthreach-list li {
+      margin-bottom: 4px;
+    }
+
+    .youthreach-side {
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: #ffffff;
+      padding: 14px 16px;
+      font-size: 12px;
+      color: #4b5563;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    .btn-outline-dark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid #111827;
+      background: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 12px;
+      cursor: pointer;
+    }
+
+    .btn-outline-dark:hover {
+      background: #111827;
+      color: white;
+    }
+
+    /* ABOUT / JOIN */
+    .about-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr);
+    }
+
+    @media (max-width: 900px) {
+      .about-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .about-text-block {
+      border-radius: 24px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(255, 255, 255, 0.96);
+      padding: 16px 16px 18px;
+      font-size: 13px;
+      color: #4b5563;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+    }
+
+    .about-text-block p + p {
+      margin-top: 10px;
+    }
+
+    .join-card {
+      border-radius: 24px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: #111827;
+      color: #f9fafb;
+      padding: 16px 16px 18px;
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .join-title {
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .join-pill {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #facc15;
+      color: #111827;
+      font-size: 11px;
+      font-weight: 600;
+      align-self: flex-start;
+    }
+
+    .join-btn {
+      margin-top: 4px;
+      align-self: flex-start;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid #f9fafb;
+      background: #f9fafb;
+      color: #111827;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .join-btn:hover {
+      background: #e5e7eb;
     }
 
     /* FOOTER */
     footer {
-      border-top: 1px solid rgba(148, 163, 184, 0.35);
-      padding-top: 16px;
+      border-top: 1px solid rgba(148, 163, 184, 0.6);
+      padding-top: 14px;
+      margin-top: 10px;
       font-size: 11px;
-      color: #9ca3af;
+      color: #6b7280;
       display: flex;
-      flex-wrap: wrap;
       justify-content: space-between;
+      flex-wrap: wrap;
       gap: 8px;
     }
 
     footer span.brand {
       font-weight: 600;
-      color: #e5e7eb;
+      color: #111827;
     }
   </style>
 </head>
@@ -556,253 +860,116 @@
       <div class="logo-wrap">
         <div class="logo-mark">AE</div>
         <div>
-          <div class="logo-text-main">ActivEU</div>
-          <div class="logo-text-sub">Young, structured, serious</div>
+          <div class="logo-main">ActivEU</div>
+          <div class="logo-sub lang-pt">Solidarity Action Day em Portugal</div>
+          <div class="logo-sub lang-en">Solidarity Action Day in Portugal</div>
         </div>
       </div>
+
       <nav class="nav-links">
-        <a href="#about">About</a>
-        <a href="#what-we-do">What we do</a>
-        <a href="#sad">Solidarity Action Day</a>
-        <a href="#projects">Projects</a>
-        <a href="#impact">Our impact</a>
-        <a href="#team">Team</a>
-        <a href="#partners">Partners</a>
+        <a href="#hero">
+          <span class="lang-pt">Início</span><span class="lang-en">Home</span>
+        </a>
+        <a href="#why">
+          <span class="lang-pt">Porquê</span><span class="lang-en">Why</span>
+        </a>
+        <a href="#what">
+          <span class="lang-pt">O que fazemos</span><span class="lang-en">What we do</span>
+        </a>
+        <a href="#impact">
+          <span class="lang-pt">Impacto</span><span class="lang-en">Impact</span>
+        </a>
+        <a href="#connect">
+          <span class="lang-pt">ActivEU Connect</span><span class="lang-en">ActivEU Connect</span>
+        </a>
+        <a href="#youthreach">
+          <span class="lang-pt">Serviços</span><span class="lang-en">Services</span>
+        </a>
+        <a href="#about">
+          <span class="lang-pt">Sobre</span><span class="lang-en">About</span>
+        </a>
       </nav>
-      <a href="#contact" class="nav-cta">Work with ActivEU</a>
+
+      <div class="nav-actions">
+        <button id="lang-toggle" class="lang-toggle" type="button">
+          <span id="lang-toggle-label">PT</span>/<span>EN</span>
+        </button>
+        <a href="#contact" class="nav-cta">
+          <span class="lang-pt">Junta-te ao Movimento</span>
+          <span class="lang-en">Join the Movement</span>
+        </a>
+      </div>
     </div>
   </header>
 
-  <main class="shell">
+  <main class="page-shell">
     <!-- HERO -->
-    <section id="about">
+    <section id="hero" class="hero">
       <div class="hero-grid">
         <div>
-          <div class="pill">
-            <span class="pill-dot"></span>
-            <span>Youth-led non-profit · Portugal · SAME candidate organisation</span>
+          <div class="hero-badges">
+            <div class="hero-badge">
+              <span class="hero-badge-dot"></span>
+              <span class="lang-pt">Jovem, séria e solidária</span>
+              <span class="lang-en">Youth-led, serious and solidarity-driven</span>
+            </div>
+            <div class="hero-badge">
+              <span class="lang-pt">Em rede com a Europa</span>
+              <span class="lang-en">Connected with Europe</span>
+            </div>
           </div>
-          <h1 class="hero-title">
-            Young people deserve more than a seat.
-            <br />
-            <span>They deserve a <span class="gradient-word">mandate</span>.</span>
-          </h1>
-          <p class="hero-text">
-            ActivEU is a youth-led, non-profit organisation based in Portugal, building structured opportunities for young people to act, decide and contribute, not just be consulted.
+          <div class="hero-word">ActivEU</div>
+          <p class="hero-subline">
+            <span class="lang-pt">Uma ideia simples. Um impacto gigantesco.</span>
+            <span class="lang-en">One simple idea. A huge impact.</span>
+          </p>
+          <p class="hero-tagline">
+            <span class="lang-pt">
+              Um dia em que trocas as aulas por experiência real, ganhas competências
+              e o valor é doado a causas solidárias. O teu dia. A tua ação. O teu impacto.
+            </span>
+            <span class="lang-en">
+              One day where you swap classes for real-world experience, gain skills and
+              the value generated goes to social causes. Your day. Your action. Your impact.
+            </span>
           </p>
 
-          <div class="hero-actions">
-            <a href="#contact" class="btn-primary">Work with ActivEU</a>
-            <a href="#sad" class="btn-secondary">How Solidarity Action Day works</a>
-            <div class="hero-tag-rotating">
-              <span>Built to be</span>
-              <span id="rotating-word">Youth-led</span>
-            </div>
+          <div class="hero-actions-row">
+            <a href="#contact" class="btn-solid">
+              <span class="lang-pt">Junta-te ao Movimento</span>
+              <span class="lang-en">Join the Movement</span>
+            </a>
+            <a href="#connect" class="btn-ghost">
+              <span class="lang-pt">Sabe como funciona</span>
+              <span class="lang-en">See how it works</span>
+            </a>
           </div>
-
-          <div class="hero-cards">
-            <div class="card">
-              <div class="card-title">Solidarity Action Day</div>
-              <div class="card-text">
-                Tested in Europe and now being implemented in Portugal with a controlled pilot and strict quality standards.
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-title">Youth-led governance</div>
-              <div class="card-text">
-                Statutes, internal regulations and accountability mechanisms aligned with national and European requirements.
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-title">Local roots, European vision</div>
-              <div class="card-text">
-                Partnerships with municipalities, incubators, European networks and youth structures.
-              </div>
-            </div>
-          </div>
+          <p class="hero-mini">
+            <span class="lang-pt">Criado por jovens em Portugal, inspirado pelo modelo europeu Solidarity Action Day.</span>
+            <span class="lang-en">Created by young people in Portugal, inspired by the European Solidarity Action Day model.</span>
+          </p>
         </div>
 
-        <div>
-          <div class="hero-panel">
-            <div class="hero-panel-header">
-              <span>ActivEU snapshot</span>
-              <span>2025–2026</span>
-            </div>
-            <div>
-              <div class="info-row">
-                <div class="info-label">Legal form</div>
-                <div class="info-value">Youth-led non-profit association</div>
-              </div>
-              <div class="info-row">
-                <div class="info-label">Core focus</div>
-                <div class="info-value">
-                  Structured youth participation, Solidarity Action Day, community projects
-                </div>
-              </div>
-              <div class="info-row">
-                <div class="info-label">Location</div>
-                <div class="info-value">
-                  Portugal · national scope, European connections
-                </div>
-              </div>
-              <div class="info-row">
-                <div class="info-label">Team</div>
-                <div class="info-value">
-                  Governance bodies + area coordinators + volunteer network
-                </div>
-              </div>
+        <div class="hero-panel">
+          <div class="hero-panel-inner">
+            <div class="hero-panel-textbox">
+              <span class="lang-pt">
+                <strong>A plataforma ActivEU Connect</strong> utiliza um algoritmo
+                meritocrático que liga-te a empresas e causas de forma justa e
+                transparente, criando oportunidades reais de desenvolvimento para todos.
+              </span>
+              <span class="lang-en">
+                <strong>The ActivEU Connect platform</strong> uses a merit-based
+                algorithm that matches you with organisations and causes in a fair, transparent
+                way, creating real development opportunities for everyone.
+              </span>
             </div>
 
-            <div class="mini-stats">
-              <div>
-                <div class="mini-stat-label">Documented institutional actions</div>
-                <div class="mini-stat-value">40+</div>
-              </div>
-              <div>
-                <div class="mini-stat-label">Different entities engaged</div>
-                <div class="mini-stat-value">30+</div>
-              </div>
-              <div>
-                <div class="mini-stat-label">Average actions per week</div>
-                <div class="mini-stat-value">1.6</div>
-              </div>
-            </div>
-
-            <div class="hero-panel-footer">
-              Youth initiative with contracts, internal regulations, reports, pilots and a long-term plan behind every project.
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- WHY ACTIVEU -->
-    <section>
-      <div class="section-header">
-        <div class="eyebrow">Why ActivEU</div>
-        <h2 class="section-title">
-          Serious youth participation with serious structures behind it.
-        </h2>
-        <p class="section-subtitle">
-          We design youth participation and solidarity in ways that are traceable, documented and accountable, from internal regulations to impact reports and pilots.
-        </p>
-      </div>
-
-      <div class="grid-cols-4">
-        <div class="card">
-          <div class="tag">Methods</div>
-          <div class="card-title">Structured, not symbolic</div>
-          <div class="card-text">
-            Programmes and pilots are built with clear procedures, documentation and evaluation tools rather than one-off events or symbolic consultations.
-          </div>
-        </div>
-        <div class="card">
-          <div class="tag">Governance</div>
-          <div class="card-title">Youth-led, institutionally trusted</div>
-          <div class="card-text">
-            Formal association with statutes, internal regulations and governance bodies that match institutional expectations and legal requirements.
-          </div>
-        </div>
-        <div class="card">
-          <div class="tag">Impact</div>
-          <div class="card-title">Impact-focused from day one</div>
-          <div class="card-text">
-            From the first 176 days of activity, every relevant action has been registered, documented and integrated into a broader learning and impact strategy.
-          </div>
-        </div>
-        <div class="card">
-          <div class="tag">Europe</div>
-          <div class="card-title">European roots, local execution</div>
-          <div class="card-text">
-            Inspired by Solidarity Action Day in Europe and SAME, working closely with municipalities and partners to adapt the model to Portugal.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- WHAT WE DO -->
-    <section id="what-we-do">
-      <div class="section-header">
-        <div class="eyebrow">What we do</div>
-        <h2 class="section-title">
-          We turn youth commitment into structured impact.
-        </h2>
-        <p class="section-subtitle">
-          From Solidarity Action Day to community projects and mental health initiatives, ActivEU builds programmes that combine youth leadership, institutional reliability and measurable outcomes.
-        </p>
-      </div>
-
-      <div class="grid-cols-2">
-        <div class="card" id="sad">
-          <div class="tag">SAD</div>
-          <div class="card-title">Solidarity Action Day (SAD)</div>
-          <div class="card-text">
-            One day of lessons becomes one day of structured work in host organisations. The value generated supports social causes, while students gain experience, visibility and a concrete sense of contribution. In 2026, SAD is a controlled pilot focused on testing workflows, evaluation tools and certification mechanisms before scaling.
-          </div>
-        </div>
-        <div class="card">
-          <div class="tag">Digital</div>
-          <div class="card-title">ActivEU Connect</div>
-          <div class="card-text">
-            The digital backbone for fair, secure and meaningful matches between students, host organisations and causes. In 2026, it runs as an internal infrastructure to stress-test verification, data protection, matching criteria and algorithmic fairness before public deployment.
-          </div>
-        </div>
-        <div class="card">
-          <div class="tag">Local impact</div>
-          <div class="card-title">Community projects with municipalities</div>
-          <div class="card-text">
-            Long-term partnerships that activate public space, connect generations and document local realities. Projects like “Raízes e Risos” and “Tradições em Páginas” combine youth volunteering with structured methodologies and outputs that municipalities can reuse.
-          </div>
-        </div>
-        <div class="card">
-          <div class="tag">Well-being</div>
-          <div class="card-title">ActivEU: Respira</div>
-          <div class="card-text">
-            An initiative focused on mental health and well-being for young people aged 13–25. It combines individual psychological support, group sessions and complementary activities, always prioritising ethics, safety and accessibility.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- WHO WE WORK WITH -->
-    <section>
-      <div class="section-header">
-        <div class="eyebrow">Who we work with</div>
-        <h2 class="section-title">
-          We bridge young people and institutions that take them seriously.
-        </h2>
-        <p class="section-subtitle">
-          We collaborate with public authorities, networks, universities, companies and organisations that are ready to move beyond rhetoric and build concrete opportunities with young people.
-        </p>
-      </div>
-
-      <div class="grid-cols-3">
-        <div class="card">
-          <div class="tag">Municipalities</div>
-          <div class="card-title">Public authorities</div>
-          <div class="card-text">
-            Municipalities, metropolitan structures and parish councils engaging youth in community projects, solidarity initiatives and public space activation.
-          </div>
-        </div>
-        <div class="card">
-          <div class="tag">Education</div>
-          <div class="card-title">Education and youth structures</div>
-          <div class="card-text">
-            Schools, universities, youth councils and student groups integrating Solidarity Action Day, volunteering and co-created programmes into their long-term work.
-          </div>
-        </div>
-        <div class="card">
-          <div class="tag">Partners</div>
-          <div class="card-title">Companies and social economy</div>
-          <div class="card-text">
-            Companies, foundations and social organisations that want to align social responsibility, talent discovery and structured youth participation.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- IMPACT NUMBERS -->
-    <section id="impact">
-      <div class="section-header">
-        <div class="eyebrow">Activity and reach</div>
-        <h2 class="sectio
+            <div class="hero-panel-textbox">
+              <span class="lang-pt">
+                O valor que a empresa paga pelo teu dia é <strong>doado integralmente</strong>
+                a causas solidárias verificadas. Tu ganhas experiência e certificação,
+                as causas ganham força para continuar o seu trabalho essencial.
+              </span>
+              <span class="lang-en">
+                The amount the host organisation pays for your day is <strong>fully donated</strong>
