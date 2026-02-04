@@ -300,26 +300,6 @@
       color: #e5e7eb;
     }
 
-    /* SPLIT HEADINGS (word-by-word animation) */
-
-    .split-heading {
-      display: inline-flex;
-      flex-wrap: wrap;
-      gap: 4px;
-    }
-
-    .split-heading span {
-      display: inline-block;
-      transform: translateY(18px);
-      opacity: 0;
-      will-change: transform, opacity;
-    }
-
-    .split-heading.is-visible span {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
     /* HERO */
 
     .hero {
@@ -482,114 +462,6 @@
     .hero-mini {
       font-size: 12px;
       color: #6b6575;
-    }
-
-    /* HERO - JOURNEY CARD */
-
-    .journey-card {
-      margin-top: 14px;
-      padding: 12px 14px;
-      border-radius: 18px;
-      border: 1px solid rgba(15, 23, 42, 0.12);
-      background: rgba(255, 255, 255, 0.96);
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-      font-size: 13px;
-      max-width: 520px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .journey-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top left, rgba(247, 181, 0, 0.18), transparent 55%);
-      opacity: 0.8;
-      pointer-events: none;
-    }
-
-    .journey-eyebrow {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 2px 9px;
-      border-radius: 999px;
-      background: #020617;
-      color: #fef9c3;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
-      margin-bottom: 6px;
-    }
-
-    .journey-title {
-      position: relative;
-      font-size: 15px;
-      font-weight: 600;
-      color: #111827;
-      margin-bottom: 6px;
-    }
-
-    .journey-steps {
-      position: relative;
-      margin-left: 18px;
-      margin-bottom: 8px;
-      padding-left: 4px;
-      color: #4b5563;
-    }
-
-    .journey-steps li {
-      margin-bottom: 4px;
-    }
-
-    .journey-cta {
-      position: relative;
-      border-radius: 999px;
-      border: 1px solid #020617;
-      background: #020617;
-      color: #f9fafb;
-      font-size: 12px;
-      font-weight: 600;
-      padding: 7px 14px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition:
-        transform 0.12s ease-out,
-        box-shadow 0.15s ease-out,
-        background-color 0.15s ease-out,
-        color 0.15s ease-out;
-      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.4);
-    }
-
-    .journey-cta::after {
-      content: "↘";
-      font-size: 11px;
-    }
-
-    .journey-cta:hover {
-      background: #111827;
-      transform: translateY(-1px);
-      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.55);
-    }
-
-    body[data-theme="about"] .journey-card {
-      background: rgba(15, 23, 42, 0.96);
-      border-color: rgba(148, 163, 184, 0.6);
-      color: #e5e7eb;
-    }
-
-    body[data-theme="about"] .journey-title {
-      color: #facc15;
-    }
-
-    body[data-theme="about"] .journey-cta {
-      border-color: #facc15;
-      background: #facc15;
-      color: #020617;
-      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.8);
     }
 
     /* ROLE SWITCHER */
@@ -1254,148 +1126,6 @@
       color: #4b5563;
     }
 
-    /* PORTFÓLIO – OS NOSSOS PROJETOS */
-
-    .portfolio-section {
-      margin-top: 60px;
-    }
-
-    .portfolio-rail-wrap {
-      position: relative;
-      margin-top: 14px;
-    }
-
-    .portfolio-rail {
-      display: flex;
-      gap: 14px;
-      overflow-x: auto;
-      padding-bottom: 6px;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: thin;
-    }
-
-    .portfolio-rail::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .portfolio-rail::-webkit-scrollbar-track {
-      background: rgba(148, 163, 184, 0.18);
-      border-radius: 999px;
-    }
-
-    .portfolio-rail::-webkit-scrollbar-thumb {
-      background: rgba(15, 23, 42, 0.35);
-      border-radius: 999px;
-    }
-
-    .portfolio-card {
-      scroll-snap-align: start;
-      min-width: 260px;
-      max-width: 320px;
-      border-radius: 22px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      background: rgba(255, 255, 255, 0.98);
-      padding: 12px 14px 14px;
-      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.1);
-      font-size: 13px;
-      color: var(--text-soft);
-      transition:
-        transform 0.22s ease-out,
-        box-shadow 0.22s ease-out,
-        border-color 0.22s ease-out;
-    }
-
-    .portfolio-card:hover {
-      transform: translateY(-5px) scale(1.01);
-      box-shadow: 0 20px 48px rgba(15, 23, 42, 0.22);
-      border-color: rgba(32, 25, 43, 0.35);
-    }
-
-    .portfolio-tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 6px;
-    }
-
-    .portfolio-pill {
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.9);
-      background: #f9fafb;
-      color: #374151;
-    }
-
-    .portfolio-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: #111827;
-      margin-bottom: 4px;
-    }
-
-    .portfolio-text {
-      font-size: 13px;
-      margin-bottom: 6px;
-    }
-
-    .portfolio-list {
-      font-size: 12px;
-      padding-left: 18px;
-      color: #4b5563;
-    }
-
-    .portfolio-list li {
-      margin-bottom: 3px;
-    }
-
-    .portfolio-controls {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      margin-top: 8px;
-    }
-
-    .rail-btn {
-      width: 30px;
-      height: 30px;
-      border-radius: 999px;
-      border: 1px solid rgba(15, 23, 42, 0.4);
-      background: #ffffff;
-      cursor: pointer;
-      font-size: 14px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.18);
-      transition:
-        transform 0.12s ease-out,
-        box-shadow 0.15s ease-out,
-        background-color 0.15s ease-out;
-    }
-
-    .rail-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 16px 38px rgba(15, 23, 42, 0.28);
-      background: #f9fafb;
-    }
-
-    body[data-theme="about"] .portfolio-card {
-      background: rgba(15, 23, 42, 0.96);
-      border-color: rgba(148, 163, 184, 0.7);
-      color: #e5e7eb;
-    }
-
-    body[data-theme="about"] .portfolio-title {
-      color: #facc15;
-    }
-
-    body[data-theme="about"] .rail-btn {
-      background: #020617;
-      border-color: rgba(148, 163, 184, 0.6);
-      color: #e5e7eb;
-    }
-
     /* ABOUT / JOIN */
 
     .about-grid {
@@ -1462,46 +1192,6 @@
 
     .join-btn:hover {
       background: #e5e7eb;
-    }
-
-    /* TESTIMONIALS – CLIENTS TALK & WE BLUSH */
-
-    .clients-section {
-      margin-top: 70px;
-    }
-
-    .clients-grid {
-      display: grid;
-      gap: 16px;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    @media (max-width: 900px) {
-      .clients-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    .client-card {
-      border-radius: 20px;
-      border: 1px solid rgba(148, 163, 184, 0.8);
-      background: rgba(255, 255, 255, 0.97);
-      padding: 14px 16px;
-      font-size: 13px;
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
-    }
-
-    .client-quote {
-      font-size: 13px;
-      color: #374151;
-      margin-bottom: 8px;
-    }
-
-    .client-meta {
-      font-size: 11px;
-      color: #6b7280;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
     }
 
     /* FOOTER */
@@ -1738,7 +1428,6 @@
         <a href="#hero">Início</a>
         <a href="#why">Porquê</a>
         <a href="#what">O que fazemos</a>
-        <a href="#portfolio">Projetos</a>
         <a href="#process">Processo</a>
         <a href="#sad">SAD</a>
         <a href="#youthreach">Serviços</a>
@@ -1766,7 +1455,7 @@
 
           <div class="hero-word">ActivEU</div>
 
-          <p class="hero-subline split-heading">
+          <p class="hero-subline">
             O teu dia. A tua ação. O teu impacto.
           </p>
 
@@ -1792,22 +1481,6 @@
           <p class="hero-mini">
             Jovens, empresas e causas ligadas por um modelo simples: um dia de trabalho solidário, impacto real para todos.
           </p>
-
-          <!-- PERCURSO RECOMENDADO -->
-          <div class="journey-card" id="journeyCard">
-            <div class="journey-eyebrow">Percurso recomendado para ti</div>
-            <h3 class="journey-title" id="journeyTitle">
-              Se és estudante universitário ou do secundário
-            </h3>
-            <ol class="journey-steps" id="journeySteps">
-              <li>Regista-te na ActivEU Connect em menos de 2 minutos.</li>
-              <li>Escolhe a causa que queres apoiar e as áreas que queres explorar.</li>
-              <li>Candidata-te às oportunidades com melhor match para o teu perfil.</li>
-            </ol>
-            <button class="journey-cta" id="journeyCta" type="button">
-              Ver como o processo funciona
-            </button>
-          </div>
         </div>
 
         <div class="hero-right">
@@ -1850,7 +1523,7 @@
     <section id="why" class="stripe-section" data-animate data-theme="why">
       <div class="section-header">
         <div class="eyebrow">Why we are the best</div>
-        <h2 class="section-title split-heading">
+        <h2 class="section-title">
           Uma ideia simples. Um impacto gigantesco.
         </h2>
         <p class="section-subtitle">
@@ -1947,8 +1620,8 @@
         <div class="circle-shell">
           <div class="circle-top-grid">
             <div>
-              <div class="eyebrow">O que fazemos (e fazemos com impacto)</div>
-              <h2 class="section-title split-heading">
+              <div class="eyebrow">What we do &amp; do really well</div>
+              <h2 class="section-title">
                 ActivEU é mais do que um dia.
               </h2>
               <p class="section-subtitle">
@@ -1992,7 +1665,7 @@
               <div class="feature-title">O lugar certo para ti</div>
               <p>
                 O algoritmo garante que apenas oportunidades realmente compatíveis aparecem no topo. A empresa vê
-                primeiro quem faz mais sentido para a função e tu vais para um sítio onde fazes a diferença.
+                primeiro quem faz mais sentido para a função, e tu vais para um sítio onde fazes a diferença.
               </p>
             </article>
 
@@ -2017,7 +1690,6 @@
               <span class="pill-tag">Solidarity Action Day</span>
               <span class="pill-tag">Voluntariado estruturado</span>
               <span class="pill-tag">Certificação &amp; impacto</span>
-              <span class="pill-tag">Doações transparentes</span>
             </div>
             <h3 class="card-title">
               ActivEU Connect: Solidarity Action Day em Portugal
@@ -2027,9 +1699,7 @@
             </p>
             <p class="card-text">
               A ActivEU Connect é a base tecnológica que torna o modelo possível no terreno, garantindo que cada
-              participação é segura, justa e totalmente transparente. A plataforma implementa o modelo europeu
-              Solidarity Action Day em Portugal, ligando jovens, empresas e causas sociais num só gesto de
-              solidariedade ativa.
+              participação é segura, justa e totalmente transparente.
             </p>
           </article>
 
@@ -2048,11 +1718,10 @@
               Capacitar jovens para agir com consciência, competência e liderança.
             </p>
             <p class="card-text">
-              A ActivEU promove momentos de aprendizagem e reflexão que vão além da experiência prática do Solidarity
-              Action Day. Realizamos formações, palestras, workshops e debates sobre cidadania, ética profissional,
-              direitos humanos, democracia europeia e sustentabilidade. Integramos também apoio psicológico e programas
-              de bem-estar juvenil com acompanhamento profissional, abordagens expressivas, artísticas e de contacto
-              com a natureza, criando espaços seguros onde os jovens podem investir em si e no seu equilíbrio emocional.
+              A ActivEU promove formações, palestras, workshops e debates sobre cidadania, ética profissional,
+              direitos humanos, democracia europeia e sustentabilidade. Integramos programas de bem-estar juvenil,
+              com acompanhamento profissional e abordagens expressivas, artísticas e de contacto com a natureza,
+              para que cada jovem possa investir no seu crescimento e equilíbrio emocional.
             </p>
           </article>
 
@@ -2073,8 +1742,7 @@
             <p class="card-text">
               A ActivEU atua no terreno com projetos que valorizam o contacto humano e a identidade cultural.
               Organizamos encontros intergeracionais, atividades culturais inclusivas e eventos comunitários que
-              promovem empatia, cooperação e solidariedade local. Estas iniciativas reforçam a coesão social e mostram
-              que a solidariedade também se aprende ao ouvir, cuidar e partilhar.
+              promovem empatia, cooperação e solidariedade local.
             </p>
           </article>
 
@@ -2092,11 +1760,9 @@
               Transparência, responsabilidade e compromisso com resultados mensuráveis.
             </p>
             <p class="card-text">
-              A ActivEU pauta-se por uma gestão rigorosa, transparente e orientada para o impacto positivo.
               Todas as atividades são acompanhadas por indicadores sociais, educativos e ambientais, com auditorias
-              externas periódicas e independentes. Promovemos práticas de sustentabilidade ecológica em todas as
-              dimensões da associação, reduzindo desperdício e incentivando escolhas responsáveis. Jovens, empresas e
-              parceiros têm acesso a relatórios detalhados que reforçam confiança e credibilidade.
+              externas periódicas. Promovemos práticas de sustentabilidade ecológica em todas as dimensões da
+              associação, reduzindo desperdício e incentivando escolhas responsáveis.
             </p>
           </article>
 
@@ -2106,7 +1772,6 @@
               <span class="pill-tag">SAME Network</span>
               <span class="pill-tag">Municípios</span>
               <span class="pill-tag">Universidades &amp; escolas</span>
-              <span class="pill-tag">Cooperação internacional</span>
             </div>
             <h3 class="card-title">
               Parcerias e Cooperação Europeia
@@ -2115,107 +1780,19 @@
               Trabalhamos em rede para multiplicar impacto, em Portugal e na Europa.
             </p>
             <p class="card-text">
-              A ActivEU integra o movimento europeu Solidarity Action Day, coordenado pela SAME Network, que liga
-              milhares de jovens e organizações por toda a Europa. Em Portugal, colaboramos com municípios, escolas,
-              universidades, empresas e fundações para adaptar continuamente o modelo ao contexto nacional. Participamos
-              em fóruns e estruturas de decisão juvenil, porque acreditamos que a juventude deve estar no centro das
-              decisões e da ação.
+              A ActivEU integra o movimento europeu Solidarity Action Day, coordenado pela SAME Network. Em Portugal,
+              colaboramos com municípios, escolas, universidades, empresas e fundações para adaptar continuamente o
+              modelo ao contexto nacional.
             </p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- PORTFÓLIO – OS NOSSOS PROJETOS -->
-    <section id="portfolio" data-animate data-theme="what" class="portfolio-section">
-      <div class="section-header">
-        <div class="eyebrow">Portefólio</div>
-        <h2 class="section-title">
-          Os nossos projetos!
-        </h2>
-        <p class="section-subtitle">
-          Do terreno local às redes europeias, a ActivEU já começou a testar, adaptar e provar o modelo Solidarity Action Day em contexto real.
-        </p>
-      </div>
-
-      <div class="portfolio-rail-wrap">
-        <div class="portfolio-rail" id="portfolioRail">
-          <article class="portfolio-card">
-            <div class="portfolio-tag-row">
-              <span class="portfolio-pill">Piloto · Solidarity Action Day</span>
-              <span class="portfolio-pill">Universitários</span>
-            </div>
-            <h3 class="portfolio-title">SAD – Piloto universitário em Portugal</h3>
-            <p class="portfolio-text">
-              Um primeiro grupo de estudantes põe em prática o modelo: um dia em contexto profissional, com doação integral a causas solidárias pré-selecionadas.
-            </p>
-            <ul class="portfolio-list">
-              <li>Matching digital entre jovens e entidades.</li>
-              <li>Relatórios de impacto individuais para cada participante.</li>
-              <li>Aprendizagens-chave para escalar a nível nacional.</li>
-            </ul>
-          </article>
-
-          <article class="portfolio-card">
-            <div class="portfolio-tag-row">
-              <span class="portfolio-pill">Raízes &amp; Risos</span>
-              <span class="portfolio-pill">Intergeracional</span>
-            </div>
-            <h3 class="portfolio-title">Mini-festivais intergeracionais</h3>
-            <p class="portfolio-text">
-              Jogos tradicionais, histórias e encontros que aproximam gerações e reforçam a coesão social em contexto local.
-            </p>
-            <ul class="portfolio-list">
-              <li>Atividades inclusivas desenhadas com escolas e lares.</li>
-              <li>Participação de jovens voluntários com acompanhamento.</li>
-              <li>Foco em acessibilidade, dignidade e bem-estar.</li>
-            </ul>
-          </article>
-
-          <article class="portfolio-card">
-            <div class="portfolio-tag-row">
-              <span class="portfolio-pill">Tradições em Páginas</span>
-              <span class="portfolio-pill">Memória coletiva</span>
-            </div>
-            <h3 class="portfolio-title">Histórias que não se perdem</h3>
-            <p class="portfolio-text">
-              Jovens recolhem jogos, memórias e narrativas locais para livro e documentário, preservando património imaterial.
-            </p>
-            <ul class="portfolio-list">
-              <li>Metodologia participativa com entrevistas e recolha de testemunhos.</li>
-              <li>Produção de materiais educativos para escolas e comunidades.</li>
-              <li>Valorização da identidade local com uma perspetiva europeia.</li>
-            </ul>
-          </article>
-
-          <article class="portfolio-card">
-            <div class="portfolio-tag-row">
-              <span class="portfolio-pill">YouthReach</span>
-              <span class="portfolio-pill">Consultoria jovem</span>
-            </div>
-            <h3 class="portfolio-title">ActivEU YouthReach &amp; Creative Support</h3>
-            <p class="portfolio-text">
-              Apoio a municípios, escolas e organizações que querem falar com jovens de forma séria, competente e estruturada.
-            </p>
-            <ul class="portfolio-list">
-              <li>Diagnóstico jovem com dados, escuta ativa e recomendações práticas.</li>
-              <li>Workshops de co-criação e formação interna para equipas.</li>
-              <li>Apoio criativo em comunicação institucional para novas gerações.</li>
-            </ul>
-          </article>
-        </div>
-
-        <div class="portfolio-controls">
-          <button type="button" class="rail-btn" data-dir="prev" aria-label="Ver projeto anterior">←</button>
-          <button type="button" class="rail-btn" data-dir="next" aria-label="Ver próximo projeto">→</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROCESSO – ACTIVEU CONNECT -->
+    <!-- PROCESSO – OUR NOT SO SECRET SAUCE -->
     <section id="process" data-animate data-theme="process">
       <div class="section-header">
-        <div class="eyebrow">ActivEU Connect</div>
+        <div class="eyebrow">Our not so secret sauce</div>
         <h2 class="section-title">
           O processo que torna tudo isto possível.
         </h2>
@@ -2269,7 +1846,7 @@
     <!-- SAD GLOBAL STATS -->
     <section id="sad" class="sad-stats" data-animate data-theme="sad">
       <div class="headline-center">
-        <h2 class="headline-title split-heading">We built the rocket, they flew.</h2>
+        <h2 class="headline-title">Solidarity Action Day</h2>
         <p class="headline-note">
           Um modelo europeu que mobiliza milhares de jovens todos os anos. Agora, com sotaque português.
         </p>
@@ -2328,13 +1905,7 @@
             <li>Diagnóstico jovem local e organizacional.</li>
             <li>Metodologias participativas que convocam jovens para cocriar políticas e soluções.</li>
             <li>Workshops e sessões de co-criação que aproximam entidades da juventude.</li>
-            <li>Formação para equipas internas sobre:
-              <ul>
-                <li>como trabalhar com jovens;</li>
-                <li>como comunicar institucionalmente para as novas gerações;</li>
-                <li>como implementar práticas participativas de forma contínua e sustentável.</li>
-              </ul>
-            </li>
+            <li>Formação para equipas internas sobre trabalho com jovens e comunicação institucional.</li>
             <li>Orientação em narrativas e comunicação institucional jovem.</li>
             <li>Apoio técnico em produção audiovisual estratégica (quando aplicável).</li>
             <li>Recomendações práticas e aplicáveis para reforçar programas, serviços e decisões.</li>
@@ -2347,43 +1918,28 @@
             e impacto real. Ideal para municípios, escolas, universidades e organizações que querem mais do que
             campanhas simbólicas.
           </p>
-          <a href="mailto:info@activeu.pt" class="btn-outline-dark" data-magnetic>
+          <a href="mailto:executivo@activeu.pt" class="btn-outline-dark" data-magnetic>
             Marcar reunião
           </a>
         </aside>
       </div>
     </section>
 
-    <!-- CLIENTS TALK & WE BLUSH (placeholder para futuro) -->
-    <section id="clients" class="clients-section" data-animate data-theme="what" style="display:none;">
-      <div class="section-header">
-        <div class="eyebrow">Clients talk &amp; we blush</div>
-        <h2 class="section-title">
-          O que dizem de trabalhar connosco.
-        </h2>
-        <p class="section-subtitle">
-          Em breve, partilharemos aqui testemunhos de municípios, escolas, empresas e organizações que decidiram confiar na ActivEU.
-        </p>
-      </div>
+    <!-- FUTURO: LOOK WHAT WE MADE & TESTEMUNHOS
+         Estas secções ficam em espera, NÃO aparecem no site,
+         mas podes voltar aqui mais tarde e descomentar. 
 
-      <div class="clients-grid">
-        <article class="client-card">
-          <p class="client-quote">
-            “Testemunho real em breve.”
-          </p>
-          <p class="client-meta">
-            Entidade – Local
-          </p>
-        </article>
-      </div>
-    </section>
+    <section id="portfolio">...</section>
+    <section id="clients">...</section>
+
+    -->
 
     <!-- ABOUT US + TU -->
     <section id="about" data-animate data-theme="about">
       <div class="section-header">
         <div class="eyebrow">About us</div>
         <h2 class="section-title">
-          Acreditamos numa coisa simples: os jovens merecem mais oportunidades, mais voz e mais futuro em Portugal.
+          Acreditamos que os jovens merecem mais oportunidades, mais voz e mais futuro em Portugal.
         </h2>
       </div>
 
@@ -2413,7 +1969,7 @@
             de nós. Voluntariado, equipa, estágios, grupos de trabalho – se te vês a criar impacto real, podemos
             começar por uma conversa.
           </p>
-          <a href="mailto:info@activeu.pt" class="join-btn" data-magnetic>
+          <a href="mailto:executivo@activeu.pt" class="join-btn" data-magnetic>
             Junta-te a nós!
           </a>
         </aside>
@@ -2674,17 +2230,12 @@
       });
     }
 
-    // ===== HERO ROLE SWITCHER + JOURNEY =====
+    // ===== HERO ROLE SWITCHER =====
     const rolePills = document.querySelectorAll(".role-pill");
     const panelInner = document.getElementById("heroPanelInner");
     const box1 = document.getElementById("panelBox1");
     const box2 = document.getElementById("panelBox2");
     const pillsRow = document.getElementById("panelPills");
-
-    const journeyCard = document.getElementById("journeyCard");
-    const journeyTitle = document.getElementById("journeyTitle");
-    const journeySteps = document.getElementById("journeySteps");
-    const journeyCta = document.getElementById("journeyCta");
 
     const roleContent = {
       student: {
@@ -2694,19 +2245,7 @@
           "Primeiro contacto com o mercado de trabalho",
           "Competências que contam mesmo",
           "Experiência certificada e impacto social"
-        ],
-        journey: {
-          title: "Se és estudante universitário ou do secundário",
-          steps: [
-            "Regista-te na ActivEU Connect com o teu email e prova académica.",
-            "Escolhe áreas e tipos de entidade onde gostavas de experimentar trabalhar.",
-            "Candidata-te às oportunidades com melhor match para o teu perfil.",
-            "No dia da ação, mostra o que sabes fazer e aprende com a equipa.",
-            "Recebe o teu certificado e o relatório de impacto para CV e LinkedIn."
-          ],
-          ctaLabel: "Ver o processo passo a passo",
-          ctaTarget: "#process"
-        }
+        ]
       },
       company: {
         box1: "Enquanto <strong>entidade de acolhimento</strong>, abres as portas da tua organização a jovens motivados, num modelo claro, seguro e simples de implementar.",
@@ -2714,67 +2253,19 @@
         pills: [
           "Responsabilidade social com rosto",
           "Descoberta de talento jovem",
-          "Modelo transparente e acompanhado"
-        ],
-        journey: {
-          title: "Se representas uma empresa, organização ou município",
-          steps: [
-            "Marca uma primeira reunião rápida com a ActivEU para alinhar expectativas.",
-            "Define as áreas onde a presença de jovens faz sentido, com tarefas concretas.",
-            "Publica oportunidades na ActivEU Connect com apoio da nossa equipa.",
-            "Recebe jovens no dia acordado, com enquadramento e seguro de voluntariado.",
-            "Avalia a experiência e recebe o relatório de impacto para comunicação institucional."
-          ],
-          ctaLabel: "Falar com a ActivEU sobre parcerias",
-          ctaTarget: "#youthreach"
-        }
+          "Modelo transparente e acompanhando"
+        ]
       },
       cause: {
-        box1: "Enquanto <strong>causa solidária</strong>, recebes apoio financeiro gerado por jovens e entidades que acreditam no trabalho que fazes todos os dias.",
+        box1: "Enquanto <strong>causa solidária</strong>, recebes apoio financeiro gerado por milhares de jovens e entidades que acreditam no trabalho que fazes todos os dias.",
         box2: "As doações chegam-te com transparência, acompanhadas por relatórios claros. Podes concentrar-te na missão, enquanto a ActivEU garante o modelo, a tecnologia e a ponte com a juventude.",
         pills: [
           "Financiamento sustentável",
-          "Ligação direta à juventude em Portugal",
+          "Ligação direta à juventude",
           "Transparência e confiança institucional"
-        ],
-        journey: {
-          title: "Se representas uma associação ou fundação",
-          steps: [
-            "Entra em contacto com a ActivEU para apresentar a tua missão e necessidades.",
-            "Passa por um processo simples de verificação e seleção de causas.",
-            "Define em conjunto como o financiamento pode reforçar projetos concretos.",
-            "Recebe donativos com transparência e relatórios associados ao Solidarity Action Day.",
-            "Partilha histórias de impacto que voltam a inspirar mais jovens a participar."
-          ],
-          ctaLabel: "Saber como ser causa beneficiária",
-          ctaTarget: "#sad"
-        }
+        ]
       }
     };
-
-    function updateJourney(role) {
-      if (!journeyCard) return;
-      const content = roleContent[role];
-      if (!content || !content.journey) return;
-
-      journeyTitle.textContent = content.journey.title;
-      journeySteps.innerHTML = "";
-      content.journey.steps.forEach((step) => {
-        const li = document.createElement("li");
-        li.textContent = step;
-        journeySteps.appendChild(li);
-      });
-
-      journeyCta.textContent = content.journey.ctaLabel;
-      journeyCta.onclick = () => {
-        const target = document.querySelector(content.journey.ctaTarget);
-        if (!target) return;
-        const offset = 80;
-        const top =
-          target.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top, behavior: "smooth" });
-      };
-    }
 
     function setRole(role) {
       const content = roleContent[role];
@@ -2794,7 +2285,6 @@
           pillsRow.appendChild(span);
         });
         panelInner.classList.remove("is-switching");
-        updateJourney(role);
       }, 180);
     }
 
@@ -2804,8 +2294,6 @@
         setRole(role);
       });
     });
-
-    updateJourney("student");
 
     // ===== Hero animated background (canvas particles) =====
     const canvas = document.getElementById("heroCanvas");
@@ -2888,8 +2376,7 @@
       { id: "hero", label: "Início", keywords: "inicio home activ eu" },
       { id: "why", label: "Porquê", keywords: "porque why melhor" },
       { id: "what", label: "O que fazemos", keywords: "o que fazemos actividades connect plataforma" },
-      { id: "portfolio", label: "Projetos", keywords: "projetos portfolio raiz tradicoes youthreach" },
-      { id: "process", label: "Processo", keywords: "processo como funciona passos connect" },
+      { id: "process", label: "Processo", keywords: "processo como funciona passos" },
       { id: "sad", label: "Solidarity Action Day", keywords: "sad solidarity action day europa dados impacto" },
       { id: "youthreach", label: "Serviços a entidades", keywords: "servicos entidades youthreach creative consultoria" },
       { id: "about", label: "Sobre a ActivEU", keywords: "sobre about equipa associacao" },
@@ -2988,7 +2475,7 @@
       const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
       const cmdKey = isMac ? e.metaKey : e.ctrlKey;
 
-      if ((cmdKey && e.key.toLowerCase() === "k") || (e.key === "/" && commandOverlay.getAttribute("data-open") !== "true")) {
+      if ((cmdKey && e.key.toLowerCase() === "k") || (e.key === "/" && !commandOverlay.dataset.open)) {
         e.preventDefault();
         if (commandOverlay.getAttribute("data-open") === "true") {
           closeCommandPalette();
@@ -3013,65 +2500,7 @@
         }
       }
     });
-
-    // ===== PORTFOLIO RAIL CONTROLS =====
-    const portfolioRail = document.getElementById("portfolioRail");
-    if (portfolioRail) {
-      const railButtons = document.querySelectorAll(".rail-btn");
-      railButtons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const dir = btn.getAttribute("data-dir") === "next" ? 1 : -1;
-          const firstCard = portfolioRail.querySelector(".portfolio-card");
-          if (!firstCard) return;
-          const cardWidth = firstCard.getBoundingClientRect().width + 16;
-          portfolioRail.scrollBy({
-            left: dir * cardWidth,
-            behavior: "smooth",
-          });
-        });
-      });
-    }
-
-    // ===== SPLIT HEADINGS INIT =====
-    function initSplitHeadings() {
-      const headings = document.querySelectorAll(".split-heading");
-      if (!headings.length) return;
-
-      headings.forEach((el) => {
-        const text = el.textContent.trim();
-        el.textContent = "";
-        const words = text.split(" ");
-        words.forEach((word, index) => {
-          const span = document.createElement("span");
-          span.textContent = word;
-          span.style.transition =
-            "transform 0.5s ease-out, opacity 0.5s ease-out";
-          span.style.transitionDelay = `${index * 0.04}s`;
-          el.appendChild(span);
-          if (index < words.length - 1) {
-            el.append(" ");
-          }
-        });
-      });
-
-      const splitObserver = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              splitObserver.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.4 }
-      );
-
-      document.querySelectorAll(".split-heading").forEach((el) => {
-        splitObserver.observe(el);
-      });
-    }
-
-    document.addEventListener("DOMContentLoaded", initSplitHeadings);
   </script>
 </body>
 </html>
+
