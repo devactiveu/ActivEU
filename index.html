@@ -68,7 +68,20 @@
       }
     }
 
-    /* NAVBAR */
+    /* SCROLL PROGRESS BAR */
+
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      z-index: 80;
+      background: linear-gradient(to right, #f7b500, #4b0823);
+      transform-origin: left center;
+    }
+
+    /* HEADER / NAVBAR */
 
     header {
       position: sticky;
@@ -78,7 +91,7 @@
       background: linear-gradient(
         to bottom,
         rgba(255, 247, 229, 0.98),
-        rgba(255, 247, 229, 0.92),
+        rgba(255, 247, 229, 0.94),
         transparent
       );
       border-bottom: 1px solid rgba(0, 0, 0, 0.06);
@@ -139,6 +152,7 @@
     .nav-links a {
       position: relative;
       padding-bottom: 2px;
+      transition: color 0.18s ease-out;
     }
 
     .nav-links a::after {
@@ -175,6 +189,7 @@
       letter-spacing: 0.04em;
       text-transform: uppercase;
       box-shadow: var(--shadow-soft);
+      cursor: pointer;
     }
 
     .menu-pill:hover {
@@ -231,7 +246,23 @@
       padding-top: 22px;
     }
 
+    .hero-bg-canvas-wrap {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.8;
+    }
+
+    #heroCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
     .hero-grid {
+      position: relative;
       display: grid;
       grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
       gap: 28px;
@@ -255,9 +286,20 @@
       font-size: clamp(54px, 17vw, 120px);
       line-height: 0.86;
       letter-spacing: -0.09em;
-      color: var(--accent-burgundy);
       text-transform: uppercase;
       margin-bottom: 10px;
+      background: linear-gradient(115deg, #4b0823, #f7b500, #0051a8);
+      background-size: 180% 180%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: heroGradient 18s ease-in-out infinite;
+    }
+
+    @keyframes heroGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .hero-subline {
@@ -282,15 +324,29 @@
       margin-bottom: 16px;
     }
 
-    .btn-primary {
+    .btn-primary,
+    .btn-outline,
+    .btn-outline-dark,
+    .join-btn,
+    .menu-pill {
       border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition:
+        transform 0.12s ease-out,
+        box-shadow 0.12s ease-out,
+        background-color 0.15s ease-out,
+        color 0.15s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
       border: 1px solid #20192b;
       background: var(--activ-yellow);
       padding: 10px 20px;
-      font-size: 13px;
-      font-weight: 600;
       box-shadow: var(--shadow-soft);
-      cursor: pointer;
     }
 
     .btn-primary:hover {
@@ -302,9 +358,34 @@
       border: 1px solid #20192b;
       background: #fffef7;
       padding: 9px 16px;
-      font-size: 13px;
       font-weight: 500;
-      cursor: pointer;
+    }
+
+    .btn-outline-dark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid #111827;
+      background: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 12px;
+    }
+
+    .btn-outline-dark:hover {
+      background: #111827;
+      color: white;
+    }
+
+    .btn-primary:active,
+    .btn-outline:active,
+    .btn-outline-dark:active,
+    .join-btn:active,
+    .menu-pill:active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
     }
 
     .hero-mini {
@@ -384,7 +465,7 @@
       }
     }
 
-    /* HERO RIGHT PANEL */
+    /* HERO RIGHT PANEL & LYNX */
 
     .hero-right {
       position: relative;
@@ -419,6 +500,8 @@
         repeating-radial-gradient(circle at center, #f7b5ff 0, #f7b5ff 4px, #ffe7ff 4px, #ffe7ff 10px);
       box-shadow: var(--shadow-soft);
       overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.35s ease-out, box-shadow 0.35s ease-out;
     }
 
     .hero-panel-inner {
@@ -454,6 +537,10 @@
       border: 1px solid rgba(32, 25, 43, 0.2);
       background: #f9fafb;
       color: #4b4357;
+    }
+
+    .hero-panel[data-tilt-active="true"] {
+      box-shadow: 0 22px 55px rgba(0, 0, 0, 0.25);
     }
 
     /* WAVY DIVIDER */
@@ -506,6 +593,16 @@
       font-size: 13px;
       color: var(--text-soft);
       position: relative;
+      transition:
+        transform 0.22s ease-out,
+        box-shadow 0.22s ease-out,
+        border-color 0.22s ease-out;
+    }
+
+    .stripe-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+      border-color: rgba(32, 25, 43, 0.28);
     }
 
     .stripe-index {
@@ -541,7 +638,13 @@
       }
     }
 
-    .card {
+    .card,
+    .feature-card,
+    .step,
+    .stat-card,
+    .youthreach-side,
+    .about-text-block,
+    .join-card {
       border-radius: var(--radius-xl);
       border: 1px solid rgba(148, 163, 184, 0.7);
       background: rgba(255, 255, 255, 0.96);
@@ -549,6 +652,26 @@
       box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
       font-size: 13px;
       color: var(--text-soft);
+      transition:
+        transform 0.22s ease-out,
+        box-shadow 0.22s ease-out,
+        border-color 0.22s ease-out;
+    }
+
+    .card:hover,
+    .feature-card:hover,
+    .step:hover,
+    .stat-card:hover,
+    .youthreach-side:hover,
+    .about-text-block:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+      border-color: rgba(32, 25, 43, 0.28);
+    }
+
+    .join-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
     }
 
     .card-tag-row {
@@ -717,12 +840,7 @@
     }
 
     .step {
-      border-radius: 18px;
-      border: 1px solid rgba(148, 163, 184, 0.9);
-      background: #ffffff;
-      padding: 12px 14px 14px;
       position: relative;
-      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
       font-size: 13px;
     }
 
@@ -864,32 +982,8 @@
     }
 
     .youthreach-side {
-      border-radius: var(--radius-xl);
-      border: 1px solid rgba(148, 163, 184, 0.9);
-      background: #ffffff;
-      padding: 14px 16px;
       font-size: 12px;
       color: #4b5563;
-      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
-    }
-
-    .btn-outline-dark {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 9px 16px;
-      border-radius: 999px;
-      border: 1px solid #111827;
-      background: #fff;
-      font-size: 13px;
-      font-weight: 600;
-      margin-top: 12px;
-      cursor: pointer;
-    }
-
-    .btn-outline-dark:hover {
-      background: #111827;
-      color: white;
     }
 
     /* ABOUT / JOIN */
@@ -906,27 +1000,13 @@
       }
     }
 
-    .about-text-block {
-      border-radius: 24px;
-      border: 1px solid rgba(148, 163, 184, 0.8);
-      background: rgba(255, 255, 255, 0.96);
-      padding: 16px 16px 18px;
-      font-size: 13px;
-      color: #4b5563;
-      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
-    }
-
     .about-text-block p + p {
       margin-top: 10px;
     }
 
     .join-card {
-      border-radius: 24px;
-      border: 1px solid rgba(148, 163, 184, 0.8);
       background: #111827;
       color: #f9fafb;
-      padding: 16px 16px 18px;
-      font-size: 13px;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -958,7 +1038,6 @@
       color: #111827;
       font-size: 13px;
       font-weight: 600;
-      cursor: pointer;
     }
 
     .join-btn:hover {
@@ -983,15 +1062,41 @@
       font-weight: 600;
       color: #1f2933;
     }
+
+    /* SCROLL REVEAL ANIMATIONS */
+
+    [data-animate] {
+      opacity: 0;
+      transform: translateY(24px);
+      transition:
+        opacity 0.65s ease-out,
+        transform 0.65s ease-out;
+      will-change: opacity, transform;
+    }
+
+    [data-animate].is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        scroll-behavior: auto !important;
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
   </style>
 </head>
 <body>
+  <div class="scroll-progress" id="scrollProgress"></div>
+
   <header>
     <div class="nav-inner">
       <div class="nav-left">
         <div class="logo-wrap">
           <div class="logo-card">
-            <!-- logo principal ActivEU com fundo branco dentro de um card branco -->
             <img src="ActivEU_Logo_PNG.png" alt="ActivEU logo" />
           </div>
           <div class="logo-text">
@@ -1005,19 +1110,24 @@
         <a href="#why">Porquê</a>
         <a href="#what">O que fazemos</a>
         <a href="#process">Processo</a>
+        <a href="#sad">SAD</a>
         <a href="#youthreach">Serviços</a>
         <a href="#about">Sobre</a>
       </nav>
 
       <div class="nav-right">
-        <a href="#contact" class="menu-pill">MENU</a>
+        <button class="menu-pill" type="button">MENU</button>
       </div>
     </div>
   </header>
 
   <main class="page-shell">
     <!-- HERO -->
-    <section id="hero" class="hero">
+    <section id="hero" class="hero" data-animate>
+      <div class="hero-bg-canvas-wrap">
+        <canvas id="heroCanvas"></canvas>
+      </div>
+
       <div class="hero-grid">
         <div>
           <div class="hero-top-note">
@@ -1036,8 +1146,8 @@
           </p>
 
           <div class="hero-actions">
-            <a href="#contact" class="btn-primary">Junta-te ao Movimento</a>
-            <a href="#connect-intro" class="btn-outline">Percebe como funciona</a>
+            <a href="#contact" class="btn-primary" data-magnetic>Junta-te ao Movimento</a>
+            <a href="#connect-intro" class="btn-outline" data-magnetic>Percebe como funciona</a>
           </div>
 
           <p class="hero-mini">
@@ -1047,11 +1157,10 @@
 
         <div class="hero-right">
           <div class="lynx-note">
-            <!-- logo secundário com fundo branco dentro de um pill branco -->
             <img src="Lynx.png" alt="Símbolo do lince ActivEU" />
-            <span></span>
+            <span>Símbolo secundário com o lince europeu</span>
           </div>
-          <div class="hero-panel">
+          <div class="hero-panel" id="heroTilt">
             <div class="hero-panel-inner">
               <div class="hero-panel-box">
                 <strong>A plataforma ActivEU Connect</strong> utiliza um algoritmo meritocrático que te liga a empresas
@@ -1071,7 +1180,7 @@
           </div>
         </div>
 
-        <!-- stickers estilo Agenius -->
+        <!-- Stickers -->
         <div class="hero-sticker green top-left">Jovem</div>
         <div class="hero-sticker left">Solidária</div>
         <div class="hero-sticker blue right">Europeia</div>
@@ -1083,7 +1192,7 @@
     </section>
 
     <!-- WHY WE ARE THE BEST -->
-    <section id="why" class="stripe-section">
+    <section id="why" class="stripe-section" data-animate>
       <div class="section-header">
         <div class="eyebrow">Why we are the best</div>
         <h2 class="section-title">
@@ -1178,7 +1287,7 @@
     </section>
 
     <!-- WHAT WE DO – INTRO + GRID -->
-    <section id="what">
+    <section id="what" data-animate>
       <div class="circle-section" id="connect-intro">
         <div class="circle-shell">
           <div class="circle-top-grid">
@@ -1353,7 +1462,7 @@
     </section>
 
     <!-- PROCESSO – OUR NOT SO SECRET SAUCE -->
-    <section id="process">
+    <section id="process" data-animate>
       <div class="section-header">
         <div class="eyebrow">Our not so secret sauce</div>
         <h2 class="section-title">
@@ -1407,7 +1516,7 @@
     </section>
 
     <!-- SAD GLOBAL STATS -->
-    <section id="sad" class="sad-stats">
+    <section id="sad" class="sad-stats" data-animate>
       <div class="headline-center">
         <h2 class="headline-title">Solidarity Action Day</h2>
         <p class="headline-note">
@@ -1448,7 +1557,7 @@
     </section>
 
     <!-- YOUTHREACH & CREATIVE SUPPORT -->
-    <section id="youthreach">
+    <section id="youthreach" data-animate>
       <div class="section-header">
         <div class="eyebrow">ActivEU YouthReach &amp; Creative Support</div>
         <h2 class="section-title">
@@ -1481,7 +1590,7 @@
             e impacto real. Ideal para municípios, escolas, universidades e organizações que querem mais do que
             campanhas simbólicas.
           </p>
-          <a href="mailto:info@activeu.pt" class="btn-outline-dark">
+          <a href="mailto:info@activeu.pt" class="btn-outline-dark" data-magnetic>
             Marcar reunião
           </a>
         </aside>
@@ -1498,7 +1607,7 @@
     -->
 
     <!-- ABOUT US + TU -->
-    <section id="about">
+    <section id="about" data-animate>
       <div class="section-header">
         <div class="eyebrow">About us</div>
         <h2 class="section-title">
@@ -1532,7 +1641,7 @@
             de nós. Voluntariado, equipa, estágios, grupos de trabalho – se te vês a criar impacto real, podemos
             começar por uma conversa.
           </p>
-          <a href="mailto:info@activeu.pt" class="join-btn">
+          <a href="mailto:info@activeu.pt" class="join-btn" data-magnetic>
             Junta-te a nós!
           </a>
         </aside>
@@ -1554,7 +1663,297 @@
     // ano no footer
     document.getElementById("year").textContent =
       new Date().getFullYear().toString();
+
+    // ===== Scroll progress bar =====
+    const progressBar = document.getElementById("scrollProgress");
+    const updateProgress = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const docHeight =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progressBar.style.width = progress + "%";
+    };
+    window.addEventListener("scroll", updateProgress);
+    updateProgress();
+
+    // ===== Scroll reveal for sections =====
+    const animatedSections = document.querySelectorAll("[data-animate]");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        root: null,
+        threshold: 0.15,
+      }
+    );
+    animatedSections.forEach((section) => observer.observe(section));
+
+    // ===== Stats counters (SAD section) =====
+    const counters = [
+      { selector: ".stat-card:nth-child(1) .stat-number", end: 4_000_000, suffix: "€+" },
+      { selector: ".stat-card:nth-child(2) .stat-number", end: 300_000, suffix: "+" },
+      { selector: ".stat-card:nth-child(3) .stat-number", end: 10, suffix: "+" },
+      { selector: ".stat-card:nth-child(4) .stat-number", end: 60, suffix: "+" },
+    ];
+
+    function formatNumber(value) {
+      if (value >= 1_000_000) return (value / 1_000_000).toFixed(1).replace(".0", "") + "M";
+      if (value >= 1_000) return (value / 1_000).toFixed(0) + "k";
+      return value.toString();
+    }
+
+    function animateCounters() {
+      counters.forEach(({ selector, end, suffix }) => {
+        const el = document.querySelector(selector);
+        if (!el) return;
+        const duration = 1400;
+        const start = 0;
+        const startTime = performance.now();
+
+        function tick(now) {
+          const progress = Math.min((now - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+          const current = Math.floor(start + (end - start) * eased);
+          el.textContent = formatNumber(current) + suffix;
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+    }
+
+    const statsSection = document.querySelector(".sad-stats");
+    if (statsSection) {
+      const statsObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              animateCounters();
+              statsObserver.disconnect();
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+      statsObserver.observe(statsSection);
+    }
+
+    // ===== Nav link highlight by scroll =====
+    const navLinks = document.querySelectorAll(".nav-links a");
+    const sectionsMap = Array.from(navLinks).map((link) => {
+      const target = document.querySelector(link.getAttribute("href"));
+      return { link, section: target };
+    });
+
+    function highlightNav() {
+      let active = sectionsMap[0];
+      const scrollPos = window.scrollY + 100;
+      sectionsMap.forEach((item) => {
+        if (item.section && item.section.offsetTop <= scrollPos) {
+          active = item;
+        }
+      });
+      sectionsMap.forEach(({ link }) => {
+        if (link === active.link) {
+          link.style.fontWeight = "600";
+          link.style.color = "#1f2933";
+        } else {
+          link.style.fontWeight = "400";
+          link.style.color = "#4a4357";
+        }
+      });
+    }
+    window.addEventListener("scroll", highlightNav);
+    highlightNav();
+
+    // ===== Smooth scroll for internal links =====
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+        const targetId = this.getAttribute("href");
+        if (!targetId || targetId === "#") return;
+        const target = document.querySelector(targetId);
+        if (!target) return;
+        e.preventDefault();
+        const offset = 80; // espaço para o header
+        const top =
+          target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: "smooth" });
+      });
+    });
+
+    // ===== Mobile menu toggle =====
+    const menuButton = document.querySelector(".menu-pill");
+    const nav = document.querySelector(".nav-links");
+
+    if (menuButton && nav) {
+      const closeNavMobile = () => {
+        if (window.innerWidth <= 900) {
+          nav.style.display = "none";
+        }
+      };
+
+      menuButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        const isOpen = nav.style.display === "flex";
+        if (window.innerWidth <= 900) {
+          nav.style.display = isOpen ? "none" : "flex";
+          nav.style.flexDirection = "column";
+          nav.style.position = "absolute";
+          nav.style.top = "52px";
+          nav.style.right = "16px";
+          nav.style.padding = "10px 12px";
+          nav.style.background = "#fff7e5";
+          nav.style.borderRadius = "18px";
+          nav.style.boxShadow = "0 14px 30px rgba(0,0,0,0.18)";
+        }
+      });
+
+      navLinks.forEach((link) => {
+        link.addEventListener("click", closeNavMobile);
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 900) {
+          nav.style.display = "flex";
+          nav.style.position = "";
+          nav.style.boxShadow = "";
+          nav.style.background = "";
+          nav.style.padding = "";
+        } else {
+          nav.style.display = "none";
+        }
+      });
+    }
+
+    // ===== Magnetic buttons (WOW micro-interaction) =====
+    const magneticButtons = document.querySelectorAll("[data-magnetic]");
+
+    magneticButtons.forEach((btn) => {
+      const strength = 18;
+      btn.addEventListener("mousemove", (e) => {
+        const rect = btn.getBoundingClientRect();
+        const relX = e.clientX - rect.left - rect.width / 2;
+        const relY = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform =
+          "translate(" +
+          (relX / rect.width) * strength +
+          "px," +
+          (relY / rect.height) * strength +
+          "px)";
+      });
+      btn.addEventListener("mouseleave", () => {
+        btn.style.transform = "translate(0,0)";
+      });
+    });
+
+    // ===== Hero panel tilt (3D efeito cartão) =====
+    const heroTilt = document.getElementById("heroTilt");
+    if (heroTilt) {
+      const tiltStrength = 10;
+      heroTilt.addEventListener("mousemove", (e) => {
+        const rect = heroTilt.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const rotY = ((x - rect.width / 2) / rect.width) * tiltStrength;
+        const rotX = -((y - rect.height / 2) / rect.height) * tiltStrength;
+        heroTilt.style.transform =
+          "rotateX(" + rotX + "deg) rotateY(" + rotY + "deg)";
+        heroTilt.setAttribute("data-tilt-active", "true");
+      });
+      heroTilt.addEventListener("mouseleave", () => {
+        heroTilt.style.transform = "rotateX(0deg) rotateY(0deg)";
+        heroTilt.setAttribute("data-tilt-active", "false");
+      });
+    }
+
+    // ===== Parallax leve nos stickers do hero =====
+    const stickers = document.querySelectorAll(".hero-sticker");
+    window.addEventListener("scroll", () => {
+      const offset = window.scrollY * 0.03;
+      stickers.forEach((sticker, index) => {
+        const direction = index % 2 === 0 ? 1 : -1;
+        sticker.style.transform =
+          "translateY(" + offset * direction + "px) rotate(" + sticker.style.getPropertyValue("--r") + ")";
+      });
+    });
+
+    // ===== Hero animated background (canvas particles) =====
+    const canvas = document.getElementById("heroCanvas");
+    if (canvas && canvas.getContext) {
+      const ctx = canvas.getContext("2d");
+      let width, height;
+      let particles = [];
+
+      function resizeCanvas() {
+        const rect = canvas.parentElement.getBoundingClientRect();
+        width = rect.width;
+        height = rect.height;
+        const ratio = window.devicePixelRatio || 1;
+        canvas.width = width * ratio;
+        canvas.height = height * ratio;
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      }
+
+      function createParticles() {
+        const count = 40;
+        particles = [];
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: 1.8 + Math.random() * 2,
+            dx: (Math.random() - 0.5) * 0.2,
+            dy: (Math.random() - 0.5) * 0.2,
+            alpha: 0.3 + Math.random() * 0.4,
+          });
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+
+        // suave gradiente de fundo
+        const gradient = ctx.createLinearGradient(0, 0, width, height);
+        gradient.addColorStop(0, "rgba(255,247,229,0.85)");
+        gradient.addColorStop(1, "rgba(247,181,255,0.35)");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = "rgba(10,25,56,0.7)";
+        particles.forEach((p) => {
+          ctx.globalAlpha = p.alpha;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+
+          p.x += p.dx;
+          p.y += p.dy;
+
+          if (p.x < 0) p.x = width;
+          if (p.x > width) p.x = 0;
+          if (p.y < 0) p.y = height;
+          if (p.y > height) p.y = 0;
+        });
+
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(draw);
+      }
+
+      function initCanvas() {
+        resizeCanvas();
+        createParticles();
+        draw();
+      }
+
+      window.addEventListener("resize", initCanvas);
+      initCanvas();
+    }
   </script>
 </body>
 </html>
-
