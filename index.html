@@ -20,13 +20,9 @@
       --activ-yellow: #f7b500;
       --accent-burgundy: #4b0823;
 
-      --bg-hero: radial-gradient(circle at top, #fff9ef 0, #fff7e5 45%, #fffaf2 100%);
-      --bg-why: linear-gradient(135deg, #fff7e5, #e0f2fe);
-      --bg-what: radial-gradient(circle at top left, #fef3ff 0, #fff7e5 55%, #e5f6ff 100%);
-      --bg-process: linear-gradient(130deg, #ecfdf3, #fef9c3);
-      --bg-sad: radial-gradient(circle at top, #eef2ff, #fef9c3);
-      --bg-youthreach: radial-gradient(circle at top, #e5f6ff, #fdf2ff);
-      --bg-about: linear-gradient(145deg, #020617, #0f172a);
+      --bg-cream: #fff7e5;
+      --bg-soft: #fffaf0;
+      --bg-gradient-top: radial-gradient(circle at top, #fff9ef 0, #fff7e5 45%, #fffaf2 100%);
 
       --text-main: #1a1625;
       --text-soft: #5f5b6b;
@@ -50,19 +46,10 @@
     body {
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
         "Segoe UI", sans-serif;
+      background: var(--bg-gradient-top);
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
-      background: var(--bg-hero);
-      transition: background 0.6s ease;
     }
-
-    body[data-theme="hero"] { background: var(--bg-hero); }
-    body[data-theme="why"] { background: var(--bg-why); }
-    body[data-theme="what"] { background: var(--bg-what); }
-    body[data-theme="process"] { background: var(--bg-process); }
-    body[data-theme="sad"] { background: var(--bg-sad); }
-    body[data-theme="youthreach"] { background: var(--bg-youthreach); }
-    body[data-theme="about"] { background: var(--bg-about); }
 
     a {
       color: inherit;
@@ -110,16 +97,6 @@
       border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     }
 
-    body[data-theme="about"] header {
-      background: linear-gradient(
-        to bottom,
-        rgba(15, 23, 42, 0.96),
-        rgba(15, 23, 42, 0.92),
-        transparent
-      );
-      border-bottom-color: rgba(148, 163, 184, 0.55);
-    }
-
     .nav-inner {
       max-width: 1180px;
       margin: 0 auto;
@@ -164,10 +141,6 @@
       color: #706b7c;
     }
 
-    body[data-theme="about"] .logo-text {
-      color: #e5e7eb;
-    }
-
     .nav-links {
       display: flex;
       align-items: center;
@@ -197,14 +170,6 @@
       width: 100%;
     }
 
-    body[data-theme="about"] .nav-links a {
-      color: #e5e7eb;
-    }
-
-    body[data-theme="about"] .nav-links a::after {
-      background: #facc15;
-    }
-
     .nav-right {
       display: flex;
       align-items: center;
@@ -225,25 +190,10 @@
       text-transform: uppercase;
       box-shadow: var(--shadow-soft);
       cursor: pointer;
-      transition:
-        transform 0.12s ease-out,
-        box-shadow 0.12s ease-out,
-        background-color 0.15s ease-out,
-        color 0.15s ease-out;
     }
 
     .menu-pill:hover {
       background: #000;
-    }
-
-    body[data-theme="about"] .menu-pill {
-      border-color: #f4f4f5;
-      background: #f4f4f5;
-      color: #020617;
-    }
-
-    body[data-theme="about"] .menu-pill:hover {
-      background: #e5e7eb;
     }
 
     @media (max-width: 900px) {
@@ -274,12 +224,6 @@
       letter-spacing: 0.08em;
     }
 
-    body[data-theme="about"] .eyebrow {
-      border-color: #facc15;
-      background: #facc15;
-      color: #020617;
-    }
-
     .section-title {
       margin-top: 10px;
       font-size: 24px;
@@ -293,11 +237,6 @@
       max-width: 680px;
       font-size: 14px;
       color: var(--text-soft);
-    }
-
-    body[data-theme="about"] .section-title,
-    body[data-theme="about"] .section-subtitle {
-      color: #e5e7eb;
     }
 
     /* HERO */
@@ -382,7 +321,7 @@
       flex-wrap: wrap;
       gap: 10px;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 16px;
     }
 
     .btn-primary,
@@ -394,6 +333,11 @@
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
+      transition:
+        transform 0.12s ease-out,
+        box-shadow 0.12s ease-out,
+        background-color 0.15s ease-out,
+        color 0.15s ease-out;
       position: relative;
       overflow: hidden;
     }
@@ -403,11 +347,6 @@
       background: var(--activ-yellow);
       padding: 10px 20px;
       box-shadow: var(--shadow-soft);
-      transition:
-        transform 0.12s ease-out,
-        box-shadow 0.12s ease-out,
-        background-color 0.15s ease-out,
-        color 0.15s ease-out;
     }
 
     .btn-primary:hover {
@@ -420,11 +359,6 @@
       background: #fffef7;
       padding: 9px 16px;
       font-weight: 500;
-      transition:
-        transform 0.12s ease-out,
-        box-shadow 0.12s ease-out,
-        background-color 0.15s ease-out,
-        color 0.15s ease-out;
     }
 
     .btn-outline-dark {
@@ -438,11 +372,6 @@
       font-size: 13px;
       font-weight: 600;
       margin-top: 12px;
-      transition:
-        transform 0.12s ease-out,
-        box-shadow 0.12s ease-out,
-        background-color 0.15s ease-out,
-        color 0.15s ease-out;
     }
 
     .btn-outline-dark:hover {
@@ -462,47 +391,6 @@
     .hero-mini {
       font-size: 12px;
       color: #6b6575;
-    }
-
-    /* ROLE SWITCHER */
-
-    .role-switcher {
-      margin-top: 12px;
-      font-size: 11px;
-      color: #6b6575;
-    }
-
-    .role-label {
-      margin-bottom: 4px;
-      display: block;
-    }
-
-    .role-pill-row {
-      display: inline-flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .role-pill {
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(15, 23, 42, 0.22);
-      background: #fffef7;
-      cursor: pointer;
-      font-size: 11px;
-      font-weight: 500;
-      transition:
-        background-color 0.15s ease-out,
-        color 0.15s ease-out,
-        transform 0.12s ease-out,
-        box-shadow 0.12s ease-out;
-    }
-
-    .role-pill.is-active {
-      background: #111827;
-      color: #fef9c3;
-      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.4);
-      transform: translateY(-1px);
     }
 
     /* HERO STICKERS */
@@ -620,12 +508,6 @@
       border-radius: 32px 32px 0 0;
       background: rgba(255, 255, 255, 0.92);
       padding: 18px 16px 16px;
-      transition: opacity 0.25s ease-out, transform 0.25s ease-out;
-    }
-
-    .hero-panel-inner.is-switching {
-      opacity: 0;
-      transform: translateY(6px);
     }
 
     .hero-panel-box {
@@ -839,10 +721,6 @@
       padding: 26px 20px 22px;
     }
 
-    body[data-theme="about"] .circle-shell {
-      background: #020617;
-    }
-
     .circle-top-grid {
       display: grid;
       grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
@@ -865,19 +743,9 @@
       color: var(--text-soft);
     }
 
-    body[data-theme="about"] .circle-text-box {
-      background: #020617;
-      color: #e5e7eb;
-      border-color: #facc15;
-    }
-
     .circle-text-box strong {
       color: var(--text-main);
       font-weight: 600;
-    }
-
-    body[data-theme="about"] .circle-text-box strong {
-      color: #facc15;
     }
 
     .circle-visual-wrap {
@@ -915,10 +783,6 @@
       text-align: center;
       font-size: 11px;
       color: var(--text-soft);
-    }
-
-    body[data-theme="about"] .circle-caption {
-      color: #e5e7eb;
     }
 
     .circle-bottom-grid {
@@ -1018,10 +882,6 @@
       font-size: 32px;
       letter-spacing: -0.05em;
       color: var(--accent-burgundy);
-    }
-
-    body[data-theme="about"] .headline-title {
-      color: #e5e7eb;
     }
 
     .headline-note {
@@ -1140,16 +1000,6 @@
       }
     }
 
-    .about-text-block {
-      background: rgba(255, 255, 255, 0.95);
-    }
-
-    body[data-theme="about"] .about-text-block {
-      background: rgba(15, 23, 42, 0.92);
-      border-color: rgba(148, 163, 184, 0.8);
-      color: #e5e7eb;
-    }
-
     .about-text-block p + p {
       margin-top: 10px;
     }
@@ -1213,15 +1063,6 @@
       color: #1f2933;
     }
 
-    body[data-theme="about"] footer {
-      border-top-color: rgba(148, 163, 184, 0.55);
-      color: #9ca3af;
-    }
-
-    body[data-theme="about"] footer span.brand {
-      color: #e5e7eb;
-    }
-
     /* SCROLL REVEAL ANIMATIONS */
 
     [data-animate] {
@@ -1238,166 +1079,6 @@
       transform: translateY(0);
     }
 
-    /* COMMAND PALETTE */
-
-    .command-btn {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      z-index: 90;
-      width: 42px;
-      height: 42px;
-      border-radius: 999px;
-      border: 1px solid rgba(15, 23, 42, 0.18);
-      background: rgba(255, 255, 255, 0.96);
-      box-shadow: 0 16px 45px rgba(15, 23, 42, 0.35);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      transition:
-        transform 0.12s ease-out,
-        box-shadow 0.12s ease-out,
-        background-color 0.15s ease-out;
-    }
-
-    .command-btn:hover {
-      transform: translateY(-2px);
-      background: #f9fafb;
-    }
-
-    body[data-theme="about"] .command-btn {
-      background: #020617;
-      color: #e5e7eb;
-      border-color: rgba(148, 163, 184, 0.5);
-    }
-
-    .command-overlay {
-      position: fixed;
-      inset: 0;
-      display: none;
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .command-overlay[data-open="true"] {
-      display: flex;
-    }
-
-    .command-backdrop {
-      position: absolute;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.45);
-      backdrop-filter: blur(10px);
-    }
-
-    .command-panel {
-      position: relative;
-      width: min(520px, 100% - 32px);
-      background: #f9fafb;
-      border-radius: 18px;
-      border: 1px solid rgba(15, 23, 42, 0.28);
-      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.6);
-      padding: 12px 12px 10px;
-      z-index: 101;
-    }
-
-    body[data-theme="about"] .command-panel {
-      background: #020617;
-      border-color: rgba(148, 163, 184, 0.8);
-      color: #e5e7eb;
-    }
-
-    .command-input-wrap {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 8px;
-      border-radius: 10px;
-      background: #ffffff;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      margin-bottom: 8px;
-    }
-
-    body[data-theme="about"] .command-input-wrap {
-      background: #020617;
-    }
-
-    .command-input-wrap span {
-      font-size: 12px;
-      color: #6b7280;
-    }
-
-    body[data-theme="about"] .command-input-wrap span {
-      color: #9ca3af;
-    }
-
-    .command-input {
-      flex: 1;
-      border: none;
-      outline: none;
-      font-size: 13px;
-      background: transparent;
-      color: #111827;
-    }
-
-    body[data-theme="about"] .command-input {
-      color: #e5e7eb;
-    }
-
-    .command-hint {
-      font-size: 10px;
-      color: #9ca3af;
-      margin-bottom: 6px;
-    }
-
-    .command-list {
-      list-style: none;
-      max-height: 220px;
-      overflow-y: auto;
-      margin: 0;
-      padding: 0;
-      border-radius: 10px;
-      background: #ffffff;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-    }
-
-    body[data-theme="about"] .command-list {
-      background: #020617;
-    }
-
-    .command-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 6px 8px;
-      font-size: 13px;
-      cursor: pointer;
-      transition: background-color 0.12s ease-out;
-    }
-
-    .command-item span.label {
-      font-weight: 500;
-    }
-
-    .command-item span.meta {
-      font-size: 11px;
-      color: #9ca3af;
-    }
-
-    .command-item:hover,
-    .command-item[data-active="true"] {
-      background: #eff6ff;
-    }
-
-    body[data-theme="about"] .command-item:hover,
-    body[data-theme="about"] .command-item[data-active="true"] {
-      background: #0f172a;
-    }
-
     @media (prefers-reduced-motion: reduce) {
       * {
         scroll-behavior: auto !important;
@@ -1408,7 +1089,7 @@
     }
   </style>
 </head>
-<body data-theme="hero">
+<body>
   <div class="scroll-progress" id="scrollProgress"></div>
 
   <header>
@@ -1442,7 +1123,7 @@
 
   <main class="page-shell">
     <!-- HERO -->
-    <section id="hero" class="hero" data-animate data-theme="hero">
+    <section id="hero" class="hero" data-animate>
       <div class="hero-bg-canvas-wrap">
         <canvas id="heroCanvas"></canvas>
       </div>
@@ -1469,15 +1150,6 @@
             <a href="#connect-intro" class="btn-outline" data-magnetic>Percebe como funciona</a>
           </div>
 
-          <div class="role-switcher">
-            <span class="role-label">Ver o Solidarity Action Day pelos olhos de:</span>
-            <div class="role-pill-row">
-              <button class="role-pill is-active" data-role="student">Um estudante</button>
-              <button class="role-pill" data-role="company">Uma entidade de acolhimento</button>
-              <button class="role-pill" data-role="cause">Uma causa solidária</button>
-            </div>
-          </div>
-
           <p class="hero-mini">
             Jovens, empresas e causas ligadas por um modelo simples: um dia de trabalho solidário, impacto real para todos.
           </p>
@@ -1489,17 +1161,17 @@
             <span>Símbolo secundário com o lince europeu</span>
           </div>
           <div class="hero-panel" id="heroTilt">
-            <div class="hero-panel-inner" id="heroPanelInner">
-              <div class="hero-panel-box" id="panelBox1">
+            <div class="hero-panel-inner">
+              <div class="hero-panel-box">
                 <strong>A plataforma ActivEU Connect</strong> utiliza um algoritmo meritocrático que te liga a empresas
                 e causas de forma justa e transparente, criando oportunidades reais de desenvolvimento para todos.
               </div>
-              <div class="hero-panel-box" id="panelBox2">
+              <div class="hero-panel-box">
                 O valor pago pela entidade de acolhimento é <strong>doado integralmente</strong> a causas solidárias
                 verificadas. Tu ganhas experiência e certificação; as causas ganham força para continuar o seu trabalho.
               </div>
 
-              <div class="hero-panel-pill-row" id="panelPills">
+              <div class="hero-panel-pill-row">
                 <span class="hero-panel-pill">Experiência com impacto</span>
                 <span class="hero-panel-pill">Matching inteligente</span>
                 <span class="hero-panel-pill">Resultados que permanecem</span>
@@ -1520,7 +1192,7 @@
     </section>
 
     <!-- WHY WE ARE THE BEST -->
-    <section id="why" class="stripe-section" data-animate data-theme="why">
+    <section id="why" class="stripe-section" data-animate>
       <div class="section-header">
         <div class="eyebrow">Why we are the best</div>
         <h2 class="section-title">
@@ -1615,7 +1287,7 @@
     </section>
 
     <!-- WHAT WE DO – INTRO + GRID -->
-    <section id="what" data-animate data-theme="what">
+    <section id="what" data-animate>
       <div class="circle-section" id="connect-intro">
         <div class="circle-shell">
           <div class="circle-top-grid">
@@ -1790,7 +1462,7 @@
     </section>
 
     <!-- PROCESSO – OUR NOT SO SECRET SAUCE -->
-    <section id="process" data-animate data-theme="process">
+    <section id="process" data-animate>
       <div class="section-header">
         <div class="eyebrow">Our not so secret sauce</div>
         <h2 class="section-title">
@@ -1844,7 +1516,7 @@
     </section>
 
     <!-- SAD GLOBAL STATS -->
-    <section id="sad" class="sad-stats" data-animate data-theme="sad">
+    <section id="sad" class="sad-stats" data-animate>
       <div class="headline-center">
         <h2 class="headline-title">Solidarity Action Day</h2>
         <p class="headline-note">
@@ -1885,7 +1557,7 @@
     </section>
 
     <!-- YOUTHREACH & CREATIVE SUPPORT -->
-    <section id="youthreach" data-animate data-theme="youthreach">
+    <section id="youthreach" data-animate>
       <div class="section-header">
         <div class="eyebrow">ActivEU YouthReach &amp; Creative Support</div>
         <h2 class="section-title">
@@ -1935,7 +1607,7 @@
     -->
 
     <!-- ABOUT US + TU -->
-    <section id="about" data-animate data-theme="about">
+    <section id="about" data-animate>
       <div class="section-header">
         <div class="eyebrow">About us</div>
         <h2 class="section-title">
@@ -1987,31 +1659,6 @@
     </footer>
   </main>
 
-  <!-- COMMAND PALETTE -->
-  <button class="command-btn" type="button" id="commandBtn" aria-label="Abrir painel de comandos">
-    ⌘K
-  </button>
-
-  <div class="command-overlay" id="commandOverlay" aria-hidden="true">
-    <div class="command-backdrop"></div>
-    <div class="command-panel" role="dialog" aria-modal="true" aria-labelledby="commandTitle">
-      <div class="command-input-wrap">
-        <span>🔍</span>
-        <input
-          type="text"
-          class="command-input"
-          id="commandInput"
-          placeholder="Escreve 'sad', 'serviços', 'sobre'…"
-          autocomplete="off"
-        />
-      </div>
-      <div class="command-hint">
-        Usa ↑↓ para navegar · Enter para ir · Esc para fechar
-      </div>
-      <ul class="command-list" id="commandList"></ul>
-    </div>
-  </div>
-
   <script>
     // ano no footer
     document.getElementById("year").textContent =
@@ -2030,28 +1677,23 @@
     window.addEventListener("scroll", updateProgress);
     updateProgress();
 
-    // ===== Scroll reveal for sections + theme switching =====
+    // ===== Scroll reveal for sections =====
     const animatedSections = document.querySelectorAll("[data-animate]");
-    const rootBody = document.body;
-
-    const revealObserver = new IntersectionObserver(
+    const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const theme = entry.target.getAttribute("data-theme");
           if (entry.isIntersecting) {
             entry.target.classList.add("is-visible");
-            if (theme) {
-              rootBody.setAttribute("data-theme", theme);
-            }
+            observer.unobserve(entry.target);
           }
         });
       },
       {
         root: null,
-        threshold: 0.35,
+        threshold: 0.15,
       }
     );
-    animatedSections.forEach((section) => revealObserver.observe(section));
+    animatedSections.forEach((section) => observer.observe(section));
 
     // ===== Stats counters (SAD section) =====
     const counters = [
@@ -2120,10 +1762,10 @@
       sectionsMap.forEach(({ link }) => {
         if (link === active.link) {
           link.style.fontWeight = "600";
-          link.style.color = rootBody.getAttribute("data-theme") === "about" ? "#facc15" : "#1f2933";
+          link.style.color = "#1f2933";
         } else {
           link.style.fontWeight = "400";
-          link.style.color = rootBody.getAttribute("data-theme") === "about" ? "#e5e7eb" : "#4a4357";
+          link.style.color = "#4a4357";
         }
       });
     }
@@ -2166,7 +1808,7 @@
           nav.style.top = "52px";
           nav.style.right = "16px";
           nav.style.padding = "10px 12px";
-          nav.style.background = rootBody.getAttribute("data-theme") === "about" ? "#020617" : "#fff7e5";
+          nav.style.background = "#fff7e5";
           nav.style.borderRadius = "18px";
           nav.style.boxShadow = "0 14px 30px rgba(0,0,0,0.18)";
         }
@@ -2230,68 +1872,14 @@
       });
     }
 
-    // ===== HERO ROLE SWITCHER =====
-    const rolePills = document.querySelectorAll(".role-pill");
-    const panelInner = document.getElementById("heroPanelInner");
-    const box1 = document.getElementById("panelBox1");
-    const box2 = document.getElementById("panelBox2");
-    const pillsRow = document.getElementById("panelPills");
-
-    const roleContent = {
-      student: {
-        box1: "<strong>Enquanto estudante</strong>, usas o Solidarity Action Day para ganhar experiência real, testar caminhos profissionais e ter algo concreto para acrescentar ao teu CV – sem pagar nada pelo processo.",
-        box2: "Passas um dia numa entidade de acolhimento, mostras aquilo que sabes fazer e, no final, recebes certificação e um resumo do impacto que ajudaste a criar. O valor do teu trabalho é doado a uma causa que escolheste.",
-        pills: [
-          "Primeiro contacto com o mercado de trabalho",
-          "Competências que contam mesmo",
-          "Experiência certificada e impacto social"
-        ]
-      },
-      company: {
-        box1: "Enquanto <strong>entidade de acolhimento</strong>, abres as portas da tua organização a jovens motivados, num modelo claro, seguro e simples de implementar.",
-        box2: "Recebes talento fresco durante um dia, sem burocracia excessiva, e a tua contribuição financeira é inteiramente doada a causas credíveis. Ganha a equipa, ganha a comunidade, ganha a tua reputação.",
-        pills: [
-          "Responsabilidade social com rosto",
-          "Descoberta de talento jovem",
-          "Modelo transparente e acompanhando"
-        ]
-      },
-      cause: {
-        box1: "Enquanto <strong>causa solidária</strong>, recebes apoio financeiro gerado por milhares de jovens e entidades que acreditam no trabalho que fazes todos os dias.",
-        box2: "As doações chegam-te com transparência, acompanhadas por relatórios claros. Podes concentrar-te na missão, enquanto a ActivEU garante o modelo, a tecnologia e a ponte com a juventude.",
-        pills: [
-          "Financiamento sustentável",
-          "Ligação direta à juventude",
-          "Transparência e confiança institucional"
-        ]
-      }
-    };
-
-    function setRole(role) {
-      const content = roleContent[role];
-      if (!content) return;
-      rolePills.forEach((pill) => {
-        pill.classList.toggle("is-active", pill.getAttribute("data-role") === role);
-      });
-      panelInner.classList.add("is-switching");
-      setTimeout(() => {
-        box1.innerHTML = content.box1;
-        box2.innerHTML = content.box2;
-        pillsRow.innerHTML = "";
-        content.pills.forEach((text) => {
-          const span = document.createElement("span");
-          span.className = "hero-panel-pill";
-          span.textContent = text;
-          pillsRow.appendChild(span);
-        });
-        panelInner.classList.remove("is-switching");
-      }, 180);
-    }
-
-    rolePills.forEach((pill) => {
-      pill.addEventListener("click", () => {
-        const role = pill.getAttribute("data-role");
-        setRole(role);
+    // ===== Parallax leve nos stickers do hero =====
+    const stickers = document.querySelectorAll(".hero-sticker");
+    window.addEventListener("scroll", () => {
+      const offset = window.scrollY * 0.03;
+      stickers.forEach((sticker, index) => {
+        const direction = index % 2 === 0 ? 1 : -1;
+        sticker.style.transform =
+          "translateY(" + offset * direction + "px) rotate(" + sticker.style.getPropertyValue("--r") + ")";
       });
     });
 
@@ -2330,6 +1918,7 @@
       function draw() {
         ctx.clearRect(0, 0, width, height);
 
+        // suave gradiente de fundo
         const gradient = ctx.createLinearGradient(0, 0, width, height);
         gradient.addColorStop(0, "rgba(255,247,229,0.85)");
         gradient.addColorStop(1, "rgba(247,181,255,0.35)");
@@ -2365,141 +1954,6 @@
       window.addEventListener("resize", initCanvas);
       initCanvas();
     }
-
-    // ===== COMMAND PALETTE =====
-    const commandBtn = document.getElementById("commandBtn");
-    const commandOverlay = document.getElementById("commandOverlay");
-    const commandInput = document.getElementById("commandInput");
-    const commandList = document.getElementById("commandList");
-
-    const commandItems = [
-      { id: "hero", label: "Início", keywords: "inicio home activ eu" },
-      { id: "why", label: "Porquê", keywords: "porque why melhor" },
-      { id: "what", label: "O que fazemos", keywords: "o que fazemos actividades connect plataforma" },
-      { id: "process", label: "Processo", keywords: "processo como funciona passos" },
-      { id: "sad", label: "Solidarity Action Day", keywords: "sad solidarity action day europa dados impacto" },
-      { id: "youthreach", label: "Serviços a entidades", keywords: "servicos entidades youthreach creative consultoria" },
-      { id: "about", label: "Sobre a ActivEU", keywords: "sobre about equipa associacao" },
-      { id: "contact", label: "Contacto directo", keywords: "contacto email reuniao marca" }
-    ];
-
-    let activeIndex = 0;
-
-    function renderCommandList(filter = "") {
-      const query = filter.trim().toLowerCase();
-      const filtered = commandItems.filter((item) => {
-        if (!query) return true;
-        return (
-          item.label.toLowerCase().includes(query) ||
-          item.keywords.includes(query)
-        );
-      });
-
-      commandList.innerHTML = "";
-      filtered.forEach((item, index) => {
-        const li = document.createElement("li");
-        li.className = "command-item";
-        li.dataset.id = item.id;
-        li.dataset.active = index === 0 ? "true" : "false";
-        li.innerHTML = `
-          <span class="label">${item.label}</span>
-          <span class="meta">#${item.id}</span>
-        `;
-        commandList.appendChild(li);
-      });
-
-      activeIndex = 0;
-    }
-
-    function openCommandPalette() {
-      commandOverlay.setAttribute("data-open", "true");
-      commandOverlay.setAttribute("aria-hidden", "false");
-      renderCommandList();
-      commandInput.value = "";
-      setTimeout(() => commandInput.focus(), 10);
-    }
-
-    function closeCommandPalette() {
-      commandOverlay.setAttribute("data-open", "false");
-      commandOverlay.setAttribute("aria-hidden", "true");
-    }
-
-    function navigateCommand(delta) {
-      const items = commandList.querySelectorAll(".command-item");
-      if (!items.length) return;
-      activeIndex = (activeIndex + delta + items.length) % items.length;
-      items.forEach((item, index) => {
-        item.dataset.active = index === activeIndex ? "true" : "false";
-        if (index === activeIndex) {
-          item.scrollIntoView({ block: "nearest" });
-        }
-      });
-    }
-
-    function activateCommand() {
-      const active = commandList.querySelector('.command-item[data-active="true"]');
-      if (!active) return;
-      const id = active.dataset.id;
-      const target = document.getElementById(id);
-      if (!target) return;
-      closeCommandPalette();
-      const offset = 80;
-      const top =
-        target.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: "smooth" });
-    }
-
-    commandBtn.addEventListener("click", openCommandPalette);
-
-    commandOverlay.addEventListener("click", (e) => {
-      if (e.target === commandOverlay || e.target.classList.contains("command-backdrop")) {
-        closeCommandPalette();
-      }
-    });
-
-    commandInput.addEventListener("input", (e) => {
-      renderCommandList(e.target.value);
-    });
-
-    commandList.addEventListener("click", (e) => {
-      const item = e.target.closest(".command-item");
-      if (!item) return;
-      commandList
-        .querySelectorAll(".command-item")
-        .forEach((el) => (el.dataset.active = "false"));
-      item.dataset.active = "true";
-      activateCommand();
-    });
-
-    document.addEventListener("keydown", (e) => {
-      const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
-      const cmdKey = isMac ? e.metaKey : e.ctrlKey;
-
-      if ((cmdKey && e.key.toLowerCase() === "k") || (e.key === "/" && !commandOverlay.dataset.open)) {
-        e.preventDefault();
-        if (commandOverlay.getAttribute("data-open") === "true") {
-          closeCommandPalette();
-        } else {
-          openCommandPalette();
-        }
-      }
-
-      if (commandOverlay.getAttribute("data-open") === "true") {
-        if (e.key === "Escape") {
-          e.preventDefault();
-          closeCommandPalette();
-        } else if (e.key === "ArrowDown") {
-          e.preventDefault();
-          navigateCommand(1);
-        } else if (e.key === "ArrowUp") {
-          e.preventDefault();
-          navigateCommand(-1);
-        } else if (e.key === "Enter") {
-          e.preventDefault();
-          activateCommand();
-        }
-      }
-    });
   </script>
 </body>
 </html>
