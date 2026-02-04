@@ -1,35 +1,33 @@
 <!DOCTYPE html>
-<html lang="pt" data-lang="pt">
+<html lang="pt">
 <head>
   <meta charset="UTF-8" />
   <title>ActivEU – Solidarity Action Day em Portugal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="ActivEU é uma associação jovem que traz para Portugal o modelo Solidarity Action Day: um dia em que os jovens trocam aulas por experiência real, doando o valor a causas solidárias."
+    content="ActivEU é uma associação jovem que traz para Portugal o modelo Solidarity Action Day: um dia em que trocas aulas por experiência real, doando o valor a causas solidárias."
   />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
     rel="stylesheet"
   />
   <style>
     :root {
+      --activ-blue: #0051a8;
+      --activ-yellow: #f7b500;
+      --accent-burgundy: #4b0823;
       --bg-cream: #fff7e5;
-      --bg-cream-soft: #fff9ed;
-      --bg-mint: #e7fff4;
-      --bg-lilac: #fce7ff;
-      --bg-hero: #fff7e5;
-      --text-main: #111827;
-      --text-soft: #4b5563;
-      --accent-dark: #4b0b27;
-      --accent-yellow: #ffd644;
-      --accent-mint: #b8ffd8;
-      --accent-pink: #ffbcd8;
-      --accent-outline: #111827;
-      --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.12);
-      --radius-xl: 20px;
+      --bg-cream-soft: #fffaf0;
+      --bg-green: #e9ffe9;
+      --bg-pink: #ffe8f2;
+      --bg-lilac: #e5f0ff;
+      --text-main: #1a1625;
+      --text-soft: #5f5b6b;
+      --radius-xl: 26px;
+      --shadow-soft: 0 14px 40px rgba(0, 0, 0, 0.12);
     }
 
     * {
@@ -47,7 +45,7 @@
     body {
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
         "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #fff9ed 0, #fff7e5 40%, #fefce8 100%);
+      background: radial-gradient(circle at top, #fff9ef 0, #fff7e5 45%, #fffaf2 100%);
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
     }
@@ -58,9 +56,9 @@
     }
 
     .page-shell {
-      max-width: 1200px;
+      max-width: 1180px;
       margin: 0 auto;
-      padding: 16px 16px 64px;
+      padding: 16px 16px 72px;
     }
 
     @media (max-width: 768px) {
@@ -69,76 +67,60 @@
       }
     }
 
-    /* LANGUAGE TOGGLE */
-    .lang-pt { display: inline; }
-    .lang-en { display: none; }
-
-    html[data-lang="en"] .lang-pt { display: none; }
-    html[data-lang="en"] .lang-en { display: inline; }
-
     /* NAVBAR */
     header {
       position: sticky;
       top: 0;
-      z-index: 40;
+      z-index: 50;
       backdrop-filter: blur(18px);
       background: linear-gradient(
         to bottom,
-        rgba(255, 247, 229, 0.95),
-        rgba(255, 247, 229, 0.85),
+        rgba(255, 247, 229, 0.98),
+        rgba(255, 247, 229, 0.9),
         transparent
       );
-      border-bottom: 1px solid rgba(148, 163, 184, 0.4);
-      margin-bottom: 18px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     }
 
     .nav-inner {
-      max-width: 1200px;
+      max-width: 1180px;
       margin: 0 auto;
-      padding: 10px 16px;
+      padding: 10px 16px 8px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
     }
 
-    .logo-wrap {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .logo-mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #ffeeba, #ffb3d1);
+    .nav-left {
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 11px;
-      color: var(--accent-dark);
-      border: 1px solid rgba(17, 24, 39, 0.15);
+      gap: 10px;
     }
 
     .logo-main {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .logo-sub {
+    .logo-main img {
+      height: 32px;
+      width: auto;
+      display: block;
+    }
+
+    .logo-text {
       font-size: 11px;
-      color: #6b7280;
+      color: #706b7c;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 20px;
       font-size: 12px;
-      color: #4b5563;
+      color: #4a4357;
     }
 
     .nav-links a {
@@ -153,7 +135,7 @@
       bottom: 0;
       width: 0;
       height: 1px;
-      background: #111827;
+      background: #20192b;
       transition: width 0.18s ease-out;
     }
 
@@ -161,41 +143,29 @@
       width: 100%;
     }
 
-    .nav-actions {
+    .nav-right {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .nav-cta {
-      font-size: 12px;
-      font-weight: 600;
-      padding: 8px 14px;
+    .menu-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
       border-radius: 999px;
-      border: 1px solid #111827;
-      background: #111827;
-      color: #f9fafb;
+      border: 1px solid #20192b;
+      background: #20192b;
+      color: #fff7e5;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
       box-shadow: var(--shadow-soft);
     }
 
-    .nav-cta:hover {
+    .menu-pill:hover {
       background: #000;
-    }
-
-    .lang-toggle {
-      font-size: 11px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(17, 24, 39, 0.5);
-      background: rgba(255, 255, 255, 0.9);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .lang-toggle span {
-      font-weight: 600;
     }
 
     @media (max-width: 900px) {
@@ -204,20 +174,52 @@
       }
     }
 
-    /* HERO */
+    /* GENERIC SECTION */
     section {
-      margin-bottom: 80px;
+      margin-bottom: 90px;
     }
 
+    .section-header {
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid #20192b;
+      background: #20192b;
+      color: #fff7e5;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-title {
+      margin-top: 10px;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text-main);
+    }
+
+    .section-subtitle {
+      margin-top: 8px;
+      max-width: 640px;
+      font-size: 14px;
+      color: var(--text-soft);
+    }
+
+    /* HERO */
     .hero {
       position: relative;
-      padding-top: 12px;
+      padding-top: 24px;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr);
-      gap: 32px;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 28px;
       align-items: center;
     }
 
@@ -227,57 +229,37 @@
       }
     }
 
-    .hero-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 10px;
+    .hero-top-note {
       font-size: 11px;
-      color: #4b5563;
-    }
-
-    .hero-badge {
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(17, 24, 39, 0.2);
-      background: rgba(255, 255, 255, 0.8);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .hero-badge-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: #22c55e;
+      color: #6b6575;
+      margin-bottom: 8px;
     }
 
     .hero-word {
       font-family: "Space Grotesk", system-ui, sans-serif;
-      font-size: clamp(48px, 16vw, 102px);
-      line-height: 0.9;
-      letter-spacing: -0.06em;
-      color: var(--accent-dark);
+      font-size: clamp(54px, 17vw, 120px);
+      line-height: 0.86;
+      letter-spacing: -0.09em;
+      color: var(--accent-burgundy);
       text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .hero-subline {
-      font-size: 18px;
+      font-size: 19px;
       font-weight: 600;
-      color: #4b0b27;
+      color: #4a1536;
       margin-bottom: 6px;
     }
 
     .hero-tagline {
       font-size: 14px;
-      color: #4b5563;
-      max-width: 520px;
+      color: var(--text-soft);
+      max-width: 480px;
       margin-bottom: 18px;
     }
 
-    .hero-actions-row {
+    .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
@@ -285,25 +267,25 @@
       margin-bottom: 16px;
     }
 
-    .btn-solid {
+    .btn-primary {
       border-radius: 999px;
-      border: 1px solid #111827;
-      background: var(--accent-yellow);
-      padding: 10px 18px;
+      border: 1px solid #20192b;
+      background: var(--activ-yellow);
+      padding: 10px 20px;
       font-size: 13px;
       font-weight: 600;
-      cursor: pointer;
       box-shadow: var(--shadow-soft);
+      cursor: pointer;
     }
 
-    .btn-solid:hover {
+    .btn-primary:hover {
       filter: brightness(1.05);
     }
 
-    .btn-ghost {
+    .btn-outline {
       border-radius: 999px;
-      border: 1px solid #111827;
-      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid #20192b;
+      background: #fffef7;
       padding: 9px 16px;
       font-size: 13px;
       font-weight: 500;
@@ -312,48 +294,71 @@
 
     .hero-mini {
       font-size: 12px;
-      color: #4b5563;
+      color: #6b6575;
     }
 
-    /* floating stickers around hero word */
+    /* HERO STICKERS */
+
     .hero-sticker {
       position: absolute;
       font-size: 11px;
       padding: 4px 10px;
       border-radius: 999px;
-      background: #ffe4f3;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-      transform: rotate(-10deg);
+      background: #ffe8f2;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+      transform: rotate(-9deg);
+      white-space: nowrap;
+      pointer-events: none;
+      animation: float 6s ease-in-out infinite;
     }
 
-    .hero-sticker.mint {
-      background: #dcfce7;
+    .hero-sticker.green {
+      background: #e5ffe8;
       transform: rotate(8deg);
+      animation-delay: 0.7s;
     }
 
     .hero-sticker.blue {
-      background: #e0f2fe;
+      background: #e1f0ff;
       transform: rotate(-6deg);
+      animation-delay: 1.2s;
     }
 
     .hero-sticker.top-left {
-      top: 80px;
+      top: 90px;
       left: 10%;
     }
 
     .hero-sticker.left {
-      top: 170px;
-      left: 3%;
+      top: 190px;
+      left: 4%;
     }
 
     .hero-sticker.right {
-      top: 130px;
-      right: 6%;
+      top: 140px;
+      right: 8%;
     }
 
     .hero-sticker.top-right {
       top: 40px;
-      right: 12%;
+      right: 15%;
+    }
+
+    .hero-sticker.bottom {
+      top: 270px;
+      left: 52%;
+      transform: translateX(-50%) rotate(4deg);
+      animation-delay: 1.5s;
+    }
+
+    @keyframes float {
+      0%,
+      100% {
+        transform: translateY(0) rotate(var(--r, -9deg));
+      }
+      50% {
+        transform: translateY(-6px) rotate(calc(var(--r, -9deg) + 2deg));
+      }
     }
 
     @media (max-width: 900px) {
@@ -362,542 +367,381 @@
       }
     }
 
-    /* hero side panel */
+    /* HERO RIGHT PANEL */
+
+    .hero-right {
+      position: relative;
+    }
+
+    .lynx-note {
+      font-size: 11px;
+      color: #6b6575;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .lynx-note img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+    }
+
     .hero-panel {
       position: relative;
-      border-radius: 40px 40px 0 0;
-      padding: 24px 20px 20px;
+      border-radius: 46px 46px 0 0;
+      padding: 22px 20px 20px;
       background-image:
-        radial-gradient(circle at top, #ffe2ff 0, #fff7e5 50%, #fff7e5 80%),
-        repeating-radial-gradient(circle at center, #fcb4ff 0, #fcb4ff 4px, #ffe7ff 4px, #ffe7ff 10px);
+        radial-gradient(circle at top, #ffe7ff 0, #fff7e5 58%, #fff7e5 100%),
+        repeating-radial-gradient(circle at center, #f7b5ff 0, #f7b5ff 4px, #ffe7ff 4px, #ffe7ff 10px);
       box-shadow: var(--shadow-soft);
       overflow: hidden;
     }
 
     .hero-panel-inner {
-      border-radius: 28px 28px 0 0;
-      background: rgba(255, 255, 255, 0.85);
-      padding: 16px 16px 18px;
+      border-radius: 32px 32px 0 0;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 18px 16px 16px;
     }
 
-    .hero-panel-textbox {
-      border: 2px solid #111827;
+    .hero-panel-box {
+      border-radius: 14px;
+      border: 2px solid #20192b;
+      background: #ffffff;
       padding: 10px 12px;
-      border-radius: 12px;
-      background: #fff;
       font-size: 12px;
       margin-bottom: 10px;
     }
 
-    .hero-panel-textbox strong {
+    .hero-panel-box strong {
       font-weight: 600;
     }
 
-    .hero-panel-belt {
-      margin-top: 10px;
-      padding-top: 12px;
-      border-top: 1px solid rgba(148, 163, 184, 0.6);
+    .hero-panel-pill-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 7px;
+      margin-top: 10px;
       font-size: 11px;
-      color: #4b5563;
     }
 
     .hero-panel-pill {
-      padding: 4px 10px;
+      padding: 3px 10px;
       border-radius: 999px;
+      border: 1px solid rgba(32, 25, 43, 0.2);
       background: #f9fafb;
-      border: 1px solid rgba(148, 163, 184, 0.7);
+      color: #4b4357;
     }
 
-    /* SECTION GENERIC */
-    .section-header {
-      margin-bottom: 22px;
+    /* WAVY DIVIDER AFTER HERO */
+    .hero-wave {
+      margin-top: 40px;
+      height: 120px;
+      border-radius: 60px 60px 0 0;
+      background-image:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0) 0, #fff7e5 55%),
+        repeating-radial-gradient(circle at center, #f3b7ff 0, #f3b7ff 4px, #ffe7ff 4px, #ffe7ff 12px);
+      mask-image: radial-gradient(circle at top, transparent 0, black 60%);
     }
 
-    .eyebrow {
-      display: inline-flex;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: #111827;
-      color: #f9fafb;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+    /* SECTION 2 – CÍRCULO + 3 CARTÕES */
+
+    .circle-section {
+      position: relative;
+      margin-top: -40px;
     }
 
-    .section-title {
-      margin-top: 10px;
-      font-size: 24px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: #111827;
-    }
-
-    .section-subtitle {
-      margin-top: 8px;
-      max-width: 680px;
-      font-size: 14px;
-      color: #4b5563;
-    }
-
-    /* WHY WE ARE THE BEST – STRIPE OF 7 */
-    .stripe {
-      border-radius: 30px;
-      background: linear-gradient(
-        to right,
-        #fef9c3,
-        #e0f2fe,
-        #fce7f3,
-        #dcfce7
-      );
-      padding: 16px 14px;
+    .circle-shell {
+      border-radius: 50px;
+      background: #fff7e5;
       box-shadow: var(--shadow-soft);
-      overflow-x: auto;
+      padding: 26px 20px 22px;
     }
 
-    .stripe-inner {
+    .circle-top-grid {
       display: grid;
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(220px, 260px);
-      gap: 14px;
-    }
-
-    .stripe-card {
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 18px;
-      border: 1px solid rgba(17, 24, 39, 0.1);
-      padding: 12px 12px 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      font-size: 13px;
-    }
-
-    .stripe-tag {
-      font-size: 11px;
-      font-weight: 600;
-      color: #374151;
-      opacity: 0.9;
-    }
-
-    .stripe-title {
-      font-weight: 600;
-      color: #111827;
-    }
-
-    .stripe-text {
-      font-size: 12px;
-      color: #4b5563;
-    }
-
-    /* WHAT WE DO – 5 CARDS */
-    .grid-2,
-    .grid-3 {
-      display: grid;
-      gap: 18px;
-    }
-
-    .grid-2 {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .grid-3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 22px;
+      align-items: center;
     }
 
     @media (max-width: 900px) {
-      .grid-2,
-      .grid-3 {
+      .circle-top-grid {
         grid-template-columns: minmax(0, 1fr);
       }
     }
 
-    .card {
-      border-radius: var(--radius-xl);
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      background: rgba(255, 255, 255, 0.95);
-      padding: 14px 16px;
-      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    .circle-text-box {
+      border-radius: 18px;
+      border: 2px solid #20192b;
+      background: #fffdf7;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--text-soft);
     }
 
-    .card-tag-row {
+    .circle-text-box strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .circle-visual-wrap {
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 6px;
+      justify-content: center;
     }
 
-    .pill-tag {
-      font-size: 11px;
-      padding: 3px 8px;
+    .circle-main {
+      width: 230px;
+      height: 230px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.8);
-      background: #f9fafb;
-      color: #374151;
+      background-image:
+        radial-gradient(circle at 30% 20%, #ffe5b9, transparent 55%),
+        radial-gradient(circle at 70% 80%, #b4e0ff, transparent 60%),
+        linear-gradient(135deg, #004fb2, #f7b500);
+      position: relative;
+      overflow: hidden;
+      border: 4px solid #fffdf5;
+      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.18);
     }
 
-    .card-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: #111827;
-      margin-bottom: 4px;
+    .circle-main::after {
+      content: "";
+      position: absolute;
+      inset: 12%;
+      border-radius: inherit;
+      background-image:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent),
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.35), transparent 60%);
+      mix-blend-mode: screen;
     }
 
-    .card-lead {
-      font-size: 12px;
-      font-weight: 500;
-      color: #4b0b27;
-      margin-bottom: 6px;
-    }
-
-    .card-text {
-      font-size: 13px;
-      color: #4b5563;
-    }
-
-    /* GLOBAL IMPACT BAND */
-    .impact-band {
-      margin-top: 20px;
-      border-radius: 32px;
-      padding: 24px 20px;
-      background-image: linear-gradient(
-          to bottom,
-          rgba(224, 242, 254, 0.8),
-          rgba(221, 239, 253, 0.9)
-        ),
-        repeating-linear-gradient(
-          135deg,
-          rgba(14, 116, 144, 0.05),
-          rgba(14, 116, 144, 0.05) 4px,
-          transparent 4px,
-          transparent 10px
-        );
-      box-shadow: var(--shadow-soft);
-    }
-
-    .impact-header {
+    .circle-caption {
+      margin-top: 10px;
       text-align: center;
-      margin-bottom: 14px;
+      font-size: 11px;
+      color: var(--text-soft);
     }
 
-    .impact-title {
-      font-size: 22px;
-      font-weight: 600;
-      color: #111827;
-      letter-spacing: -0.02em;
-    }
-
-    .impact-sub {
-      margin-top: 6px;
-      font-size: 13px;
-      color: #374151;
-    }
-
-    .impact-grid {
-      margin-top: 14px;
+    .circle-bottom-grid {
+      margin-top: 22px;
       display: grid;
-      gap: 12px;
-    }
-
-    .impact-row {
-      display: grid;
-      gap: 10px;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
     }
 
     @media (max-width: 900px) {
-      .impact-row {
+      .circle-bottom-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .feature-card {
+      border-radius: 18px;
+      border: 1px solid rgba(32, 25, 43, 0.18);
+      background: #fffef9;
+      padding: 12px 12px 14px;
+      font-size: 13px;
+      color: var(--text-soft);
+      position: relative;
+    }
+
+    .feature-title {
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .feature-label {
+      position: absolute;
+      top: -12px;
+      left: 14px;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #111827;
+      color: #fff7e5;
+    }
+
+    /* SECTION 3 – SAD GLOBAL STATS */
+
+    .sad-stats {
+      margin-top: 70px;
+    }
+
+    .headline-center {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .headline-title {
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 32px;
+      letter-spacing: -0.05em;
+      color: var(--accent-burgundy);
+    }
+
+    .headline-note {
+      margin-top: 6px;
+      font-size: 14px;
+      color: var(--text-soft);
+    }
+
+    .floating-badges-row {
+      margin: 18px auto 18px;
+      max-width: 600px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      font-size: 11px;
+    }
+
+    .floating-badge {
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: #fffdf7;
+      border: 1px solid rgba(32, 25, 43, 0.16);
+    }
+
+    .stats-band {
+      border-radius: 26px;
+      padding: 16px 14px;
+      background: linear-gradient(
+        to right,
+        #ffe4f2,
+        #ffd8ff,
+        #e7f2ff
+      );
+      box-shadow: var(--shadow-soft);
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .stats-row {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
-    .impact-card {
+    .stat-card {
       border-radius: 16px;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.94);
       padding: 10px 12px;
       text-align: center;
-      border: 1px solid rgba(148, 163, 184, 0.7);
+      border: 1px solid rgba(32, 25, 43, 0.18);
     }
 
-    .impact-number {
+    .stat-number {
       font-size: 18px;
       font-weight: 700;
-      color: #111827;
     }
 
-    .impact-label {
-      font-size: 11px;
-      color: #4b5563;
+    .stat-label {
       margin-top: 2px;
+      font-size: 11px;
+      color: var(--text-soft);
     }
 
-    .impact-note {
+    .stats-note {
       margin-top: 10px;
       text-align: right;
       font-size: 11px;
-      color: #374151;
-      opacity: 0.9;
+      color: var(--text-soft);
     }
 
-    /* PROCESSO */
-    .process-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-    }
+    /* CTA SECTION */
 
-    @media (max-width: 900px) {
-      .process-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    .step {
-      border-radius: 18px;
-      border: 1px solid rgba(148, 163, 184, 0.9);
-      background: #ffffff;
-      padding: 12px 14px 14px;
-      position: relative;
-      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
-      font-size: 13px;
-    }
-
-    .step-number {
-      position: absolute;
-      top: 8px;
-      left: 10px;
-      font-size: 11px;
-      font-weight: 600;
-      color: #6b7280;
-    }
-
-    .step-title {
-      margin-top: 20px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #111827;
-      margin-bottom: 6px;
-    }
-
-    .step-text {
-      font-size: 12px;
-      color: #4b5563;
-    }
-
-    /* PROJECTS PLACEHOLDER */
-    .projects-placeholder {
-      border-radius: 26px;
-      border: 2px dashed rgba(148, 163, 184, 0.9);
-      background: rgba(255, 255, 255, 0.85);
-      padding: 18px 16px;
-      font-size: 13px;
-      color: #4b5563;
-    }
-
-    /* TESTIMONIALS PLACEHOLDER */
-    .testimonials {
-      border-radius: 26px;
-      border: 1px solid rgba(148, 163, 184, 0.8);
-      background: linear-gradient(
-        135deg,
-        rgba(252, 231, 243, 0.85),
-        rgba(219, 234, 254, 0.9)
-      );
+    .cta-band {
+      margin-top: 28px;
+      border-radius: 30px;
+      border: 1px solid rgba(32, 25, 43, 0.14);
+      background: #111827;
+      color: #f9fafb;
       padding: 18px 18px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
       box-shadow: var(--shadow-soft);
-      font-size: 13px;
-      color: #4b5563;
     }
 
-    /* YOUTHREACH */
-    .youthreach-grid {
-      display: grid;
-      gap: 18px;
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr);
-    }
-
-    @media (max-width: 900px) {
-      .youthreach-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    .youthreach-list {
-      margin-top: 10px;
-      font-size: 13px;
-      color: #4b5563;
-    }
-
-    .youthreach-list li {
+    .cta-text h3 {
+      font-size: 18px;
+      letter-spacing: -0.02em;
       margin-bottom: 4px;
     }
 
-    .youthreach-side {
-      border-radius: var(--radius-xl);
-      border: 1px solid rgba(148, 163, 184, 0.9);
-      background: #ffffff;
-      padding: 14px 16px;
-      font-size: 12px;
-      color: #4b5563;
-      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    .cta-text p {
+      font-size: 13px;
+      color: #e5e7eb;
+      max-width: 520px;
     }
 
-    .btn-outline-dark {
+    .cta-button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 9px 16px;
+      padding: 10px 18px;
       border-radius: 999px;
-      border: 1px solid #111827;
-      background: #fff;
-      font-size: 13px;
-      font-weight: 600;
-      margin-top: 12px;
-      cursor: pointer;
-    }
-
-    .btn-outline-dark:hover {
-      background: #111827;
-      color: white;
-    }
-
-    /* ABOUT / JOIN */
-    .about-grid {
-      display: grid;
-      gap: 18px;
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr);
-    }
-
-    @media (max-width: 900px) {
-      .about-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    .about-text-block {
-      border-radius: 24px;
-      border: 1px solid rgba(148, 163, 184, 0.8);
-      background: rgba(255, 255, 255, 0.96);
-      padding: 16px 16px 18px;
-      font-size: 13px;
-      color: #4b5563;
-      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
-    }
-
-    .about-text-block p + p {
-      margin-top: 10px;
-    }
-
-    .join-card {
-      border-radius: 24px;
-      border: 1px solid rgba(148, 163, 184, 0.8);
-      background: #111827;
-      color: #f9fafb;
-      padding: 16px 16px 18px;
-      font-size: 13px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .join-title {
-      font-size: 17px;
-      font-weight: 600;
-    }
-
-    .join-pill {
-      display: inline-flex;
-      padding: 4px 10px;
-      border-radius: 999px;
+      border: 1px solid #facc15;
       background: #facc15;
       color: #111827;
-      font-size: 11px;
-      font-weight: 600;
-      align-self: flex-start;
-    }
-
-    .join-btn {
-      margin-top: 4px;
-      align-self: flex-start;
-      padding: 9px 16px;
-      border-radius: 999px;
-      border: 1px solid #f9fafb;
-      background: #f9fafb;
-      color: #111827;
       font-size: 13px;
       font-weight: 600;
-      cursor: pointer;
     }
 
-    .join-btn:hover {
-      background: #e5e7eb;
+    .cta-button:hover {
+      filter: brightness(1.05);
     }
 
     /* FOOTER */
+
     footer {
-      border-top: 1px solid rgba(148, 163, 184, 0.6);
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
       padding-top: 14px;
-      margin-top: 10px;
+      margin-top: 40px;
       font-size: 11px;
-      color: #6b7280;
+      color: #6b6575;
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px;
     }
 
     footer span.brand {
       font-weight: 600;
-      color: #111827;
+      color: #1f2933;
     }
   </style>
 </head>
 <body>
   <header>
     <div class="nav-inner">
-      <div class="logo-wrap">
-        <div class="logo-mark">AE</div>
-        <div>
-          <div class="logo-main">ActivEU</div>
-          <div class="logo-sub lang-pt">Solidarity Action Day em Portugal</div>
-          <div class="logo-sub lang-en">Solidarity Action Day in Portugal</div>
+      <div class="nav-left">
+        <div class="logo-main">
+          <!-- coloca aqui activ-eu-logo.png -->
+          <img src="activ-eu-logo.png" alt="ActivEU" />
+        </div>
+        <div class="logo-text">
+          Solidarity Action Day · Portugal
         </div>
       </div>
 
       <nav class="nav-links">
-        <a href="#hero">
-          <span class="lang-pt">Início</span><span class="lang-en">Home</span>
-        </a>
-        <a href="#why">
-          <span class="lang-pt">Porquê</span><span class="lang-en">Why</span>
-        </a>
-        <a href="#what">
-          <span class="lang-pt">O que fazemos</span><span class="lang-en">What we do</span>
-        </a>
-        <a href="#impact">
-          <span class="lang-pt">Impacto</span><span class="lang-en">Impact</span>
-        </a>
-        <a href="#connect">
-          <span class="lang-pt">ActivEU Connect</span><span class="lang-en">ActivEU Connect</span>
-        </a>
-        <a href="#youthreach">
-          <span class="lang-pt">Serviços</span><span class="lang-en">Services</span>
-        </a>
-        <a href="#about">
-          <span class="lang-pt">Sobre</span><span class="lang-en">About</span>
-        </a>
+        <a href="#hero">Início</a>
+        <a href="#connect">ActivEU Connect</a>
+        <a href="#sad">Solidarity Action Day</a>
+        <a href="#contact">Junta-te</a>
       </nav>
 
-      <div class="nav-actions">
-        <button id="lang-toggle" class="lang-toggle" type="button">
-          <span id="lang-toggle-label">PT</span>/<span>EN</span>
-        </button>
-        <a href="#contact" class="nav-cta">
-          <span class="lang-pt">Junta-te ao Movimento</span>
-          <span class="lang-en">Join the Movement</span>
-        </a>
+      <div class="nav-right">
+        <a href="#contact" class="menu-pill">Menu</a>
       </div>
     </div>
   </header>
@@ -907,952 +751,194 @@
     <section id="hero" class="hero">
       <div class="hero-grid">
         <div>
-          <div class="hero-badges">
-            <div class="hero-badge">
-              <span class="hero-badge-dot"></span>
-              <span class="lang-pt">Jovem, séria e solidária</span>
-              <span class="lang-en">Youth-led, serious and solidarity-driven</span>
-            </div>
-            <div class="hero-badge">
-              <span class="lang-pt">Em rede com a Europa</span>
-              <span class="lang-en">Connected with Europe</span>
-            </div>
+          <div class="hero-top-note">
+            ActivEU · Associação jovem europeia · Portugal
           </div>
+
           <div class="hero-word">ActivEU</div>
+
           <p class="hero-subline">
-            <span class="lang-pt">Uma ideia simples. Um impacto gigantesco.</span>
-            <span class="lang-en">One simple idea. A huge impact.</span>
+            Your day. Your action. Your impact.
           </p>
+
           <p class="hero-tagline">
-            <span class="lang-pt">
-              Um dia em que trocas as aulas por experiência real, ganhas competências
-              e o valor é doado a causas solidárias. O teu dia. A tua ação. O teu impacto.
-            </span>
-            <span class="lang-en">
-              One day where you swap classes for real-world experience, gain skills and
-              the value generated goes to social causes. Your day. Your action. Your impact.
-            </span>
+            Em vez de um dia “normal” de aulas, vives uma experiência real em contexto profissional, ganhas competências
+            e o valor é doado a causas solidárias. O Solidarity Action Day chega a Portugal com rosto, rigor e ambição.
           </p>
 
-          <div class="hero-actions-row">
-            <a href="#contact" class="btn-solid">
-              <span class="lang-pt">Junta-te ao Movimento</span>
-              <span class="lang-en">Join the Movement</span>
-            </a>
-            <a href="#connect" class="btn-ghost">
-              <span class="lang-pt">Sabe como funciona</span>
-              <span class="lang-en">See how it works</span>
-            </a>
+          <div class="hero-actions">
+            <a href="#contact" class="btn-primary">Junta-te ao Movimento</a>
+            <a href="#connect" class="btn-outline">Percebe como funciona</a>
           </div>
+
           <p class="hero-mini">
-            <span class="lang-pt">Criado por jovens em Portugal, inspirado pelo modelo europeu Solidarity Action Day.</span>
-            <span class="lang-en">Created by young people in Portugal, inspired by the European Solidarity Action Day model.</span>
+            Jovens, empresas e causas ligadas por um modelo simples: um dia de trabalho solidário, impacto real para todos.
           </p>
         </div>
 
-        <div class="hero-panel">
-          <div class="hero-panel-inner">
-            <div class="hero-panel-textbox">
-              <span class="lang-pt">
-                <strong>A plataforma ActivEU Connect</strong> utiliza um algoritmo
-                meritocrático que liga-te a empresas e causas de forma justa e
-                transparente, criando oportunidades reais de desenvolvimento para todos.
-              </span>
-              <span class="lang-en">
-                <strong>The ActivEU Connect platform</strong> uses a merit-based
-                algorithm that matches you with organisations and causes in a fair, transparent
-                way, creating real development opportunities for everyone.
-              </span>
-            </div>
-
-            <div class="hero-panel-textbox">
-              <span class="lang-pt">
-                O valor que a empresa paga pelo teu dia é <strong>doado integralmente</strong>
-                a causas solidárias verificadas. Tu ganhas experiência e certificação,
-                as causas ganham força para continuar o seu trabalho essencial.
-              </span>
-              <span class="lang-en">
-                The amount the host organisation pays for your day is <strong>fully donated</strong>
-                to verified social causes. You gain experience and certification,
-                while those causes gain strength to keep doing essential work.
-              </span>
-            </div>
-
-            <div class="hero-panel-belt">
-              <div class="hero-panel-pill">
-                <span class="lang-pt">Experiência com impacto</span>
-                <span class="lang-en">Experience with impact</span>
+        <div class="hero-right">
+          <div class="lynx-note">
+            <!-- logo secundário lince -->
+            <img src="lynx-logo.png" alt="Símbolo do lince ActivEU" />
+            <span>Símbolo secundário com o lince europeu</span>
+          </div>
+          <div class="hero-panel">
+            <div class="hero-panel-inner">
+              <div class="hero-panel-box">
+                <strong>A plataforma ActivEU Connect</strong> usa um algoritmo meritocrático para te ligar a empresas e causas
+                de forma justa e transparente, criando oportunidades reais de desenvolvimento para todos.
               </div>
-              <div class="hero-panel-pill">
-                <span class="lang-pt">Matching inteligente</span>
-                <span class="lang-en">Smart matching</span>
+              <div class="hero-panel-box">
+                O valor pago pela entidade de acolhimento é
+                <strong>doado integralmente</strong> a causas solidárias verificadas. Tu ganhas experiência e certificação;
+                as causas ganham força para continuar o seu trabalho.
               </div>
-              <div class="hero-panel-pill">
-                <span class="lang-pt">Resultados que permanecem</span>
-                <span class="lang-en">Results that last</span>
+
+              <div class="hero-panel-pill-row">
+                <span class="hero-panel-pill">Experiência com impacto</span>
+                <span class="hero-panel-pill">Matching inteligente</span>
+                <span class="hero-panel-pill">Resultados que permanecem</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- floating stickers -->
-        <div class="hero-sticker top-left mint">
-          <span class="lang-pt">Jovem</span><span class="lang-en">Youth</span>
+        <!-- stickers à volta da palavra principal -->
+        <div class="hero-sticker green top-left">Jovem</div>
+        <div class="hero-sticker left">Solidária</div>
+        <div class="hero-sticker blue right">Europeia</div>
+        <div class="hero-sticker top-right">Uma iniciativa europeia</div>
+        <div class="hero-sticker bottom">Junta-te ao Movimento</div>
+      </div>
+
+      <div class="hero-wave"></div>
+    </section>
+
+    <!-- CÍRCULO + 3 CARTÕES -->
+    <section id="connect" class="circle-section">
+      <div class="circle-shell">
+        <div class="circle-top-grid">
+          <div>
+            <div class="eyebrow">ActivEU Connect</div>
+            <h2 class="section-title">
+              A tecnologia que faz o Solidarity Action Day acontecer.
+            </h2>
+            <p class="section-subtitle">
+              Não é apenas um formulário ou uma base de dados. É uma infraestrutura pensada para ser justa, segura e
+              simples para todos os lados: estudantes, entidades e causas.
+            </p>
+
+            <div class="circle-text-box" style="margin-top: 12px;">
+              <strong>Como funciona:</strong> tu registas-te, escolhes oportunidades, e o algoritmo da ActivEU Connect
+              avalia compatibilidades com base em mérito, motivações e critérios claros. Sem favoritismos, sem “atalhos”.
+              A empresa vê os perfis mais alinhados, confirma a participação, e o teu dia passa a valer muito mais.
+            </div>
+          </div>
+
+          <div class="circle-visual-wrap">
+            <div>
+              <div class="circle-main"></div>
+              <p class="circle-caption">
+                Um modelo europeu, agora com toque português: rigor, transparência e muito coração.
+              </p>
+            </div>
+          </div>
         </div>
-        <div class="hero-sticker left">
-          <span class="lang-pt">Solidária</span><span class="lang-en">Solidarity</span>
-        </div>
-        <div class="hero-sticker right mint">
-          <span class="lang-pt">Europeia</span><span class="lang-en">European</span>
-        </div>
-        <div class="hero-sticker top-right blue">
-          <span class="lang-pt">O teu dia. A tua ação.</span>
-          <span class="lang-en">Your day. Your action.</span>
+
+        <div class="circle-bottom-grid" style="margin-top: 26px;">
+          <article class="feature-card">
+            <div class="feature-label">Experiência com Impacto</div>
+            <div class="feature-title">Aprende em contexto real</div>
+            <p>
+              Aprendes em contexto profissional, desenvolves competências e transformas conhecimento em ação solidária.
+              Deixas de ouvir “falta-te experiência” e começas a construí-la, com propósito.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-label">Matching Inteligente</div>
+            <div class="feature-title">O lugar certo para ti</div>
+            <p>
+              O algoritmo garante que apenas oportunidades realmente compatíveis aparecem no topo. A empresa vê primeiro
+              quem faz mais sentido para a função, e tu vais para um sítio onde fazes a diferença.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-label">Resultados que Permanecem</div>
+            <div class="feature-title">Impacto que não acaba no fim do dia</div>
+            <p>
+              O valor é doado a causas solidárias que mudam o mundo, enquanto mostras o teu potencial e ganhas competências
+              certificadas. Um dia que se transforma em muitos outros.
+            </p>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- WHY WE ARE THE BEST -->
-    <section id="why">
-      <div class="section-header">
-        <div class="eyebrow">
-          <span class="lang-pt">Porquê o Solidarity Action Day</span>
-          <span class="lang-en">Why Solidarity Action Day</span>
-        </div>
-        <h2 class="section-title">
-          <span class="lang-pt">Uma ideia simples. Um impacto gigantesco.</span>
-          <span class="lang-en">One simple idea. A huge impact.</span>
-        </h2>
-        <p class="section-subtitle">
-          <span class="lang-pt">
-            Quando um dia de aulas se transforma em solidariedade, todos ganham:
-            jovens, empresas, causas e comunidades. O Solidarity Action Day cria
-            um círculo virtuoso em que cada participação conta.
-          </span>
-          <span class="lang-en">
-            When one school day turns into solidarity, everyone wins: young people,
-            organisations, causes and communities. Solidarity Action Day builds
-            a virtuous circle where every participation counts.
-          </span>
+    <!-- SAD GLOBAL STATS -->
+    <section id="sad" class="sad-stats">
+      <div class="headline-center">
+        <h2 class="headline-title">Solidarity Action Day</h2>
+        <p class="headline-note">
+          Um modelo europeu que mobiliza milhares de jovens todos os anos. Agora, com sotaque português.
         </p>
       </div>
 
-      <div class="stripe">
-        <div class="stripe-inner">
-          <article class="stripe-card">
-            <div class="stripe-tag">1</div>
-            <div class="stripe-title">
-              <span class="lang-pt">Jovens que transformam o seu futuro (e o dos outros)</span>
-              <span class="lang-en">Young people transforming their future (and others’)</span>
-            </div>
-            <p class="stripe-text">
-              <span class="lang-pt">
-                Vives um dia em contexto profissional, descobres o que gostas,
-                ganhas experiência e tomas decisões mais conscientes sobre o teu
-                percurso. Tudo isto enquanto fazes a diferença.
-              </span>
-              <span class="lang-en">
-                You spend a day in a real workplace, discover what you like,
-                gain experience and make more conscious decisions about your path –
-                while making a difference.
-              </span>
-            </p>
-          </article>
-
-          <article class="stripe-card">
-            <div class="stripe-tag">2</div>
-            <div class="stripe-title">
-              <span class="lang-pt">Empresas que descobrem talento com propósito</span>
-              <span class="lang-en">Organisations discovering purpose-driven talent</span>
-            </div>
-            <p class="stripe-text">
-              <span class="lang-pt">
-                As empresas acolhem jovens motivados, testam compatibilidade,
-                fortalecem a sua reputação social e descobrem futuros
-                colaboradores numa iniciativa com impacto humano e comunitário.
-              </span>
-              <span class="lang-en">
-                Organisations welcome motivated young people, test compatibility,
-                strengthen their social reputation and discover future collaborators
-                in an initiative with human and community impact.
-              </span>
-            </p>
-          </article>
-
-          <article class="stripe-card">
-            <div class="stripe-tag">3</div>
-            <div class="stripe-title">
-              <span class="lang-pt">Causas que continuam o seu trabalho essencial</span>
-              <span class="lang-en">Causes that keep doing essential work</span>
-            </div>
-            <p class="stripe-text">
-              <span class="lang-pt">
-                O valor angariado é doado a causas solidárias verificadas,
-                ajudando instituições a manter e a fazer crescer projetos que
-                mudam vidas todos os dias.
-              </span>
-              <span class="lang-en">
-                The funds raised are donated to verified social causes,
-                helping organisations sustain and grow projects that change lives every day.
-              </span>
-            </p>
-          </article>
-
-          <article class="stripe-card">
-            <div class="stripe-tag">4</div>
-            <div class="stripe-title">
-              <span class="lang-pt">Um dia que transforma percursos</span>
-              <span class="lang-en">One day that can change your path</span>
-            </div>
-            <p class="stripe-text">
-              <span class="lang-pt">
-                Para uns é o primeiro contacto com o mundo do trabalho.
-                Para outros, o momento em que descobrem a sua vocação.
-                Para todos, uma experiência que marca.
-              </span>
-              <span class="lang-en">
-                For some it’s their first contact with the world of work.
-                For others, the moment they discover a vocation.
-                For everyone, it’s a day they remember.
-              </span>
-            </p>
-          </article>
-
-          <article class="stripe-card">
-            <div class="stripe-tag">5</div>
-            <div class="stripe-title">
-              <span class="lang-pt">Impacto mensurável, transparente e partilhado</span>
-              <span class="lang-en">Measurable, transparent, shared impact</span>
-            </div>
-            <p class="stripe-text">
-              <span class="lang-pt">
-                Cada ação é acompanhada de dados tangíveis: quanto se angariou,
-                quem se ajudou, o que se aprendeu. Solidariedade com métricas,
-                responsabilidade e verdade.
-              </span>
-              <span class="lang-en">
-                Every action comes with tangible data: how much was raised,
-                who was helped, what was learned. Solidarity with metrics,
-                responsibility and honesty.
-              </span>
-            </p>
-          </article>
-
-          <article class="stripe-card">
-            <div class="stripe-tag">6</div>
-            <div class="stripe-title">
-              <span class="lang-pt">O Solidarity Action Day chega a Portugal (e ainda melhor!)</span>
-              <span class="lang-en">Solidarity Action Day comes to Portugal (even stronger)</span>
-            </div>
-            <p class="stripe-text">
-              <span class="lang-pt">
-                A versão portuguesa nasce aqui: mais ambiciosa, inovadora e
-                impactante do que nunca. Um modelo que une tecnologia,
-                solidariedade e juventude para criar impacto real em todo o país.
-              </span>
-              <span class="lang-en">
-                The Portuguese version starts here: more ambitious, innovative
-                and impactful than ever. A model that combines technology,
-                solidarity and youth to create real impact across the country.
-              </span>
-            </p>
-          </article>
-
-          <article class="stripe-card">
-            <div class="stripe-tag">7</div>
-            <div class="stripe-title">
-              <span class="lang-pt">Quando todos ganham, o mundo muda</span>
-              <span class="lang-en">When everyone gains, the world changes</span>
-            </div>
-            <p class="stripe-text">
-              <span class="lang-pt">
-                Jovens, empresas e causas unem-se num círculo virtuoso de impacto.
-                É por isso que o Solidarity Action Day é mais do que uma
-                iniciativa: é um novo modelo de cooperação social.
-              </span>
-              <span class="lang-en">
-                Young people, organisations and causes come together in a
-                virtuous circle of impact. That’s why Solidarity Action Day
-                is more than a project – it’s a new model of social cooperation.
-              </span>
-            </p>
-          </article>
-        </div>
+      <div class="floating-badges-row">
+        <span class="floating-badge">Uma iniciativa europeia, agora com um toque português</span>
+        <span class="floating-badge">Solidariedade, mérito e futuro</span>
+        <span class="floating-badge">Jovens, empresas e causas do mesmo lado</span>
       </div>
-    </section>
 
-    <!-- WHAT WE DO -->
-    <section id="what">
-      <div class="section-header">
-        <div class="eyebrow">
-          <span class="lang-pt">O que fazemos (e fazemos com impacto)</span>
-          <span class="lang-en">What we do (and do with impact)</span>
+      <div class="stats-band">
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-number">4M€+</div>
+            <div class="stat-label">angariados para causas solidárias</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">300k+</div>
+            <div class="stat-label">jovens envolvidos todos os anos</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">10+</div>
+            <div class="stat-label">países europeus participantes</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">60+</div>
+            <div class="stat-label">projetos apoiados anualmente</div>
+          </div>
         </div>
-        <h2 class="section-title">
-          <span class="lang-pt">ActivEU é mais do que um dia.</span>
-          <span class="lang-en">ActivEU is more than one day.</span>
-        </h2>
-        <p class="section-subtitle">
-          <span class="lang-pt">
-            O Solidarity Action Day é o coração do projeto, mas o trabalho não
-            começa nem acaba aí. Construímos um ecossistema que liga educação,
-            voluntariado, bem-estar e cooperação europeia.
-          </span>
-          <span class="lang-en">
-            Solidarity Action Day is the heart of the project, but our work does
-            not start or end there. We build an ecosystem connecting education,
-            volunteering, well-being and European cooperation.
-          </span>
+
+        <p class="stats-note">
+          Dados globais da iniciativa Solidarity Action Day (movimento europeu SAME).
         </p>
       </div>
 
-      <div class="grid-2">
-        <!-- 1. ActivEU Connect/SAD -->
-        <article class="card" id="connect-top">
-          <div class="card-tag-row">
-            <span class="pill-tag">Solidarity Action Day</span>
-            <span class="pill-tag">Plataforma digital</span>
-            <span class="pill-tag lang-en">Digital platform</span>
-          </div>
-          <h3 class="card-title">
-            <span class="lang-pt">ActivEU Connect: Solidarity Action Day em Portugal</span>
-            <span class="lang-en">ActivEU Connect: Solidarity Action Day in Portugal</span>
-          </h3>
-          <p class="card-lead">
-            <span class="lang-pt">Tecnologia, inovação, solidariedade e educação a trabalhar em conjunto.</span>
-            <span class="lang-en">Technology, innovation, solidarity and education working together.</span>
-          </p>
-          <p class="card-text">
-            <span class="lang-pt">
-              A ActivEU Connect é a plataforma que implementa o modelo europeu
-              Solidarity Action Day em Portugal. Através desta ferramenta digital,
-              os jovens têm uma experiência de voluntariado estruturado em
-              ambiente profissional. As empresas acolhem participantes e fazem
-              uma contribuição simbólica, doada integralmente a causas sociais
-              verificadas. Cada jovem recebe certificados e relatórios de
-              impacto, refletindo competências desenvolvidas e o impacto criado.
-              A ActivEU Connect garante justiça, segurança e transparência em
-              todo o processo, unindo juventude, setores público e privado e
-              causas num só gesto de solidariedade ativa.
-            </span>
-            <span class="lang-en">
-              ActivEU Connect is the platform that implements the European
-              Solidarity Action Day model in Portugal. Through this digital
-              tool, young people have a structured volunteering experience in a
-              professional environment. Organisations host participants and make
-              a symbolic contribution, fully donated to verified social causes.
-              Each young person receives certificates and impact reports,
-              reflecting the skills developed and the impact created. ActivEU
-              Connect guarantees fairness, safety and transparency throughout
-              the process, bringing together youth, public and private sectors
-              and causes in one active gesture of solidarity.
-            </span>
-          </p>
-        </article>
-
-        <!-- 2. Educação e Formação -->
-        <article class="card">
-          <div class="card-tag-row">
-            <span class="pill-tag lang-pt">Cidadania europeia</span>
-            <span class="pill-tag lang-pt">Educação</span>
-            <span class="pill-tag lang-pt">Competências transversais</span>
-            <span class="pill-tag lang-en">European citizenship</span>
-            <span class="pill-tag lang-en">Education</span>
-          </div>
-          <h3 class="card-title">
-            <span class="lang-pt">Educação e Formação Juvenil</span>
-            <span class="lang-en">Youth Education and Training</span>
-          </h3>
-          <p class="card-lead">
-            <span class="lang-pt">Capacitar jovens para agir com consciência, competência e liderança.</span>
-            <span class="lang-en">Equipping young people to act with awareness, competence and leadership.</span>
-          </p>
-          <p class="card-text">
-            <span class="lang-pt">
-              A ActivEU promove momentos de aprendizagem e reflexão que vão além
-              da experiência prática do Solidarity Action Day. Organizamos
-              formações, palestras, workshops e debates sobre cidadania, ética
-              profissional, direitos humanos, democracia europeia e
-              sustentabilidade. Integramos também apoio psicológico e programas
-              de bem-estar juvenil, com abordagens expressivas, artísticas e de
-              contacto com a natureza. Cada atividade procura despertar uma
-              geração capaz de conjugar ambição pessoal com compromisso social.
-            </span>
-            <span class="lang-en">
-              ActivEU promotes learning and reflection that go beyond the
-              practical experience of Solidarity Action Day. We organise
-              training sessions, talks, workshops and debates on citizenship,
-              professional ethics, human rights, European democracy and
-              sustainability. We also integrate psychological support and youth
-              well-being programmes, with expressive, artistic and nature-based
-              approaches. Every activity aims to nurture a generation that
-              combines personal ambition with social commitment.
-            </span>
-          </p>
-        </article>
-
-        <!-- 3. Ação Comunitária -->
-        <article class="card">
-          <div class="card-tag-row">
-            <span class="pill-tag lang-pt">Voluntariado local</span>
-            <span class="pill-tag lang-pt">Cultura e tradições</span>
-            <span class="pill-tag lang-pt">Solidariedade intergeracional</span>
-            <span class="pill-tag lang-en">Local volunteering</span>
-            <span class="pill-tag lang-en">Culture & traditions</span>
-          </div>
-          <h3 class="card-title">
-            <span class="lang-pt">Ação Comunitária e Encontro Intergeracional</span>
-            <span class="lang-en">Community Action & Intergenerational Encounter</span>
-          </h3>
-          <p class="card-lead">
-            <span class="lang-pt">Iniciativas que aproximam gerações, celebram tradições e fortalecem o sentido de pertença.</span>
-            <span class="lang-en">Initiatives that connect generations, celebrate traditions and strengthen belonging.</span>
-          </p>
-          <p class="card-text">
-            <span class="lang-pt">
-              A ActivEU atua no terreno com projetos que valorizam o contacto
-              humano e a identidade cultural. Organizamos encontros
-              intergeracionais, atividades culturais inclusivas e eventos
-              comunitários que promovem empatia, cooperação e solidariedade
-              local. Estas iniciativas reforçam a coesão social e mostram que a
-              solidariedade também se aprende ao ouvir, cuidar e partilhar.
-            </span>
-            <span class="lang-en">
-              ActivEU works on the ground with projects that value human contact
-              and cultural identity. We organise intergenerational meetings,
-              inclusive cultural activities and community events that foster
-              empathy, cooperation and local solidarity. These initiatives
-              strengthen social cohesion and show that solidarity is also
-              learned by listening, caring and sharing.
-            </span>
-          </p>
-        </article>
-
-        <!-- 4. Sustentabilidade -->
-        <article class="card">
-          <div class="card-tag-row">
-            <span class="pill-tag lang-pt">Avaliação de impacto</span>
-            <span class="pill-tag lang-pt">Relatórios e auditoria</span>
-            <span class="pill-tag lang-pt">Responsabilidade ambiental</span>
-            <span class="pill-tag lang-en">Impact evaluation</span>
-            <span class="pill-tag lang-en">Reporting & audits</span>
-          </div>
-          <h3 class="card-title">
-            <span class="lang-pt">Sustentabilidade e Impacto Social</span>
-            <span class="lang-en">Sustainability and Social Impact</span>
-          </h3>
-          <p class="card-lead">
-            <span class="lang-pt">Transparência, responsabilidade e compromisso com resultados mensuráveis.</span>
-            <span class="lang-en">Transparency, responsibility and commitment to measurable results.</span>
-          </p>
-          <p class="card-text">
-            <span class="lang-pt">
-              A ActivEU pauta-se por uma gestão rigorosa, transparente e
-              orientada para o impacto positivo. Todas as atividades são
-              acompanhadas por indicadores sociais, educativos e ambientais,
-              com auditorias externas periódicas. Promovemos práticas de
-              sustentabilidade ecológica em todas as dimensões, reduzindo
-              desperdício e incentivando escolhas responsáveis. Parceiros,
-              empresas e jovens podem consultar relatórios detalhados, com
-              confiança e credibilidade.
-            </span>
-            <span class="lang-en">
-              ActivEU follows rigorous, transparent management focused on
-              positive impact. All activities are monitored with social,
-              educational and environmental indicators, and we work with
-              periodic external audits. We promote ecological sustainability in
-              all dimensions, reducing waste and encouraging responsible
-              choices. Partners, organisations and young people can access
-              detailed reports, with trust and credibility.
-            </span>
-          </p>
-        </article>
-
-        <!-- 5. Parcerias -->
-        <article class="card">
-          <div class="card-tag-row">
-            <span class="pill-tag">SAME Network</span>
-            <span class="pill-tag lang-pt">Municípios, escolas, universidades</span>
-            <span class="pill-tag lang-en">Municipalities, schools, universities</span>
-          </div>
-          <h3 class="card-title">
-            <span class="lang-pt">Parcerias e Cooperação Europeia</span>
-            <span class="lang-en">Partnerships & European Cooperation</span>
-          </h3>
-          <p class="card-lead">
-            <span class="lang-pt">Trabalhamos em rede para multiplicar impacto, em Portugal e na Europa.</span>
-            <span class="lang-en">We work in networks to multiply impact in Portugal and across Europe.</span>
-          </p>
-          <p class="card-text">
-            <span class="lang-pt">
-              A ActivEU integra o movimento europeu Solidarity Action Day,
-              coordenado pela SAME Network. Em Portugal, colaboramos com
-              municípios, escolas, universidades, empresas e fundações para
-              adaptar continuamente o modelo ao contexto nacional. Participamos
-              em fóruns e estruturas de decisão juvenil, porque acreditamos que
-              a juventude deve estar no centro das decisões e da ação.
-            </span>
-            <span class="lang-en">
-              ActivEU is part of the European Solidarity Action Day movement,
-              coordinated by the SAME Network. In Portugal we work with
-              municipalities, schools, universities, companies and foundations
-              to adapt the model to the national context. We also participate in
-              youth decision-making spaces, because young people should be at
-              the centre of decisions and action.
-            </span>
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <!-- GLOBAL SAD STATS -->
-    <section id="impact">
-      <div class="impact-band">
-        <div class="impact-header">
-          <h2 class="impact-title">
-            <span class="lang-pt">Solidarity Action Day: impacto global do movimento</span>
-            <span class="lang-en">Solidarity Action Day: global impact of the movement</span>
-          </h2>
-          <p class="impact-sub">
-            <span class="lang-pt">
-              Muito antes de chegar a Portugal, o Solidarity Action Day já
-              mostrava o que acontece quando milhares de jovens, empresas e
-              causas se juntam em torno da mesma ideia.
-            </span>
-            <span class="lang-en">
-              Long before reaching Portugal, Solidarity Action Day was already
-              showing what happens when thousands of young people, organisations
-              and causes rally around the same idea.
-            </span>
-          </p>
-        </div>
-
-        <div class="impact-grid">
-          <div class="impact-row">
-            <div class="impact-card">
-              <div class="impact-number">4M€+</div>
-              <div class="impact-label">
-                <span class="lang-pt">angariados para causas solidárias</span>
-                <span class="lang-en">raised for social causes</span>
-              </div>
-            </div>
-            <div class="impact-card">
-              <div class="impact-number">300k+</div>
-              <div class="impact-label">
-                <span class="lang-pt">jovens por ano</span>
-                <span class="lang-en">young people each year</span>
-              </div>
-            </div>
-            <div class="impact-card">
-              <div class="impact-number">10+</div>
-              <div class="impact-label">
-                <span class="lang-pt">países europeus envolvidos</span>
-                <span class="lang-en">European countries involved</span>
-              </div>
-            </div>
-            <div class="impact-card">
-              <div class="impact-number">60+</div>
-              <div class="impact-label">
-                <span class="lang-pt">projetos apoiados anualmente</span>
-                <span class="lang-en">projects supported each year</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <p class="impact-note">
-          <span class="lang-pt">Dados globais da iniciativa Solidarity Action Day.</span>
-          <span class="lang-en">Global figures from the Solidarity Action Day initiative.</span>
-        </p>
-      </div>
-    </section>
-
-    <!-- ACTIVEU CONNECT PROCESS -->
-    <section id="connect">
-      <div class="section-header">
-        <div class="eyebrow">
-          <span class="lang-pt">ActivEU Connect</span>
-          <span class="lang-en">ActivEU Connect</span>
-        </div>
-        <h2 class="section-title">
-          <span class="lang-pt">O processo que torna tudo isto possível.</span>
-          <span class="lang-en">The process that makes it all work.</span>
-        </h2>
-        <p class="section-subtitle">
-          <span class="lang-pt">
-            Pensámos cada passo para ser justo, rápido e seguro. Do registo ao
-            certificado final, o foco é simples: valor real para ti, para a
-            empresa e para a causa que escolhes.
-          </span>
-          <span class="lang-en">
-            Every step is designed to be fair, fast and safe. From sign-up to
-            final certificate, the focus is simple: real value for you, for the
-            host organisation and for the cause you choose.
-          </span>
-        </p>
-      </div>
-
-      <div class="process-grid">
-        <article class="step">
-          <div class="step-number">01</div>
-          <h3 class="step-title">
-            <span class="lang-pt">Regista-te</span>
-            <span class="lang-en">Sign up</span>
-          </h3>
-          <p class="step-text">
-            <span class="lang-pt">
-              Criar conta demora menos de dois minutos. Carregas uma prova
-              académica simples (declaração ou certificado) e ficas pronto a
-              participar. A plataforma valida e ativa o teu perfil com
-              segurança.
-            </span>
-            <span class="lang-en">
-              Creating an account takes less than two minutes. You upload a
-              simple academic proof (statement or certificate) and you are ready
-              to join. The platform validates and activates your profile safely.
-            </span>
-          </p>
-        </article>
-
-        <article class="step">
-          <div class="step-number">02</div>
-          <h3 class="step-title">
-            <span class="lang-pt">Candidata-te e destaca-te</span>
-            <span class="lang-en">Apply and stand out</span>
-          </h3>
-          <p class="step-text">
-            <span class="lang-pt">
-              Exploras oportunidades e candidatas-te às que te interessam. A
-              partir daí, o nosso algoritmo analisa a compatibilidade de forma
-              meritocrática: sem foto, sem nome, sem idade. Só aquilo que
-              realmente importa.
-            </span>
-            <span class="lang-en">
-              You explore opportunities and apply to the ones that interest you.
-              From there, our algorithm analyses compatibility in a merit-based
-              way: no photo, no name, no age. Only what truly matters.
-            </span>
-          </p>
-        </article>
-
-        <article class="step">
-          <div class="step-number">03</div>
-          <h3 class="step-title">
-            <span class="lang-pt">Participa e cria valor real</span>
-            <span class="lang-en">Participate and create real value</span>
-          </h3>
-          <p class="step-text">
-            <span class="lang-pt">
-              No dia da ação, ganhas experiência prática e contribuis
-              diretamente para uma causa que escolheste. Mostras o que sabes
-              fazer, entras em contacto com o mercado de trabalho e ficas com
-              uma experiência autêntica para acrescentar ao teu CV, validada e
-              certificada.
-            </span>
-            <span class="lang-en">
-              On the action day you gain practical experience and contribute
-              directly to a cause you chose. You show what you can do, meet the
-              world of work and gain an authentic, validated and certified
-              experience for your CV.
-            </span>
-          </p>
-        </article>
-
-        <article class="step">
-          <div class="step-number">04</div>
-          <h3 class="step-title">
-            <span class="lang-pt">Vê o impacto e avança</span>
-            <span class="lang-en">See the impact and move forward</span>
-          </h3>
-          <p class="step-text">
-            <span class="lang-pt">
-              No final, tu e a entidade deixam uma avaliação mútua, reforçando
-              qualidade e confiança para oportunidades futuras. Recebes um
-              resumo claro do que fizeste e do que ajudaste a criar. O teu
-              perfil evolui e surgem novas oportunidades à tua medida.
-            </span>
-            <span class="lang-en">
-              At the end, you and the host organisation leave mutual feedback,
-              reinforcing quality and trust for future opportunities. You
-              receive a clear summary of what you did and helped create. Your
-              profile grows – and new opportunities appear that really fit you.
-            </span>
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <!-- PROJECTS PLACEHOLDER -->
-    <section id="projects">
-      <div class="section-header">
-        <div class="eyebrow">
-          <span class="lang-pt">Os nossos projetos</span>
-          <span class="lang-en">Our projects</span>
-        </div>
-        <h2 class="section-title">
-          <span class="lang-pt">Brevemente: o portefólio ActivEU em detalhe.</span>
-          <span class="lang-en">Coming soon: ActivEU’s portfolio in detail.</span>
-        </h2>
-        <p class="section-subtitle">
-          <span class="lang-pt">
-            Aqui vais encontrar exemplos concretos do Solidarity Action Day em
-            Portugal, dos projetos comunitários como “Raízes e Risos” e
-            “Tradições em Páginas” e das iniciativas de bem-estar juvenil.
-          </span>
-          <span class="lang-en">
-            Here you will soon find concrete examples of Solidarity Action Day
-            in Portugal, community projects such as “Raízes e Risos” and
-            “Tradições em Páginas”, and our youth well-being initiatives.
-          </span>
-        </p>
-      </div>
-
-      <div class="projects-placeholder">
-        <span class="lang-pt">
-          Portefólio em construção. Preparamos este espaço para mostrar casos
-          reais com dados, fotografias e histórias. Assim que os primeiros
-          pilotos estiverem concluídos, este será o palco principal.
-        </span>
-        <span class="lang-en">
-          Portfolio under construction. We are preparing this space to showcase
-          real case studies with data, photos and stories. As soon as the first
-          pilots are complete, this will be the main stage.
-        </span>
-      </div>
-    </section>
-
-    <!-- CLIENTS TALK PLACEHOLDER -->
-    <section id="clients">
-      <div class="section-header">
-        <div class="eyebrow">
-          <span class="lang-pt">Clients talk &amp; we blush</span>
-          <span class="lang-en">Clients talk &amp; we blush</span>
-        </div>
-        <h2 class="section-title">
-          <span class="lang-pt">Ainda não, mas em breve.</span>
-          <span class="lang-en">Not yet, but soon.</span>
-        </h2>
-      </div>
-      <div class="testimonials">
-        <span class="lang-pt">
-          Esta secção está pronta para receber testemunhos de jovens, escolas,
-          empresas e causas que participem no Solidarity Action Day em Portugal.
-          Quando começarem a chegar as primeiras histórias, vamos partilhá-las
-          aqui – com honestidade, números e impacto real.
-        </span>
-        <span class="lang-en">
-          This section is ready to host testimonials from young people, schools,
-          organisations and causes taking part in Solidarity Action Day in
-          Portugal. As soon as the first stories arrive, we will share them
-          here – with honesty, numbers and real impact.
-        </span>
-      </div>
-    </section>
-
-    <!-- YOUTHREACH & CREATIVE SUPPORT -->
-    <section id="youthreach">
-      <div class="section-header">
-        <div class="eyebrow">
-          <span class="lang-pt">ActivEU YouthReach &amp; Creative Support</span>
-          <span class="lang-en">ActivEU YouthReach &amp; Creative Support</span>
-        </div>
-        <h2 class="section-title">
-          <span class="lang-pt">Ajudamos entidades a chegar (mesmo) aos jovens.</span>
-          <span class="lang-en">We help institutions truly reach young people.</span>
-        </h2>
-      </div>
-
-      <div class="youthreach-grid">
-        <div>
-          <p class="section-subtitle" style="margin-top:0;">
-            <span class="lang-pt">
-              Apoiamos municípios, escolas, empresas e organizações a
-              compreender, envolver e integrar jovens nas suas políticas,
-              iniciativas e decisões. Sempre com método, participação real e
-              comunicação à altura das novas gerações.
-            </span>
-            <span class="lang-en">
-              We support municipalities, schools, companies and organisations in
-              understanding, engaging and integrating young people into their
-              policies, initiatives and decisions – with solid methods, real
-              participation and communication that actually reaches younger
-              audiences.
-            </span>
-          </p>
-
-          <ul class="youthreach-list">
-            <li>
-              <span class="lang-pt">Diagnóstico jovem local e organizacional.</span>
-              <span class="lang-en">Local and organisational youth diagnosis.</span>
-            </li>
-            <li>
-              <span class="lang-pt">Metodologias participativas para cocriar políticas e soluções.</span>
-              <span class="lang-en">Participatory methods to co-create policies and solutions.</span>
-            </li>
-            <li>
-              <span class="lang-pt">Workshops e sessões de co-criação que aproximam entidades da juventude.</span>
-              <span class="lang-en">Workshops and co-creation sessions that bring institutions closer to youth.</span>
-            </li>
-            <li>
-              <span class="lang-pt">Formação para equipas internas sobre trabalho com jovens e comunicação institucional.</span>
-              <span class="lang-en">Training for internal teams on working with young people and institutional communication.</span>
-            </li>
-            <li>
-              <span class="lang-pt">Orientação em narrativas e conteúdos para redes sociais.</span>
-              <span class="lang-en">Guidance on narratives and content for social media.</span>
-            </li>
-            <li>
-              <span class="lang-pt">Apoio técnico em produção audiovisual estratégica (quando aplicável).</span>
-              <span class="lang-en">Technical support for strategic audiovisual production (when relevant).</span>
-            </li>
-            <li>
-              <span class="lang-pt">Recomendações práticas para reforçar programas, serviços e decisões.</span>
-              <span class="lang-en">Practical recommendations to strengthen programmes, services and decisions.</span>
-            </li>
-          </ul>
-        </div>
-
-        <aside class="youthreach-side" id="contact">
+      <div class="cta-band" id="contact">
+        <div class="cta-text">
+          <h3>Queres trazer o Solidarity Action Day para a tua escola, município ou organização?</h3>
           <p>
-            <span class="lang-pt">
-              Criamos modelos personalizados que aproximam instituições da
-              juventude com legitimidade, profissionalismo e impacto real.
-              Ideal para municípios, escolas, universidades e organizações que
-              querem mais do que campanhas simbólicas.
-            </span>
-            <span class="lang-en">
-              We design tailored models that bring institutions closer to young
-              people with legitimacy, professionalism and real impact. Ideal for
-              municipalities, schools, universities and organisations that want
-              more than symbolic campaigns.
-            </span>
+            A ActivEU trabalha com entidades públicas, privadas e do terceiro setor para desenhar pilotos responsáveis,
+            com regras claras, acompanhamento próximo e impacto mensurável.
           </p>
-          <a href="mailto:info@activeu.pt" class="btn-outline-dark">
-            <span class="lang-pt">Marcar reunião</span>
-            <span class="lang-en">Book a call</span>
-          </a>
-        </aside>
+        </div>
+        <a href="mailto:info@activeu.pt" class="cta-button">Fala connosco</a>
       </div>
     </section>
 
-    <!-- ABOUT / JOIN -->
-    <section id="about">
-      <div class="section-header">
-        <div class="eyebrow">
-          <span class="lang-pt">Sobre a ActivEU</span>
-          <span class="lang-en">About ActivEU</span>
-        </div>
-        <h2 class="section-title">
-          <span class="lang-pt">Acreditamos em jovens com mais oportunidades, mais voz e mais futuro em Portugal.</span>
-          <span class="lang-en">We believe young people deserve more opportunities, more voice and more future in Portugal.</span>
-        </h2>
-      </div>
-
-      <div class="about-grid">
-        <div class="about-text-block">
-          <p>
-            <span class="lang-pt">
-              A ActivEU nasce da experiência de jovens portugueses em
-              iniciativas europeias de participação e solidariedade. Depois de
-              viverem o impacto do Solidarity Action Day noutros países, a
-              pergunta tornou-se inevitável: porque é que isto não existe em
-              Portugal?
-            </span>
-            <span class="lang-en">
-              ActivEU was born from the experience of Portuguese young people in
-              European participation and solidarity initiatives. After seeing
-              the impact of Solidarity Action Day in other countries, one
-              question became inevitable: why doesn’t this exist in Portugal?
-            </span>
-          </p>
-          <p>
-            <span class="lang-pt">
-              A resposta foi simples: se não existe, criamos nós. Hoje,
-              ActivEU é uma associação jovem apartidária, com órgãos sociais
-              eleitos, regulamento interno rigoroso e uma visão clara: fazer do
-              Solidarity Action Day um marco anual da juventude em Portugal, em
-              ligação permanente com a Europa.
-            </span>
-            <span class="lang-en">
-              The answer was simple: if it doesn’t exist, we build it. Today,
-              ActivEU is a non-partisan youth association with elected bodies,
-              rigorous internal regulations and a clear vision: to make
-              Solidarity Action Day a yearly milestone for youth in Portugal,
-              in constant connection with Europe.
-            </span>
-          </p>
-          <p>
-            <span class="lang-pt">
-              Trabalhamos com seriedade institucional, mas sem perder aquilo
-              que nos trouxe até aqui: a vontade de provar que quando confias
-              nos jovens, o resultado ultrapassa qualquer expectativa.
-            </span>
-            <span class="lang-en">
-              We work with institutional seriousness, without losing what
-              brought us here: the will to prove that when you trust young
-              people, the result goes far beyond expectations.
-            </span>
-          </p>
-        </div>
-
-        <aside class="join-card">
-          <div class="join-pill">
-            <span class="lang-pt">Temos lugar para ti!</span>
-            <span class="lang-en">There’s room for you!</span>
-          </div>
-          <div class="join-title">
-            <span class="lang-pt">Tu.</span>
-            <span class="lang-en">You.</span>
-          </div>
-          <p>
-            <span class="lang-pt">
-              Procuramos jovens que queiram aprender, trabalhar com
-              responsabilidade e construir algo que fique depois de nós.
-              Voluntariado, equipa, estágios, grupos de trabalho – se te
-              vês a criar impacto real, podemos começar por uma conversa.
-            </span>
-            <span class="lang-en">
-              We look for young people who want to learn, work with
-              responsibility and build something that will last beyond us.
-              Volunteering, project teams, internships, working groups – if you
-              see yourself creating real impact, we can start with a
-              conversation.
-            </span>
-          </p>
-          <a href="mailto:info@activeu.pt" class="join-btn">
-            <span class="lang-pt">Junta-te a nós!</span>
-            <span class="lang-en">Join us!</span>
-          </a>
-        </aside>
-      </div>
-    </section>
-
-    <footer class="page-shell">
+    <footer>
       <div>
         <span class="brand">ActivEU</span>
-        <span> · Solidarity Action Day em Portugal</span>
+        <span> · Associação Jovem Solidária Europeia</span>
       </div>
-      <div>
-        © <span id="year"></span> ActivEU Association · Portugal
-      </div>
+      <div>© <span id="year"></span> ActivEU · Portugal</div>
     </footer>
   </main>
 
   <script>
-    // language toggle
-    const langToggle = document.getElementById("lang-toggle");
-    const langLabel = document.getElementById("lang-toggle-label");
-
-    langToggle.addEventListener("click", () => {
-      const html = document.documentElement;
-      const current = html.dataset.lang || "pt";
-      const next = current === "pt" ? "en" : "pt";
-      html.dataset.lang = next;
-      html.setAttribute("lang", next);
-      langLabel.textContent = next.toUpperCase();
-    });
-
-    // year in footer
+    // footer year
     document.getElementById("year").textContent =
       new Date().getFullYear().toString();
   </script>
