@@ -1,289 +1,260 @@
 <!DOCTYPE html>
 <html lang="pt" data-lang="pt">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>ActivEU – Solidarity Action Day em Portugal</title>
-  <meta name="description" content="ActivEU implementa em Portugal o Solidarity Action Day: trocas aulas por experiência real, doas para causas verificadas e sais com competências certificadas." />
+  <meta name="description" content="ActivEU implementa em Portugal o Solidarity Action Day: experiência real, doação transparente e competências certificadas."/>
+  <meta name="theme-color" content="#fbf4e4"/>
 
-  <!-- Fonts (Agenius-like: condensed display + clean body) -->
+  <!-- Fonts: condensed display + clean body -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Fuse.js for command palette search (no build) -->
+  <!-- Rough.js (hand-drawn UI) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/roughjs@4.5.2/bundled/rough.js"></script>
+
+  <!-- Fuse.js (search palette) -->
   <script defer src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.webmanifest">
 
   <style>
     :root{
-      /* Agenius-ish palette */
-      --cream: #fbf4e4;
-      --cream-2:#fff7e9;
-      --ink: #120810;
-      --burgundy:#3a0520;
-      --burgundy-2:#5b0b31;
+      --paper:#fbf4e4;
+      --paper2:#fff7ea;
+      --ink:#140a12;
+      --burg:#3a0520;
+      --burg2:#5b0b31;
       --mint:#b9f3c8;
-      --mint-2:#ddffe6;
+      --mint2:#ddffe6;
       --sun:#ffd56b;
-      --sky:#bfe9ff;
       --lav:#e9d7ff;
+      --sky:#bfe9ff;
 
-      --card:#ffffffcc;
-      --stroke:#1a0d18;
-      --stroke-soft: rgba(26,13,24,.12);
+      --stroke: rgba(20,10,18,.85);
+      --strokeSoft: rgba(20,10,18,.18);
 
       --shadow: 0 18px 60px rgba(0,0,0,.14);
-      --shadow-soft: 0 12px 30px rgba(0,0,0,.10);
+      --shadowSoft: 0 12px 28px rgba(0,0,0,.10);
 
-      --r-xl: 28px;
-      --r-lg: 20px;
-      --r-md: 14px;
-
+      --r: 22px;
       --max: 1200px;
     }
 
     *{ box-sizing:border-box; }
-    html, body{ height:100%; }
+    html,body{ height:100%; }
     body{
       margin:0;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--paper);
       color: var(--ink);
-      background: var(--cream);
       overflow-x:hidden;
       -webkit-font-smoothing: antialiased;
       text-rendering: geometricPrecision;
-      scroll-behavior:smooth;
     }
     a{ color:inherit; text-decoration:none; }
     button{ font:inherit; }
 
-    /* Subtle grain + paper vibe */
-    .paper{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
+    .wrap{ max-width: var(--max); margin:0 auto; padding: 0 18px; }
+
+    /* paper texture + halftone */
+    .paperBg{
+      position:fixed; inset:0;
+      z-index:-3;
       background:
-        radial-gradient(1200px 800px at 10% 0%, rgba(255,255,255,.55), transparent 60%),
-        radial-gradient(900px 700px at 90% 10%, rgba(255,255,255,.35), transparent 55%),
-        radial-gradient(900px 800px at 70% 90%, rgba(255,255,255,.25), transparent 60%);
-      mix-blend-mode: normal;
-      z-index:-2;
+        radial-gradient(1200px 700px at 12% 0%, rgba(255,255,255,.65), transparent 58%),
+        radial-gradient(900px 600px at 88% 10%, rgba(255,255,255,.35), transparent 55%),
+        radial-gradient(900px 700px at 70% 90%, rgba(255,255,255,.25), transparent 60%);
+      pointer-events:none;
     }
     .grain{
       position:fixed; inset:-40%;
+      z-index:-2;
       pointer-events:none;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
-      transform:rotate(7deg);
-      opacity:.10;
+      opacity:.12;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+      transform:rotate(6deg);
+    }
+    .halftone{
+      position:fixed; inset:-10%;
       z-index:-1;
+      pointer-events:none;
+      opacity:.22;
+      background:
+        radial-gradient(circle, rgba(58,5,32,.12) 1px, transparent 1.6px) 0 0/8px 8px;
+      mask-image: radial-gradient(700px 520px at 50% 16%, black 35%, transparent 72%);
     }
 
-    /* Scroll progress */
+    /* scroll progress */
     .progress{
       position:fixed; top:0; left:0;
       height:3px; width:0%;
-      background: linear-gradient(90deg, var(--sun), var(--burgundy));
       z-index:999;
+      background: linear-gradient(90deg, var(--sun), var(--burg));
     }
 
-    /* Layout container */
-    .wrap{ max-width: var(--max); margin:0 auto; padding: 0 18px; }
-
-    /* Header */
+    /* header */
     header{
-      position:sticky; top:0;
-      z-index:50;
+      position:sticky; top:0; z-index:50;
       background: rgba(251,244,228,.82);
       backdrop-filter: blur(14px);
-      border-bottom:1px solid rgba(0,0,0,.06);
+      border-bottom: 1px solid rgba(0,0,0,.06);
     }
     .nav{
       display:flex; align-items:center; justify-content:space-between;
       padding: 12px 0;
-      gap: 14px;
+      gap: 12px;
     }
     .brand{
       display:flex; align-items:center; gap:10px;
-      min-width: 210px;
-    }
-    .brand-badge{
-      display:flex; align-items:center; justify-content:center;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: #fff;
-      border:1.4px solid var(--stroke-soft);
-      box-shadow: 0 10px 22px rgba(0,0,0,.08);
-      font-weight:700;
+      font-weight:900;
       letter-spacing:.2px;
-      gap:8px;
     }
-    .brand-dot{
-      width:10px; height:10px; border-radius:50%;
-      background: var(--mint);
-      border:1.4px solid rgba(0,0,0,.15);
+    .logoMark{
+      width:34px; height:34px;
+      border-radius: 12px;
+      background: var(--mint2);
+      border: 1.6px solid var(--strokeSoft);
+      box-shadow: 0 10px 18px rgba(0,0,0,.08);
+      display:grid; place-items:center;
+      font-weight: 900;
+      color: var(--burg);
     }
     .brand small{
       display:block;
+      margin-top:2px;
       font-size: 11px;
       opacity:.72;
-      margin-top: 2px;
+      font-weight:800;
     }
 
-    .navlinks{
-      display:flex; align-items:center; gap:18px;
+    .links{
+      display:flex; gap:16px; align-items:center;
       font-size: 12px;
       opacity:.92;
       white-space:nowrap;
     }
-    .navlinks a{
+    .links a{
       position:relative;
       padding: 6px 2px;
+      font-weight: 800;
     }
-    .navlinks a::after{
+    .links a[data-active="true"]::after,
+    .links a:hover::after{
       content:"";
       position:absolute; left:0; right:0; bottom:2px;
-      height:1.6px;
-      transform: scaleX(0);
-      transform-origin:left;
+      height: 2px;
       background: var(--ink);
-      transition: transform .18s ease;
+      transform: rotate(-.4deg);
       opacity:.75;
     }
-    .navlinks a:hover::after,
-    .navlinks a[data-active="true"]::after{
-      transform: scaleX(1);
-    }
 
-    .nav-actions{
+    .actions{
       display:flex; align-items:center; gap:10px;
-      min-width: 220px;
-      justify-content:flex-end;
     }
-
     .pill{
-      border-radius:999px;
-      border:1.6px solid rgba(0,0,0,.14);
-      background:#fff;
+      border-radius: 999px;
+      border: 1.6px solid rgba(0,0,0,.14);
+      background: #fff;
       padding: 8px 12px;
+      font-weight: 900;
       box-shadow: 0 10px 20px rgba(0,0,0,.07);
-      display:inline-flex; align-items:center; gap:10px;
       cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
     }
-    .pill:hover{ transform: translateY(-1px); }
-    .pill:active{ transform: translateY(0px); }
     .pill .kbd{
-      font-size:11px;
+      font-size: 11px;
       opacity:.65;
       padding: 2px 7px;
-      border-radius:999px;
-      border:1px dashed rgba(0,0,0,.24);
-      background: rgba(255,255,255,.7);
+      border-radius: 999px;
+      border: 1px dashed rgba(0,0,0,.24);
+      background: rgba(255,255,255,.75);
+      font-weight: 900;
     }
-
     .menuBtn{
       border-radius: 999px;
       border: 1.8px solid rgba(0,0,0,.14);
       background: var(--mint);
       padding: 8px 14px;
-      cursor:pointer;
-      font-weight:700;
+      font-weight: 900;
       box-shadow: 0 10px 20px rgba(0,0,0,.07);
-    }
-    .menuBtn:hover{ filter:saturate(1.1); }
-    .langBtn{
-      border-radius:999px;
-      border:1.8px solid rgba(0,0,0,.14);
-      background:#fff;
-      padding: 8px 12px;
       cursor:pointer;
-      font-weight:700;
-      box-shadow: 0 10px 20px rgba(0,0,0,.07);
     }
 
-    /* Mobile menu drawer */
-    .drawer{
-      position:fixed; inset:0;
-      display:none;
-      z-index:200;
-    }
+    /* drawer */
+    .drawer{ position:fixed; inset:0; display:none; z-index:200; }
     .drawer[data-open="true"]{ display:block; }
-    .drawer .backdrop{
-      position:absolute; inset:0;
-      background: rgba(0,0,0,.35);
-      backdrop-filter: blur(4px);
-    }
+    .drawer .bg{ position:absolute; inset:0; background: rgba(0,0,0,.35); backdrop-filter: blur(4px); }
     .drawer .panel{
       position:absolute; right:0; top:0; height:100%;
-      width:min(420px, 92vw);
-      background: var(--cream-2);
+      width: min(420px, 92vw);
+      background: var(--paper2);
       border-left: 2px solid rgba(0,0,0,.12);
-      padding: 18px 18px 22px;
       box-shadow: var(--shadow);
-      display:flex; flex-direction:column; gap:12px;
+      padding: 18px;
+      display:flex; flex-direction:column; gap: 12px;
     }
-    .drawer .panel h3{
+    .drawer h3{
       margin:0;
       font-family: "Bebas Neue", sans-serif;
+      font-size: 28px;
       letter-spacing: .8px;
-      font-size: 26px;
-      color: var(--burgundy);
+      color: var(--burg);
     }
-    .drawer a{
+    .dLink{
       display:flex; justify-content:space-between; align-items:center;
       padding: 12px 12px;
-      border-radius: 14px;
-      border: 1.6px solid rgba(0,0,0,.12);
+      border-radius: 16px;
       background: #fff;
-      box-shadow: 0 12px 22px rgba(0,0,0,.07);
-      font-weight:600;
+      border: 1.6px solid rgba(0,0,0,.12);
+      box-shadow: 0 12px 18px rgba(0,0,0,.08);
+      font-weight: 900;
     }
-    .drawer a span{ opacity:.65; font-weight:700; }
+    .dLink span{ opacity:.65; font-weight: 900; }
 
-    /* HERO */
+    /* hero */
     .hero{
+      padding: 34px 0 24px;
       position:relative;
-      padding: 36px 0 26px;
     }
-
     .heroGrid{
       display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 22px;
-      align-items: start;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      align-items:start;
     }
-
-    .bigWord{
-      font-family: "Bebas Neue", sans-serif;
-      font-size: clamp(68px, 12vw, 170px);
-      line-height: .85;
+    .heroTitle{
+      font-family:"Bebas Neue", sans-serif;
+      font-size: clamp(72px, 12vw, 178px);
+      line-height:.84;
       letter-spacing: 1px;
-      color: var(--burgundy);
-      text-shadow: 0 18px 50px rgba(58,5,32,.12);
+      color: var(--burg);
       margin: 18px 0 10px;
+      text-shadow: 0 18px 50px rgba(58,5,32,.10);
     }
-
-    .subLine{
-      display:flex; align-items:flex-end; gap:16px;
-      margin-top: 8px;
-      flex-wrap: wrap;
+    .tagline{
+      font-weight: 900;
+      font-size: clamp(18px, 2.6vw, 38px);
+      letter-spacing: -0.7px;
+      max-width: 560px;
     }
-    .subLine .tagline{
-      font-weight:800;
-      font-size: clamp(18px, 2.4vw, 36px);
-      letter-spacing: -0.6px;
-      max-width: 520px;
-    }
-    .subLine .micro{
+    .micro{
+      margin-top: 10px;
       font-size: 13px;
-      opacity:.76;
-      max-width: 280px;
-      line-height:1.35;
+      opacity:.78;
+      max-width: 520px;
+      line-height: 1.5;
     }
-
     .ctaRow{
-      display:flex; gap:10px;
-      margin-top: 16px;
-      flex-wrap: wrap;
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      margin-top: 14px;
       align-items:center;
     }
     .cta{
@@ -291,535 +262,276 @@
       border: 2px solid rgba(0,0,0,.14);
       background: var(--sun);
       padding: 10px 16px;
-      font-weight:800;
-      box-shadow: 0 14px 22px rgba(0,0,0,.10);
+      font-weight: 1000;
       cursor:pointer;
+      box-shadow: 0 14px 22px rgba(0,0,0,.10);
     }
-    .cta.secondary{
-      background:#fff;
-      font-weight:800;
-    }
+    .cta.secondary{ background:#fff; }
 
-    /* Stickers + scribbles */
+    /* stickers (wiggle + magnet hover) */
     .sticker{
       position:absolute;
       border-radius: 999px;
       padding: 8px 12px;
       font-size: 12px;
-      font-weight:800;
-      border: 1.8px solid rgba(0,0,0,.12);
+      font-weight: 1000;
+      border: 1.6px solid rgba(0,0,0,.14);
       background: #fff;
-      box-shadow: 0 16px 26px rgba(0,0,0,.09);
-      display:flex; align-items:center; gap:8px;
+      box-shadow: 0 16px 24px rgba(0,0,0,.10);
       user-select:none;
+      transform: rotate(var(--rot, 0deg));
+      transition: transform .12s ease;
+      will-change: transform;
     }
-    .sticker .dot{
-      width:10px; height:10px; border-radius:50%;
-      border:1.6px solid rgba(0,0,0,.14);
-      background: var(--mint);
-    }
+    .sticker[data-tone="mint"]{ background: var(--mint2); }
     .sticker[data-tone="lav"]{ background: var(--lav); }
     .sticker[data-tone="sky"]{ background: var(--sky); }
-    .sticker[data-tone="mint"]{ background: var(--mint-2); }
     .sticker[data-tone="sun"]{ background: #fff2c9; }
+    @keyframes wiggle{
+      0%,100%{ transform: translateY(0) rotate(var(--rot,0deg)); }
+      50%{ transform: translateY(-2px) rotate(calc(var(--rot,0deg) + .6deg)); }
+    }
+    .sticker{ animation: wiggle 3.2s ease-in-out infinite; }
 
+    /* scribbles */
     .scribble{
       position:absolute;
-      width: 220px;
-      height: 120px;
       pointer-events:none;
-      opacity:.9;
+      opacity:.92;
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,.10));
     }
 
-    /* Right hero card */
+    /* right hero card (hand-drawn border drawn later) */
     .heroCard{
-      background: rgba(255,255,255,.78);
-      border: 2px solid rgba(0,0,0,.12);
-      border-radius: var(--r-xl);
-      box-shadow: var(--shadow-soft);
-      padding: 16px;
       position:relative;
+      background: rgba(255,255,255,.62);
+      border-radius: var(--r);
+      padding: 16px;
+      box-shadow: var(--shadowSoft);
       overflow:hidden;
     }
     .rings{
-      position:absolute; inset:-40%;
+      position:absolute; inset:-50%;
       background:
-        radial-gradient(circle at 50% 40%,
-          rgba(255, 88, 210, .18) 0%,
-          rgba(255, 88, 210, .10) 18%,
-          rgba(255, 88, 210, .00) 38%),
-        repeating-radial-gradient(circle at 50% 40%,
-          rgba(58,5,32,.12) 0px,
-          rgba(58,5,32,.12) 3px,
-          rgba(251,244,228,0) 16px,
-          rgba(251,244,228,0) 26px);
-      filter: blur(0px);
-      transform: rotate(6deg);
-      opacity:.9;
+        radial-gradient(circle at 50% 40%, rgba(255,88,210,.16) 0%, rgba(255,88,210,.08) 18%, transparent 40%),
+        repeating-radial-gradient(circle at 50% 40%, rgba(58,5,32,.10) 0px, rgba(58,5,32,.10) 3px, rgba(251,244,228,0) 16px, rgba(251,244,228,0) 28px);
+      transform: rotate(5deg);
+      opacity:.95;
     }
-    .heroCard .content{ position:relative; }
+    .heroCard .inner{ position:relative; }
     .heroCard h2{
       margin:0;
       font-family:"Bebas Neue", sans-serif;
-      letter-spacing:.7px;
       font-size: 34px;
-      color: var(--burgundy);
+      letter-spacing:.7px;
+      color: var(--burg);
     }
-    .heroCard p{ margin:10px 0 0; font-size: 13px; opacity:.8; line-height:1.45; }
-    .heroStats{
+    .heroCard p{
+      margin: 10px 0 0;
+      font-size: 13px;
+      opacity:.82;
+      line-height:1.5;
+    }
+    .stats{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
-      margin-top: 14px;
+      margin-top: 12px;
     }
     .stat{
-      background: rgba(255,255,255,.75);
-      border: 1.6px solid rgba(0,0,0,.10);
+      background: rgba(255,255,255,.72);
       border-radius: 16px;
       padding: 12px;
-      box-shadow: 0 12px 18px rgba(0,0,0,.06);
+      border: 1px solid rgba(0,0,0,.08); /* replaced by rough border */
+      box-shadow: 0 12px 18px rgba(0,0,0,.07);
+      position:relative;
     }
     .stat b{
       display:block;
       font-family:"Bebas Neue", sans-serif;
       font-size: 28px;
       letter-spacing:.6px;
-      color: var(--ink);
       line-height:1;
+      color: var(--ink);
     }
-    .stat span{ font-size: 12px; opacity:.75; }
+    .stat span{
+      font-size: 12px;
+      opacity:.75;
+      font-weight: 800;
+    }
 
-    /* Section base */
-    section{
-      position:relative;
-      padding: 78px 0;
-    }
-    section .head{
+    /* sections */
+    section{ padding: 76px 0; position:relative; }
+    .head{
       display:flex;
       justify-content:space-between;
       align-items:flex-end;
       gap: 16px;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
     .kicker{
       display:inline-flex;
       align-items:center;
-      gap:8px;
-      font-weight:900;
+      gap: 8px;
+      font-weight: 1000;
       font-size: 12px;
-      border: 1.8px solid rgba(0,0,0,.12);
-      background:#fff;
-      padding: 7px 10px;
       border-radius: 999px;
+      padding: 7px 10px;
+      background:#fff;
+      border:1px solid rgba(0,0,0,.10); /* rough later */
       box-shadow: 0 12px 18px rgba(0,0,0,.06);
-      width: fit-content;
     }
     .kicker i{
       width:10px; height:10px;
       border-radius:50%;
       background: var(--mint);
-      border:1.6px solid rgba(0,0,0,.14);
+      border: 1.6px solid rgba(0,0,0,.14);
       display:inline-block;
     }
-    h2.sectionTitle{
+    .sectionTitle{
       margin: 10px 0 0;
       font-family:"Bebas Neue", sans-serif;
-      font-size: clamp(38px, 5vw, 72px);
-      line-height:.92;
+      font-size: clamp(38px, 5vw, 74px);
+      line-height: .92;
       letter-spacing: .8px;
-      color: var(--burgundy);
+      color: var(--burg);
     }
     .lead{
       margin: 10px 0 0;
       font-size: 14px;
-      opacity:.8;
-      max-width: 520px;
-      line-height:1.45;
+      opacity:.80;
+      max-width: 560px;
+      line-height:1.5;
+      font-weight: 600;
     }
 
-    /* Scallop separators like Agenius */
-    .scallopTop, .scallopBottom{
+    /* scallops */
+    .scallopTop,.scallopBottom{
       position:absolute; left:0; right:0;
       height: 38px;
-      background: var(--cream);
+      background: var(--paper);
       pointer-events:none;
       z-index:2;
     }
     .scallopTop{ top:-1px; }
     .scallopBottom{ bottom:-1px; transform: rotate(180deg); }
-    .scallopTop::before, .scallopBottom::before{
+    .scallopTop::before,.scallopBottom::before{
       content:"";
       position:absolute; left:0; right:0; top:-1px;
       height: 40px;
-      background:
-        radial-gradient(circle at 20px 20px, transparent 19px, var(--cream) 20px) 0 0/40px 40px;
-      opacity:1;
+      background: radial-gradient(circle at 20px 20px, transparent 19px, var(--paper) 20px) 0 0/40px 40px;
     }
 
-    /* “Rings” background sections */
-    .ringsBg{
-      position:absolute; inset:0;
-      background:
-        radial-gradient(circle at 50% -10%,
-          rgba(255, 88, 210, .18) 0%,
-          rgba(255, 88, 210, .10) 18%,
-          rgba(255, 88, 210, .00) 40%),
-        repeating-radial-gradient(circle at 50% 5%,
-          rgba(58,5,32,.10) 0px,
-          rgba(58,5,32,.10) 3px,
-          rgba(251,244,228,0) 16px,
-          rgba(251,244,228,0) 28px);
-      opacity:.92;
-      pointer-events:none;
-    }
-
-    /* Why blocks (7) */
-    .grid7{
+    /* cards grid */
+    .grid{
       display:grid;
       grid-template-columns: repeat(12, 1fr);
       gap: 12px;
       position:relative;
       z-index:3;
     }
-    .block{
+    .card{
       grid-column: span 6;
-      background: rgba(255,255,255,.76);
-      border: 2px solid rgba(0,0,0,.12);
-      border-radius: var(--r-lg);
-      box-shadow: 0 16px 26px rgba(0,0,0,.08);
-      padding: 16px 16px 14px;
+      background: rgba(255,255,255,.68);
+      border-radius: var(--r);
+      padding: 16px;
+      box-shadow: var(--shadowSoft);
       position:relative;
       overflow:hidden;
     }
-    .block h3{
-      margin:0;
-      font-size: 16px;
-      letter-spacing: -0.2px;
-      font-weight: 900;
-    }
-    .block p{ margin: 8px 0 0; font-size: 13px; opacity:.82; line-height:1.45; }
-
-    .block .badge{
+    .card h3{ margin:0; font-size: 16px; font-weight: 1000; letter-spacing:-.2px; }
+    .card p{ margin: 8px 0 0; font-size: 13px; opacity:.84; line-height:1.5; font-weight: 600; }
+    .badge{
       position:absolute; top: 12px; right: 12px;
       font-size: 11px;
-      font-weight: 900;
+      font-weight: 1000;
       padding: 6px 10px;
-      border-radius:999px;
-      border: 1.6px solid rgba(0,0,0,.12);
-      background: #fff;
+      border-radius: 999px;
+      background:#fff;
+      border:1px solid rgba(0,0,0,.10); /* rough later */
       transform: rotate(2deg);
     }
+    .card.full{ grid-column: span 12; }
 
-    /* What we do: interactive “split card” */
-    .split{
+    /* Impact Lab */
+    .impact{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap: 14px;
       align-items:start;
     }
-    .accordion{
-      background: rgba(255,255,255,.76);
-      border: 2px solid rgba(0,0,0,.12);
-      border-radius: var(--r-xl);
-      box-shadow: var(--shadow-soft);
-      overflow:hidden;
-    }
-    details{
-      border-top: 1px solid rgba(0,0,0,.10);
-    }
-    details:first-child{ border-top:none; }
-    summary{
-      list-style:none;
-      cursor:pointer;
-      padding: 16px 16px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-      user-select:none;
-      font-weight:900;
-    }
-    summary::-webkit-details-marker{ display:none; }
-    .sumLeft{
-      display:flex; align-items:center; gap:10px;
-    }
-    .chip{
-      width: 34px; height: 34px;
-      border-radius: 12px;
-      display:grid; place-items:center;
-      background: var(--mint-2);
-      border: 1.6px solid rgba(0,0,0,.10);
-      font-weight:900;
-    }
-    .sumMeta{
-      font-size:12px;
-      font-weight:800;
-      opacity:.75;
-    }
-    .caret{
-      width: 10px; height: 10px;
-      border-right: 2px solid rgba(0,0,0,.65);
-      border-bottom: 2px solid rgba(0,0,0,.65);
-      transform: rotate(-45deg);
-      transition: transform .18s ease;
-      margin-right: 4px;
-      opacity:.85;
-    }
-    details[open] .caret{ transform: rotate(45deg); }
     .panel{
-      padding: 0 16px 16px;
-      display:grid;
-      gap: 12px;
-    }
-    .labels{
-      display:flex;
-      flex-wrap:wrap;
-      gap: 8px;
-      margin-top: 2px;
-    }
-    .label{
-      font-size: 11px;
-      font-weight: 900;
-      padding: 7px 10px;
-      border-radius:999px;
-      border:1.6px solid rgba(0,0,0,.12);
-      background:#fff;
-    }
-
-    .explain{
-      background: rgba(255,255,255,.62);
-      border: 2px solid rgba(0,0,0,.10);
-      border-radius: var(--r-xl);
-      box-shadow: var(--shadow-soft);
+      background: rgba(255,255,255,.70);
+      border-radius: var(--r);
       padding: 16px;
+      box-shadow: var(--shadowSoft);
       position:relative;
       overflow:hidden;
-      min-height: 320px;
     }
-    .explain .ringsMini{
-      position:absolute; inset:-55%;
-      background:
-        radial-gradient(circle at 50% 35%,
-          rgba(191,233,255,.35) 0%,
-          rgba(191,233,255,.08) 28%,
-          transparent 46%),
-        repeating-radial-gradient(circle at 50% 35%,
-          rgba(58,5,32,.10) 0px,
-          rgba(58,5,32,.10) 3px,
-          rgba(251,244,228,0) 16px,
-          rgba(251,244,228,0) 28px);
-      transform: rotate(-6deg);
-      opacity:.85;
-    }
-    .explain .box{
-      position:relative;
-      display:grid; gap:10px;
-    }
-    .explain h3{
+    .panel h3{
       margin:0;
       font-family:"Bebas Neue", sans-serif;
-      letter-spacing:.7px;
       font-size: 34px;
-      color: var(--burgundy);
+      letter-spacing:.7px;
+      color: var(--burg);
       line-height:1;
     }
-    .explain p{
-      margin:0;
+    .panel p{
+      margin: 10px 0 0;
       font-size: 13px;
       opacity:.82;
       line-height:1.5;
-      max-width: 56ch;
+      font-weight: 600;
     }
-
-    /* Projects grid */
-    .projGrid{
+    .controls{
       display:grid;
-      grid-template-columns: repeat(12, 1fr);
       gap: 12px;
-      position:relative;
-      z-index:3;
+      margin-top: 12px;
     }
-    .proj{
-      grid-column: span 4;
-      background: rgba(255,255,255,.76);
-      border: 2px solid rgba(0,0,0,.12);
-      border-radius: var(--r-xl);
-      box-shadow: var(--shadow-soft);
-      padding: 14px;
-      min-height: 170px;
-      position:relative;
-      overflow:hidden;
+    .row{
+      display:grid;
+      gap: 6px;
     }
-    .proj .st{
-      display:inline-flex; align-items:center; gap:8px;
-      font-size: 11px;
+    label{
+      font-size: 12px;
       font-weight: 900;
-      padding: 7px 10px;
-      border-radius:999px;
-      border:1.6px solid rgba(0,0,0,.12);
+      opacity:.82;
+    }
+    select, input[type="range"]{
+      width: 100%;
+    }
+    select{
+      padding: 10px 10px;
+      border-radius: 14px;
+      border: 1.6px solid rgba(0,0,0,.14);
       background:#fff;
-    }
-    .proj h4{
-      margin: 10px 0 0;
-      font-size: 15px;
       font-weight: 900;
+      outline:none;
     }
-    .proj p{
-      margin: 8px 0 0;
+    .out{
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.80);
+      border:1px solid rgba(0,0,0,.10); /* rough later */
+      box-shadow: 0 12px 18px rgba(0,0,0,.08);
       font-size: 13px;
-      opacity:.80;
+      line-height:1.55;
+      font-weight: 700;
+      opacity:.9;
+      white-space:pre-line;
+    }
+    .tiny{
+      margin-top: 8px;
+      font-size: 12px;
+      opacity:.72;
+      font-weight: 700;
       line-height:1.45;
     }
 
-    /* Process steps */
-    .steps{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 12px;
-    }
-    .step{
-      grid-column: span 4;
-      background: rgba(255,255,255,.76);
-      border: 2px solid rgba(0,0,0,.12);
-      border-radius: var(--r-xl);
-      box-shadow: var(--shadow-soft);
-      padding: 16px;
-      position:relative;
-      overflow:hidden;
-    }
-    .step b{
-      font-family:"Bebas Neue", sans-serif;
-      font-size: 34px;
-      letter-spacing:.7px;
-      color: var(--burgundy);
-      display:block;
-      line-height:1;
-    }
-    .step h4{ margin: 6px 0 0; font-size: 15px; font-weight: 900; }
-    .step p{ margin: 8px 0 0; font-size: 13px; opacity:.82; line-height:1.45; }
-
-    /* About */
-    .aboutCard{
-      background: rgba(255,255,255,.76);
-      border: 2px solid rgba(0,0,0,.12);
-      border-radius: var(--r-xl);
-      box-shadow: var(--shadow-soft);
-      padding: 16px;
-      display:grid;
-      gap: 12px;
-    }
-    .team{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 12px;
-    }
-    .person{
-      grid-column: span 3;
-      border-radius: 22px;
-      border: 2px solid rgba(0,0,0,.12);
-      background: #fff;
-      box-shadow: 0 14px 22px rgba(0,0,0,.08);
-      padding: 12px;
-      display:grid;
-      gap: 8px;
-    }
-    .avatar{
-      width: 56px; height: 56px;
-      border-radius: 18px;
-      background: var(--mint-2);
-      border: 1.6px solid rgba(0,0,0,.10);
-      display:grid; place-items:center;
-      font-weight: 900;
-      color: var(--burgundy);
-      font-size: 18px;
-    }
-    .person b{ font-size: 13px; }
-    .person span{ font-size: 12px; opacity:.72; }
-
-    /* Footer */
-    footer{
-      padding: 36px 0 60px;
-      border-top: 1px solid rgba(0,0,0,.08);
-      background: rgba(255,255,255,.2);
-    }
-    .foot{
-      display:flex; justify-content:space-between; gap: 12px;
-      flex-wrap: wrap;
-      align-items:flex-end;
-    }
-    .foot small{ opacity:.75; line-height:1.4; }
-
-    /* Mini-map (desktop) */
-    .minimap{
-      position: fixed;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 60;
-      display:none;
-    }
-    .minimap .rail{
-      display:flex;
-      flex-direction:column;
-      gap: 8px;
-      padding: 10px 10px;
-      border-radius: 999px;
-      border: 1.6px solid rgba(0,0,0,.12);
-      background: rgba(255,255,255,.78);
-      box-shadow: 0 14px 22px rgba(0,0,0,.10);
-      backdrop-filter: blur(10px);
-    }
-    .dotNav{
-      width: 10px; height: 10px; border-radius:50%;
-      border:1.6px solid rgba(0,0,0,.35);
-      background: transparent;
-      cursor:pointer;
-      opacity:.65;
-    }
-    .dotNav[data-active="true"]{
-      background: var(--burgundy);
-      opacity:1;
-    }
-
-    /* Bottom nav pill (mobile) */
-    .mobPill{
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 14px;
-      z-index: 70;
-      display:none;
-      border-radius:999px;
-      border: 1.6px solid rgba(0,0,0,.12);
-      background: rgba(255,255,255,.86);
-      box-shadow: 0 18px 28px rgba(0,0,0,.14);
-      backdrop-filter: blur(12px);
-      padding: 8px 10px;
-      gap: 8px;
-      align-items:center;
-    }
-    .mobPill button{
-      border-radius:999px;
-      border:1.4px solid rgba(0,0,0,.12);
-      background:#fff;
-      padding: 8px 10px;
-      font-weight: 900;
-      cursor:pointer;
-    }
-    .mobPill .now{
-      font-weight: 900;
-      font-size: 12px;
-      opacity:.75;
-      padding: 0 6px;
-      white-space:nowrap;
-    }
-
-    /* Command palette */
+    /* palette */
     .palette{
-      position: fixed;
-      inset: 0;
-      z-index: 250;
-      display:none;
+      position:fixed; inset:0; z-index:250; display:none;
     }
     .palette[data-open="true"]{ display:block; }
     .palette .bg{
@@ -828,23 +540,19 @@
       backdrop-filter: blur(6px);
     }
     .palette .modal{
-      position: absolute;
-      left: 50%;
-      top: 14%;
+      position:absolute;
+      left:50%; top: 14%;
       transform: translateX(-50%);
-      width: min(720px, 92vw);
-      background: var(--cream-2);
-      border-radius: var(--r-xl);
-      border: 2px solid rgba(0,0,0,.12);
+      width: min(760px, 92vw);
+      background: var(--paper2);
+      border-radius: 24px;
       box-shadow: var(--shadow);
       overflow:hidden;
     }
     .palette .top{
       padding: 14px;
       border-bottom: 1px solid rgba(0,0,0,.10);
-      display:flex;
-      gap: 10px;
-      align-items:center;
+      display:flex; gap: 10px; align-items:center;
       background: rgba(255,255,255,.55);
     }
     .palette input{
@@ -854,16 +562,16 @@
       padding: 12px 12px;
       outline:none;
       background:#fff;
-      font-weight:700;
+      font-weight: 900;
     }
     .palette .hint{
-      font-size:12px;
-      opacity:.65;
-      font-weight:800;
+      font-size: 12px;
+      opacity:.7;
+      font-weight: 1000;
       white-space:nowrap;
     }
-    .palette .list{
-      max-height: 360px;
+    .list{
+      max-height: 380px;
       overflow:auto;
       padding: 10px;
       display:grid;
@@ -872,99 +580,107 @@
     .item{
       padding: 12px 12px;
       border-radius: 16px;
-      border: 1.6px solid rgba(0,0,0,.12);
-      background: #fff;
+      background:#fff;
+      border:1px solid rgba(0,0,0,.10); /* rough later */
       cursor:pointer;
       display:flex;
       justify-content:space-between;
       align-items:center;
       gap: 10px;
-      font-weight:900;
+      font-weight: 1000;
+      box-shadow: 0 12px 18px rgba(0,0,0,.08);
     }
-    .item small{ opacity:.65; font-weight:900; }
-    .item:hover{ transform: translateY(-1px); }
+    .item small{ opacity:.65; font-weight: 1000; }
 
-    /* Responsiveness */
+    /* voice bubble */
+    .voice{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 1000;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,.10);
+      box-shadow: 0 12px 18px rgba(0,0,0,.08);
+      cursor:pointer;
+    }
+    .micDot{
+      width: 10px; height:10px; border-radius:50%;
+      border: 1.6px solid rgba(0,0,0,.14);
+      background: var(--mint);
+    }
+    .voice[data-on="true"] .micDot{ background: #ff7ab7; }
+
+    /* footer */
+    footer{
+      padding: 34px 0 60px;
+      border-top: 1px solid rgba(0,0,0,.08);
+      background: rgba(255,255,255,.16);
+    }
+    .foot{
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap:wrap;
+      align-items:flex-end;
+    }
+    .foot small{ opacity:.75; line-height:1.45; font-weight: 700; }
+
+    /* responsive */
     @media (max-width: 980px){
       .heroGrid{ grid-template-columns: 1fr; }
-      .navlinks{ display:none; }
-      .minimap{ display:none !important; }
-      .brand{ min-width:auto; }
-      .nav-actions{ min-width:auto; }
-      .split{ grid-template-columns: 1fr; }
-      .proj{ grid-column: span 6; }
-      .step{ grid-column: span 6; }
-      .person{ grid-column: span 4; }
+      .links{ display:none; }
+      .impact{ grid-template-columns: 1fr; }
     }
     @media (max-width: 640px){
-      .proj{ grid-column: span 12; }
-      .block{ grid-column: span 12; }
-      .step{ grid-column: span 12; }
-      .person{ grid-column: span 6; }
-      .mobPill{ display:flex; }
-      .menuBtn{ padding: 8px 12px; }
-      .sticker{ display:none; } /* keep clean on small screens */
-      .scribble{ display:none; }
-    }
-    @media (min-width: 981px){
-      .minimap{ display:block; }
+      .card{ grid-column: span 12; }
+      .sticker, .scribble{ display:none; }
     }
   </style>
 </head>
 
 <body>
-  <div class="paper"></div>
+  <div class="paperBg"></div>
   <div class="grain"></div>
+  <div class="halftone"></div>
   <div class="progress" id="progress"></div>
 
-  <!-- Desktop minimap -->
-  <nav class="minimap" aria-label="Minimap">
-    <div class="rail" id="minimapRail"></div>
-  </nav>
-
-  <!-- Mobile pill -->
-  <div class="mobPill" id="mobPill" aria-label="Quick nav">
-    <button id="mobPrev" type="button">↑</button>
-    <div class="now" id="mobNow">ActivEU</div>
-    <button id="mobNext" type="button">↓</button>
-  </div>
-
-  <!-- Mobile drawer -->
+  <!-- Drawer -->
   <div class="drawer" id="drawer" data-open="false" aria-hidden="true">
-    <div class="backdrop" id="drawerBg"></div>
+    <div class="bg" id="drawerBg"></div>
     <div class="panel" role="dialog" aria-modal="true" aria-label="Menu">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
-        <h3 data-i18n="menu_title">Menu</h3>
+        <h3>MENU</h3>
         <button class="pill" id="closeDrawer" type="button" aria-label="Fechar">✕</button>
       </div>
-      <a href="#why" class="drawerLink"><span>01</span> <span data-i18n="nav_why">Porque funciona</span></a>
-      <a href="#what" class="drawerLink"><span>02</span> <span data-i18n="nav_what">O que fazemos</span></a>
-      <a href="#projects" class="drawerLink"><span>03</span> <span data-i18n="nav_projects">Projetos</span></a>
-      <a href="#process" class="drawerLink"><span>04</span> <span data-i18n="nav_process">Processo</span></a>
-      <a href="#youthreach" class="drawerLink"><span>05</span> <span data-i18n="nav_youthreach">YouthReach</span></a>
-      <a href="#about" class="drawerLink"><span>06</span> <span data-i18n="nav_about">Sobre</span></a>
+      <a class="dLink" href="#why"><span>01</span> Porque funciona</a>
+      <a class="dLink" href="#impact"><span>02</span> Impact Lab</a>
+      <a class="dLink" href="#what"><span>03</span> O que fazemos</a>
+      <a class="dLink" href="#process"><span>04</span> Processo</a>
+      <a class="dLink" href="#youthreach"><span>05</span> YouthReach</a>
+      <a class="dLink" href="#about"><span>06</span> Sobre</a>
 
-      <div style="margin-top:auto; display:grid; gap:10px;">
+      <div style="margin-top:auto; display:flex; gap:10px; flex-wrap:wrap;">
         <button class="pill" id="openPalette2" type="button">
-          <span data-i18n="cmd_open">Abrir pesquisa</span>
+          Pesquisa
           <span class="kbd">Ctrl K</span>
         </button>
-        <button class="langBtn" id="langBtn2" type="button" aria-label="Language">
-          PT / EN
-        </button>
+        <button class="pill" id="toggleLang2" type="button">PT / EN</button>
       </div>
     </div>
   </div>
 
   <!-- Command palette -->
   <div class="palette" id="palette" data-open="false" aria-hidden="true">
-    <div class="bg" id="paletteBg"></div>
-    <div class="modal" role="dialog" aria-modal="true" aria-label="Pesquisa">
+    <div class="bg" id="palBg"></div>
+    <div class="modal" id="palModal" role="dialog" aria-modal="true" aria-label="Pesquisa">
       <div class="top">
-        <input id="paletteInput" type="text" autocomplete="off" placeholder="Pesquisar… (ex.: processo, projetos, YouthReach)" />
+        <input id="palInput" type="text" autocomplete="off" placeholder="Pesquisar… (ex.: impacto, processo, YouthReach)"/>
         <div class="hint">Esc</div>
       </div>
-      <div class="list" id="paletteList"></div>
+      <div class="list" id="palList"></div>
     </div>
   </div>
 
@@ -972,31 +688,33 @@
     <div class="wrap">
       <div class="nav">
         <div class="brand">
+          <div class="logoMark">A</div>
           <div>
-            <div class="brand-badge" aria-label="ActivEU">
-              <span class="brand-dot"></span>
-              <span>ActivEU</span>
-            </div>
-            <small data-i18n="brand_sub">Solidarity Action Day em Portugal</small>
+            <div>ActivEU</div>
+            <small>Solidarity Action Day em Portugal</small>
           </div>
         </div>
 
-        <nav class="navlinks" aria-label="Primary">
-          <a href="#why" class="navlink" data-id="why" data-i18n="nav_why">Porque funciona</a>
-          <a href="#what" class="navlink" data-id="what" data-i18n="nav_what">O que fazemos</a>
-          <a href="#projects" class="navlink" data-id="projects" data-i18n="nav_projects">Projetos</a>
-          <a href="#process" class="navlink" data-id="process" data-i18n="nav_process">Processo</a>
-          <a href="#youthreach" class="navlink" data-id="youthreach" data-i18n="nav_youthreach">YouthReach</a>
-          <a href="#about" class="navlink" data-id="about" data-i18n="nav_about">Sobre</a>
+        <nav class="links" aria-label="Primary">
+          <a class="navlink" data-id="why" href="#why">Porque funciona</a>
+          <a class="navlink" data-id="impact" href="#impact">Impact Lab</a>
+          <a class="navlink" data-id="what" href="#what">O que fazemos</a>
+          <a class="navlink" data-id="process" href="#process">Processo</a>
+          <a class="navlink" data-id="youthreach" href="#youthreach">YouthReach</a>
+          <a class="navlink" data-id="about" href="#about">Sobre</a>
         </nav>
 
-        <div class="nav-actions">
-          <button class="pill" id="openPalette" type="button" aria-label="Pesquisar">
-            <span data-i18n="cmd_open">Abrir pesquisa</span>
+        <div class="actions">
+          <button class="voice" id="voiceBtn" type="button" aria-label="Voice navigation" title="Diz: 'Ir para Impact', 'Ir para Processo'">
+            <span class="micDot"></span>
+            <span id="voiceLabel">Voice</span>
+          </button>
+          <button class="pill" id="openPalette" type="button">
+            Pesquisa
             <span class="kbd">Ctrl K</span>
           </button>
-          <button class="langBtn" id="langBtn" type="button" aria-label="Language toggle">PT / EN</button>
-          <button class="menuBtn" id="menuBtn" type="button" aria-label="Menu">MENU</button>
+          <button class="pill" id="toggleLang" type="button">PT / EN</button>
+          <button class="menuBtn" id="menuBtn" type="button">MENU</button>
         </div>
       </div>
     </div>
@@ -1006,70 +724,59 @@
     <!-- HERO -->
     <section class="hero" id="top" data-title="ActivEU">
       <div class="wrap">
-        <!-- Stickers (desktop) -->
-        <div class="sticker" style="left:22px; top:34px" data-tone="mint">
-          <span class="dot"></span><span data-i18n="stk_young">Jovem</span>
-        </div>
-        <div class="sticker" style="left:170px; top:114px" data-tone="sun">
-          <span class="dot" style="background:var(--sun)"></span><span data-i18n="stk_solidarity">Solidária</span>
-        </div>
-        <div class="sticker" style="right:220px; top:48px" data-tone="lav">
-          <span class="dot" style="background:var(--lav)"></span><span data-i18n="stk_european">Europeia</span>
-        </div>
-        <div class="sticker" style="right:52px; top:134px" data-tone="sky">
-          <span class="dot" style="background:var(--sky)"></span><span data-i18n="stk_creative">Criativa</span>
-        </div>
 
-        <!-- Scribbles (desktop) -->
-        <svg class="scribble" style="left:-10px; top:2px;" viewBox="0 0 220 120" aria-hidden="true">
-          <path d="M12 98 C38 60, 58 78, 82 48 C108 16, 136 28, 164 14 C184 4, 198 8, 210 16"
-                fill="none" stroke="rgba(0,0,0,.75)" stroke-width="2.2" stroke-linecap="round"/>
-          <path d="M198 18 l12 -2 l-6 10" fill="none" stroke="rgba(0,0,0,.75)" stroke-width="2.2" stroke-linecap="round"/>
+        <!-- Stickers like Agenius -->
+        <div class="sticker" data-tone="mint" style="left:22px; top:34px; --rot:-2.2deg;">Jovem</div>
+        <div class="sticker" data-tone="sun"  style="left:154px; top:116px; --rot:1.8deg;">Solidária</div>
+        <div class="sticker" data-tone="lav"  style="right:210px; top:44px; --rot:-1.2deg;">Europeia</div>
+        <div class="sticker" data-tone="sky"  style="right:50px; top:132px; --rot:2.6deg;">Criativa</div>
+
+        <!-- Scribbles/arrows -->
+        <svg class="scribble" style="left:-8px; top:0; width:260px; height:140px;" viewBox="0 0 260 140" aria-hidden="true">
+          <path d="M12 118 C42 76, 72 92, 98 56 C126 16, 160 34, 196 18 C218 8, 238 10, 250 20"
+                fill="none" stroke="rgba(20,10,18,.85)" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M236 22 l16 -4 l-8 14" fill="none" stroke="rgba(20,10,18,.85)" stroke-width="2.6" stroke-linecap="round"/>
         </svg>
 
         <div class="heroGrid">
           <div>
-            <div class="bigWord">ACTIVEU</div>
-
-            <div class="subLine">
-              <div class="tagline" data-i18n="hero_tagline">
-                O teu dia. A tua ação. O teu impacto.
-              </div>
-              <div class="micro" data-i18n="hero_micro">
-                Trocas aulas por experiência real em contexto profissional, apoias uma causa verificada e ganhas competências certificadas.
-              </div>
+            <div class="heroTitle">ACTIVEU</div>
+            <div class="tagline">O teu dia. A tua ação. O teu impacto.</div>
+            <div class="micro">
+              Trocas aulas por experiência real em contexto profissional, apoias uma causa verificada e ganhas competências certificadas.
             </div>
 
             <div class="ctaRow">
-              <a class="cta" href="#process" data-i18n="cta_join">Junta-te ao movimento</a>
-              <a class="cta secondary" href="#what" data-i18n="cta_learn">Ver como funciona</a>
+              <a class="cta" href="#impact">Experimenta o Impact Lab</a>
+              <a class="cta secondary" href="#process">Ver como funciona</a>
             </div>
           </div>
 
-          <aside class="heroCard" aria-label="Resumo ActivEU">
+          <aside class="heroCard sketch" data-sketch="card" aria-label="Resumo ActivEU">
             <div class="rings" aria-hidden="true"></div>
-            <div class="content">
-              <h2 data-i18n="hero_card_title">ActivEU Connect</h2>
-              <p data-i18n="hero_card_body">
-                A plataforma que implementa o Solidarity Action Day em Portugal com tecnologia, transparência e meritocracia.
+            <div class="inner">
+              <h2>ActivEU Connect</h2>
+              <p>
+                Uma plataforma desenhada para confiança: verificação, matching justo, doação transparente e relatório de impacto.
               </p>
-              <div class="heroStats">
-                <div class="stat">
-                  <b>1</b>
-                  <span data-i18n="stat_day">dia = experiência real</span>
+
+              <div class="stats">
+                <div class="stat sketch" data-sketch="stat">
+                  <b>1</b><span>dia = experiência real</span>
                 </div>
-                <div class="stat">
-                  <b>0</b>
-                  <span data-i18n="stat_bias">viés (sem foto/nome)</span>
+                <div class="stat sketch" data-sketch="stat">
+                  <b>0</b><span>viés (sem foto/nome)</span>
                 </div>
-                <div class="stat">
-                  <b>100%</b>
-                  <span data-i18n="stat_transparency">doação transparente</span>
+                <div class="stat sketch" data-sketch="stat">
+                  <b>✓</b><span>certificação</span>
                 </div>
-                <div class="stat">
-                  <b>✓</b>
-                  <span data-i18n="stat_cert">certificação & impacto</span>
+                <div class="stat sketch" data-sketch="stat">
+                  <b>100%</b><span>doação rastreável</span>
                 </div>
+              </div>
+
+              <div class="tiny" style="margin-top:10px;">
+                Dica: Ctrl/⌘ + K para navegar. Ou usa Voice e diz: “Ir para Impact”.
               </div>
             </div>
           </aside>
@@ -1077,352 +784,252 @@
       </div>
     </section>
 
-    <!-- WHY (7 blocks) -->
-    <section id="why" data-title="Porque funciona" style="background: var(--cream);">
-      <div class="ringsBg" aria-hidden="true"></div>
+    <!-- WHY -->
+    <section id="why" data-title="Porque funciona">
       <div class="scallopTop" aria-hidden="true"></div>
       <div class="scallopBottom" aria-hidden="true"></div>
 
       <div class="wrap">
         <div class="head">
           <div>
-            <div class="kicker"><i></i> <span data-i18n="why_kicker">Uma ideia simples. Um impacto gigantesco.</span></div>
-            <h2 class="sectionTitle" data-i18n="why_title">Porque funciona</h2>
-            <p class="lead" data-i18n="why_lead">
+            <div class="kicker sketch" data-sketch="kicker"><i></i> Uma ideia simples. Um impacto gigantesco.</div>
+            <h2 class="sectionTitle">Porque funciona</h2>
+            <p class="lead">
               O SAD cria valor simultâneo para jovens, empresas e causas. O desenho é intencional: rigor, utilidade e confiança.
             </p>
           </div>
         </div>
 
-        <div class="grid7">
-          <article class="block">
-            <div class="badge">01</div>
-            <h3 data-i18n="why_1_t">Jovens que transformam o seu futuro (e o dos outros)</h3>
-            <p data-i18n="why_1_p">Vives um dia em contexto profissional, descobres o que gostas, ganhas experiência e tomas decisões mais conscientes. E fazes a diferença.</p>
+        <div class="grid">
+          <article class="card sketch" data-sketch="card">
+            <div class="badge sketch" data-sketch="badge">01</div>
+            <h3>Jovens que transformam o seu futuro (e o dos outros)</h3>
+            <p>Um dia em contexto profissional: descobres o que gostas, ganhas experiência e fazes a diferença.</p>
           </article>
 
-          <article class="block">
-            <div class="badge">02</div>
-            <h3 data-i18n="why_2_t">Empresas que descobrem talento com propósito</h3>
-            <p data-i18n="why_2_p">Acolhem jovens motivados, testam compatibilidade, fortalecem reputação social e descobrem futuros colaboradores, sem ruído nem falsas promessas.</p>
+          <article class="card sketch" data-sketch="card">
+            <div class="badge sketch" data-sketch="badge">02</div>
+            <h3>Empresas que descobrem talento com propósito</h3>
+            <p>Testam compatibilidade, reforçam reputação social e encontram futuros colaboradores sem ruído.</p>
           </article>
 
-          <article class="block">
-            <div class="badge">03</div>
-            <h3 data-i18n="why_3_t">Causas que continuam o seu trabalho essencial</h3>
-            <p data-i18n="why_3_p">O valor angariado é doado a causas verificadas, com transparência. Menos fricção, mais continuidade e confiança pública.</p>
+          <article class="card sketch" data-sketch="card">
+            <div class="badge sketch" data-sketch="badge">03</div>
+            <h3>Causas que continuam o seu trabalho essencial</h3>
+            <p>Doações verificadas e rastreáveis, com transparência. Menos fricção, mais continuidade.</p>
           </article>
 
-          <article class="block">
-            <div class="badge">04</div>
-            <h3 data-i18n="why_4_t">Educação com sentido (fora da sala)</h3>
-            <p data-i18n="why_4_p">Aprendizagem não formal, competências reais, responsabilidade cívica. O SAD não compete com a educação, amplia-a.</p>
+          <article class="card sketch" data-sketch="card">
+            <div class="badge sketch" data-sketch="badge">04</div>
+            <h3>Meritocracia justa (sem enviesamentos óbvios)</h3>
+            <p>Sem foto, sem nome, sem idade. O foco é compatibilidade e mérito real, não perceções.</p>
           </article>
 
-          <article class="block">
-            <div class="badge">05</div>
-            <h3 data-i18n="why_5_t">Meritocracia justa (sem enviesamentos óbvios)</h3>
-            <p data-i18n="why_5_p">O matching é pensado para reduzir preconceitos: sem foto, sem nome, sem idade. O foco é compatibilidade e mérito.</p>
-          </article>
-
-          <article class="block">
-            <div class="badge">06</div>
-            <h3 data-i18n="why_6_t">Transparência como regra, não como marketing</h3>
-            <p data-i18n="why_6_p">Doações rastreáveis, recibos, relatórios de impacto. A confiança é um mecanismo do sistema, não uma esperança.</p>
-          </article>
-
-          <article class="block" style="grid-column: span 12;">
-            <div class="badge">07</div>
-            <h3 data-i18n="why_7_t">Escala com integridade</h3>
-            <p data-i18n="why_7_p">Um modelo desenhado para crescer sem perder qualidade: verificação prévia, regras claras, incentivos corretos e avaliação contínua.</p>
+          <article class="card full sketch" data-sketch="card">
+            <div class="badge sketch" data-sketch="badge">05</div>
+            <h3>Escala com integridade</h3>
+            <p>Verificação prévia, regras claras, incentivos corretos e avaliação contínua para crescer sem perder qualidade.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- WHAT (accordion + explanation) -->
-    <section id="what" data-title="O que fazemos" style="background: var(--cream);">
+    <!-- IMPACT LAB (the "2046" piece) -->
+    <section id="impact" data-title="Impact Lab">
       <div class="wrap">
         <div class="head">
           <div>
-            <div class="kicker"><i></i> <span data-i18n="what_kicker">Tecnologia, inovação, solidariedade, educação.</span></div>
-            <h2 class="sectionTitle" data-i18n="what_title">O que fazemos (e fazemos com impacto)</h2>
-            <p class="lead" data-i18n="what_lead">
-              Construímos uma infraestrutura de participação: simples no uso, robusta por dentro.
+            <div class="kicker sketch" data-sketch="kicker"><i></i> Uma experiência “quase-app”, sem backend.</div>
+            <h2 class="sectionTitle">Impact Lab</h2>
+            <p class="lead">
+              Simula impacto. Gera um snapshot partilhável. Navega por voz. Aqui vês tecnologia com propósito.
             </p>
           </div>
         </div>
 
-        <div class="split">
-          <div class="accordion" id="accordion">
-            <details open data-key="connect">
-              <summary>
-                <div class="sumLeft">
-                  <div class="chip">A</div>
-                  <div>
-                    <div data-i18n="what_1_t">ActivEU Connect: Solidarity Action Day em Portugal</div>
-                    <div class="sumMeta" data-i18n="what_1_m">Plataforma • Matching • Doação • Certificação</div>
-                  </div>
-                </div>
-                <div class="caret"></div>
-              </summary>
-              <div class="panel">
-                <div class="labels">
-                  <span class="label" data-i18n="lbl_structured">Voluntariado Estruturado</span>
-                  <span class="label" data-i18n="lbl_cert">Certificação e Impacto</span>
-                  <span class="label" data-i18n="lbl_transparent">Doações Transparentes</span>
-                  <span class="label" data-i18n="lbl_partners">Parcerias Educativas</span>
-                </div>
-                <div style="font-size:13px;opacity:.82;line-height:1.5" data-i18n="what_1_p">
-                  A ActivEU Connect implementa o modelo europeu Solidarity Action Day em Portugal. Jovens ganham experiência real em ambiente profissional; empresas acolhem; e o valor reverte para causas verificadas.
-                </div>
-              </div>
-            </details>
+        <div class="impact">
+          <div class="panel sketch" data-sketch="card">
+            <h3>Impact Simulator</h3>
+            <p>Escolhe perfil e ajusta variáveis. A ActivEU devolve um “Impact Snapshot” e podes fazer download local.</p>
 
-            <details data-key="sad">
-              <summary>
-                <div class="sumLeft">
-                  <div class="chip">B</div>
-                  <div>
-                    <div data-i18n="what_2_t">SAD Permanente e SAD Anual</div>
-                    <div class="sumMeta" data-i18n="what_2_m">Doação sugerida • Reputação • Escala</div>
-                  </div>
-                </div>
-                <div class="caret"></div>
-              </summary>
-              <div class="panel">
-                <div class="labels">
-                  <span class="label" data-i18n="lbl_permanent">Permanente</span>
-                  <span class="label" data-i18n="lbl_annual">Anual</span>
-                  <span class="label" data-i18n="lbl_incentives">Incentivos Reputacionais</span>
-                </div>
-                <div style="font-size:13px;opacity:.82;line-height:1.5" data-i18n="what_2_p">
-                  No SAD Permanente existe uma contribuição sugerida por dia para fortalecer impacto e sustentabilidade. No SAD Anual a participação pode ser gratuita e a doação opcional, mas incentivada.
-                </div>
-              </div>
-            </details>
-
-            <details data-key="community">
-              <summary>
-                <div class="sumLeft">
-                  <div class="chip">C</div>
-                  <div>
-                    <div data-i18n="what_3_t">Projetos comunitários complementares</div>
-                    <div class="sumMeta" data-i18n="what_3_m">Inclusão • Intergeracionalidade • Cultura</div>
-                  </div>
-                </div>
-                <div class="caret"></div>
-              </summary>
-              <div class="panel">
-                <div class="labels">
-                  <span class="label">Raízes & Risos</span>
-                  <span class="label">Tradições em Páginas</span>
-                  <span class="label" data-i18n="lbl_access">Acessibilidade</span>
-                </div>
-                <div style="font-size:13px;opacity:.82;line-height:1.5" data-i18n="what_3_p">
-                  Mini-festivais intergeracionais e recolha de histórias/jogos tradicionais para livro/documentário. Coesão social com desenho acessível.
-                </div>
-              </div>
-            </details>
-
-            <details data-key="youthreach">
-              <summary>
-                <div class="sumLeft">
-                  <div class="chip">D</div>
-                  <div>
-                    <div data-i18n="what_4_t">YouthReach & Creative Support</div>
-                    <div class="sumMeta" data-i18n="what_4_m">Diagnóstico • Participação • Comunicação</div>
-                  </div>
-                </div>
-                <div class="caret"></div>
-              </summary>
-              <div class="panel">
-                <div class="labels">
-                  <span class="label" data-i18n="lbl_diagnosis">Diagnóstico Jovem</span>
-                  <span class="label" data-i18n="lbl_cocreation">Co-criação</span>
-                  <span class="label" data-i18n="lbl_content">Conteúdo</span>
-                </div>
-                <div style="font-size:13px;opacity:.82;line-height:1.5" data-i18n="what_4_p">
-                  Apoiamos municípios, escolas, empresas e organizações a compreender e envolver jovens em políticas, serviços e decisões. Com método, formação e comunicação adaptada.
-                </div>
-              </div>
-            </details>
-          </div>
-
-          <aside class="explain" aria-label="Explicação dinâmica">
-            <div class="ringsMini" aria-hidden="true"></div>
-            <div class="box">
-              <h3 id="exTitle" data-i18n="exp_title">ActivEU Connect</h3>
-              <p id="exText" data-i18n="exp_text">
-                Um sistema completo: registo rápido, validação, matching justo, experiência, doação rastreável, avaliação e relatório de impacto.
-              </p>
-
-              <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">
-                <a class="cta secondary" href="#process" data-i18n="exp_cta">Ver o processo</a>
-                <button class="cta" type="button" id="openPalette3" data-i18n="exp_search">Pesquisar no site</button>
+            <div class="controls">
+              <div class="row">
+                <label for="role">Perfil</label>
+                <select id="role">
+                  <option value="jovem">Jovem</option>
+                  <option value="empresa">Empresa</option>
+                  <option value="escola">Escola</option>
+                  <option value="municipio">Município</option>
+                </select>
               </div>
 
-              <div style="margin-top:8px;font-size:12px;opacity:.7;line-height:1.45" data-i18n="exp_note">
-                Dica: carrega Ctrl/⌘ + K para abrir a command palette e saltar para qualquer secção.
+              <div class="row">
+                <label for="participants">Participantes por mês</label>
+                <input id="participants" type="range" min="10" max="2000" value="150" />
+                <div class="tiny"><b id="participantsVal">150</b> participantes/mês</div>
+              </div>
+
+              <div class="row">
+                <label for="donation">Doação média por dia (EUR)</label>
+                <input id="donation" type="range" min="0" max="25" value="10" />
+                <div class="tiny"><b id="donationVal">10</b> € por participação</div>
+              </div>
+
+              <div class="row">
+                <label for="quality">Qualidade da experiência (0–100)</label>
+                <input id="quality" type="range" min="40" max="100" value="86" />
+                <div class="tiny"><b id="qualityVal">86</b>/100</div>
+              </div>
+
+              <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top: 6px;">
+                <button class="cta secondary" id="copySnapshot" type="button">Copiar snapshot</button>
+                <button class="cta" id="downloadSnapshot" type="button">Download snapshot</button>
               </div>
             </div>
-          </aside>
+
+            <div class="out sketch" data-sketch="box" id="snapshot"></div>
+            <div class="tiny">Isto é client-side: não há tracking, não há cookies, não há “fake AI”. A experiência é real e respeita privacidade.</div>
+          </div>
+
+          <div class="panel sketch" data-sketch="card">
+            <h3>Voice Navigation</h3>
+            <p>Carrega no botão “Voice” e diz: “Ir para Impact”, “Ir para Processo”, “Ir para YouthReach”, “Abrir pesquisa”.</p>
+
+            <div class="out sketch" data-sketch="box" id="voiceLog">Estado: pronto.</div>
+
+            <div class="tiny">
+              Nota: funciona em browsers com Web Speech API (Chrome/Edge geralmente). Se não existir, o botão mantém-se, mas sem erro.
+            </div>
+
+            <div style="margin-top:12px;">
+              <button class="pill" id="openPalette3" type="button">Abrir pesquisa <span class="kbd">Ctrl K</span></button>
+            </div>
+
+            <div class="tiny" style="margin-top:10px;">
+              Extra “2046”: este lab é uma demo de como a ActivEU pensa produto: explicável, útil, e com zero fricção.
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- PROJECTS -->
-    <section id="projects" data-title="Projetos" style="background: var(--cream);">
-      <div class="ringsBg" aria-hidden="true"></div>
+    <!-- WHAT -->
+    <section id="what" data-title="O que fazemos">
       <div class="scallopTop" aria-hidden="true"></div>
       <div class="scallopBottom" aria-hidden="true"></div>
 
       <div class="wrap">
         <div class="head">
           <div>
-            <div class="kicker"><i></i> <span data-i18n="proj_kicker">Portefólio</span></div>
-            <h2 class="sectionTitle" data-i18n="proj_title">Os nossos projetos</h2>
-            <p class="lead" data-i18n="proj_lead">Estruturados para escalar, desenhados para criar confiança.</p>
+            <div class="kicker sketch" data-sketch="kicker"><i></i> Tecnologia, solidariedade, educação.</div>
+            <h2 class="sectionTitle">O que fazemos</h2>
+            <p class="lead">Construímos infraestrutura de participação: simples no uso, robusta por dentro.</p>
           </div>
         </div>
 
-        <div class="projGrid">
-          <article class="proj">
-            <div class="st">ActivEU Connect</div>
-            <h4 data-i18n="proj_1_t">A plataforma</h4>
-            <p data-i18n="proj_1_p">Matching meritocrático, verificação, recibos, relatórios de impacto e certificação.</p>
+        <div class="grid">
+          <article class="card sketch" data-sketch="card">
+            <div class="badge sketch" data-sketch="badge">A</div>
+            <h3>ActivEU Connect</h3>
+            <p>Matching meritocrático, verificação, doações rastreáveis e relatórios de impacto com certificação.</p>
           </article>
-          <article class="proj">
-            <div class="st">SAD</div>
-            <h4 data-i18n="proj_2_t">Solidarity Action Day</h4>
-            <p data-i18n="proj_2_p">Um dia que muda duas coisas ao mesmo tempo: o teu percurso e a vida de alguém.</p>
-          </article>
-          <article class="proj">
-            <div class="st">YouthReach</div>
-            <h4 data-i18n="proj_3_t">Apoio a entidades</h4>
-            <p data-i18n="proj_3_p">Diagnóstico jovem, processos participativos, formação interna e comunicação adaptada.</p>
-          </article>
-        </div>
 
-        <div style="margin-top:14px;font-size:12px;opacity:.72" data-i18n="proj_note">
-          Nota: esta secção está preparada para receber mais cards à medida que fores adicionando projetos.
+          <article class="card sketch" data-sketch="card">
+            <div class="badge sketch" data-sketch="badge">B</div>
+            <h3>SAD Permanente / SAD Anual</h3>
+            <p>Duas modalidades para escalar impacto: contínuo com contribuição sugerida e anual para mobilização ampla.</p>
+          </article>
+
+          <article class="card sketch" data-sketch="card">
+            <div class="badge sketch" data-sketch="badge">C</div>
+            <h3>Projetos comunitários</h3>
+            <p>Coesão social com desenho acessível: intergeracionalidade, cultura e inclusão em formatos replicáveis.</p>
+          </article>
+
+          <article class="card sketch" data-sketch="card">
+            <div class="badge sketch" data-sketch="badge">D</div>
+            <h3>YouthReach & Creative Support</h3>
+            <p>Diagnóstico jovem, processos participativos, formação interna e comunicação institucional adaptada.</p>
+          </article>
         </div>
       </div>
     </section>
 
     <!-- PROCESS -->
-    <section id="process" data-title="Processo" style="background: var(--cream);">
+    <section id="process" data-title="Processo">
       <div class="wrap">
         <div class="head">
           <div>
-            <div class="kicker"><i></i> <span data-i18n="proc_kicker">ActivEU Connect</span></div>
-            <h2 class="sectionTitle" data-i18n="proc_title">Processo</h2>
-            <p class="lead" data-i18n="proc_lead">
-              Registo rápido. Verificação simples. Matching justo. Experiência real. Impacto comprovável.
-            </p>
+            <div class="kicker sketch" data-sketch="kicker"><i></i> Uma jornada clara (sem fricção).</div>
+            <h2 class="sectionTitle">Processo</h2>
+            <p class="lead">Registo rápido. Verificação simples. Matching justo. Experiência real. Impacto comprovável.</p>
           </div>
         </div>
 
-        <div class="steps">
-          <article class="step">
-            <b>01</b>
-            <h4 data-i18n="p1_t">Regista-te</h4>
-            <p data-i18n="p1_p">Em menos de dois minutos. Carregas uma prova académica simples. A plataforma valida e ativa o teu perfil com segurança.</p>
+        <div class="grid">
+          <article class="card sketch" data-sketch="card">
+            <div class="badge sketch" data-sketch="badge">01</div>
+            <h3>Regista-te</h3>
+            <p>Em poucos minutos. Ativação segura e transparente.</p>
           </article>
-          <article class="step">
-            <b>02</b>
-            <h4 data-i18n="p2_t">Candidata-te e destaca-te</h4>
-            <p data-i18n="p2_p">Exploras oportunidades e candidatas-te. O algoritmo analisa compatibilidade de forma meritocrática (sem foto, sem nome, sem idade).</p>
+          <article class="card sketch" data-sketch="card">
+            <div class="badge sketch" data-sketch="badge">02</div>
+            <h3>Candidata-te</h3>
+            <p>O algoritmo analisa compatibilidade (sem foto/nome/idade). Mérito e contexto, não perceção.</p>
           </article>
-          <article class="step">
-            <b>03</b>
-            <h4 data-i18n="p3_t">Participa e cria valor real</h4>
-            <p data-i18n="p3_p">Ganhas experiência prática e contribuis para a causa que escolheste. No fim, tens certificação e impacto mensurável.</p>
+          <article class="card full sketch" data-sketch="card">
+            <div class="badge sketch" data-sketch="badge">03</div>
+            <h3>Participa e mede impacto</h3>
+            <p>Concluis a experiência, escolhes a causa, e recebes certificação + relatório de impacto.</p>
           </article>
         </div>
       </div>
     </section>
 
     <!-- YOUTHREACH -->
-    <section id="youthreach" data-title="YouthReach" style="background: var(--cream);">
-      <div class="ringsBg" aria-hidden="true"></div>
+    <section id="youthreach" data-title="YouthReach">
       <div class="scallopTop" aria-hidden="true"></div>
       <div class="scallopBottom" aria-hidden="true"></div>
 
       <div class="wrap">
         <div class="head">
           <div>
-            <div class="kicker"><i></i> <span>ActivEU YouthReach & Creative Support</span></div>
-            <h2 class="sectionTitle" data-i18n="yr_title">Ajudamos entidades a chegar aos jovens</h2>
-            <p class="lead" data-i18n="yr_lead">
-              Diagnóstico rigoroso, processos participativos estruturados, formação interna e comunicação institucional adaptada às novas gerações.
-            </p>
+            <div class="kicker sketch" data-sketch="kicker"><i></i> ActivEU YouthReach & Creative Support</div>
+            <h2 class="sectionTitle">Ajudamos entidades a chegar aos jovens</h2>
+            <p class="lead">Diagnóstico rigoroso, participação estruturada, formação interna e comunicação adaptada.</p>
           </div>
         </div>
 
-        <div class="aboutCard">
-          <div style="display:grid;gap:10px;font-size:13px;opacity:.84;line-height:1.6" data-i18n="yr_body">
-            <div>• Diagnóstico Jovem local e organizacional</div>
-            <div>• Metodologias participativas para cocriar políticas e soluções</div>
-            <div>• Workshops e sessões de co-criação</div>
-            <div>• Formação interna: como trabalhar com jovens, comunicar melhor e implementar participação contínua</div>
-            <div>• Orientação em narrativas e comunicação institucional jovem</div>
-            <div>• Apoio técnico em produção audiovisual estratégica</div>
-            <div>• Recomendações práticas e aplicáveis para reforçar programas, serviços e decisões</div>
-          </div>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;">
-            <a class="cta" href="#about" data-i18n="yr_cta">Falar connosco</a>
-            <button class="cta secondary" type="button" id="openPalette4" data-i18n="yr_cta2">Ver tudo (pesquisa)</button>
-          </div>
+        <div class="grid">
+          <article class="card full sketch" data-sketch="card">
+            <h3>O que oferecemos</h3>
+            <p>
+              Diagnóstico Jovem local e organizacional • Metodologias participativas • Workshops e sessões de co-criação •
+              Formação interna (trabalho com jovens, comunicação, participação contínua) • Orientação em narrativas • Apoio multimédia estratégico.
+            </p>
+          </article>
         </div>
       </div>
     </section>
 
     <!-- ABOUT -->
-    <section id="about" data-title="Sobre" style="background: var(--cream);">
+    <section id="about" data-title="Sobre">
       <div class="wrap">
         <div class="head">
           <div>
-            <div class="kicker"><i></i> <span data-i18n="about_kicker">Sobre nós</span></div>
-            <h2 class="sectionTitle" data-i18n="about_title">Uma associação jovem com desenho europeu</h2>
-            <p class="lead" data-i18n="about_lead">
-              Acreditamos numa coisa simples: os jovens merecem mais oportunidades, mais voz e mais futuro em Portugal.
-            </p>
+            <div class="kicker sketch" data-sketch="kicker"><i></i> Transparência. Impacto. Escala.</div>
+            <h2 class="sectionTitle">Sobre a ActivEU</h2>
+            <p class="lead">Uma associação jovem solidária europeia, com desenho institucional sério e ambição de referência.</p>
           </div>
         </div>
 
-        <div class="aboutCard">
-          <div style="font-size:13px;opacity:.84;line-height:1.6" data-i18n="about_body">
-            A ActivEU promove voluntariado jovem estruturado, educação não formal e iniciativas de impacto social. Unimos juventude, setor público, privado e sociedade civil com integridade, transparência e ambição de escala.
-          </div>
-
-          <div class="team" aria-label="Equipa (placeholders)">
-            <div class="person">
-              <div class="avatar">A</div>
-              <b data-i18n="t1_n">Equipa ActivEU</b>
-              <span data-i18n="t1_r">Coordenação</span>
-            </div>
-            <div class="person">
-              <div class="avatar">C</div>
-              <b data-i18n="t2_n">Creative Support</b>
-              <span data-i18n="t2_r">Multimédia</span>
-            </div>
-            <div class="person">
-              <div class="avatar">Y</div>
-              <b data-i18n="t3_n">YouthReach</b>
-              <span data-i18n="t3_r">Participação jovem</span>
-            </div>
-            <div class="person">
-              <div class="avatar">D</div>
-              <b data-i18n="t4_n">Connect</b>
-              <span data-i18n="t4_r">Produto & Operações</span>
-            </div>
-          </div>
-
-          <div class="kicker" style="justify-self:start;">
-            <i></i>
-            <span data-i18n="about_join">Temos lugar para ti!</span>
-          </div>
+        <div class="grid">
+          <article class="card full sketch" data-sketch="card">
+            <h3>Missão</h3>
+            <p>
+              Empoderar jovens para serem cidadãos informados, críticos e solidários, ligando juventude, setor público, privado e sociedade civil.
+            </p>
+          </article>
         </div>
       </div>
     </section>
@@ -1431,16 +1038,16 @@
       <div class="wrap">
         <div class="foot">
           <div>
-            <div class="brand-badge" style="display:inline-flex;">
-              <span class="brand-dot"></span><span>ActivEU</span>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div class="logoMark">A</div>
+              <div style="font-weight:1000;">ActivEU</div>
             </div>
-            <small style="display:block;margin-top:10px;" data-i18n="foot_1">
-              Associação jovem solidária europeia. Transparência, impacto e ambição de escala.
+            <small style="display:block;margin-top:10px;">
+              © <span id="year"></span> ActivEU. Offline-ready (PWA). Ctrl/⌘ + K. Voice nav.
             </small>
           </div>
-          <small data-i18n="foot_2">
-            © <span id="year"></span> ActivEU. <br>
-            Ctrl/⌘ + K para navegar como se estivesses em 2046.
+          <small>
+            Se isto não parece “desenhado” como o Agenius, então ainda não chegámos ao nível certo.
           </small>
         </div>
       </div>
@@ -1448,576 +1055,396 @@
   </main>
 
   <script>
-    // ---------- i18n ----------
-    const I18N = {
-      pt: {
-        brand_sub: "Solidarity Action Day em Portugal",
-        menu_title: "Menu",
-        nav_why: "Porque funciona",
-        nav_what: "O que fazemos",
-        nav_projects: "Projetos",
-        nav_process: "Processo",
-        nav_youthreach: "YouthReach",
-        nav_about: "Sobre",
-        cmd_open: "Abrir pesquisa",
-
-        stk_young: "Jovem",
-        stk_solidarity: "Solidária",
-        stk_european: "Europeia",
-        stk_creative: "Criativa",
-
-        hero_tagline: "O teu dia. A tua ação. O teu impacto.",
-        hero_micro: "Trocas aulas por experiência real em contexto profissional, apoias uma causa verificada e ganhas competências certificadas.",
-        cta_join: "Junta-te ao movimento",
-        cta_learn: "Ver como funciona",
-
-        hero_card_title: "ActivEU Connect",
-        hero_card_body: "A plataforma que implementa o Solidarity Action Day em Portugal com tecnologia, transparência e meritocracia.",
-        stat_day: "dia = experiência real",
-        stat_bias: "viés (sem foto/nome)",
-        stat_transparency: "doação transparente",
-        stat_cert: "certificação & impacto",
-
-        why_kicker: "Uma ideia simples. Um impacto gigantesco.",
-        why_title: "Porque funciona",
-        why_lead: "O SAD cria valor simultâneo para jovens, empresas e causas. O desenho é intencional: rigor, utilidade e confiança.",
-
-        why_1_t: "Jovens que transformam o seu futuro (e o dos outros)",
-        why_1_p: "Vives um dia em contexto profissional, descobres o que gostas, ganhas experiência e tomas decisões mais conscientes. E fazes a diferença.",
-        why_2_t: "Empresas que descobrem talento com propósito",
-        why_2_p: "Acolhem jovens motivados, testam compatibilidade, fortalecem reputação social e descobrem futuros colaboradores, sem ruído nem falsas promessas.",
-        why_3_t: "Causas que continuam o seu trabalho essencial",
-        why_3_p: "O valor angariado é doado a causas verificadas, com transparência. Menos fricção, mais continuidade e confiança pública.",
-        why_4_t: "Educação com sentido (fora da sala)",
-        why_4_p: "Aprendizagem não formal, competências reais, responsabilidade cívica. O SAD não compete com a educação, amplia-a.",
-        why_5_t: "Meritocracia justa (sem enviesamentos óbvios)",
-        why_5_p: "O matching é pensado para reduzir preconceitos: sem foto, sem nome, sem idade. O foco é compatibilidade e mérito.",
-        why_6_t: "Transparência como regra, não como marketing",
-        why_6_p: "Doações rastreáveis, recibos, relatórios de impacto. A confiança é um mecanismo do sistema, não uma esperança.",
-        why_7_t: "Escala com integridade",
-        why_7_p: "Um modelo desenhado para crescer sem perder qualidade: verificação prévia, regras claras, incentivos corretos e avaliação contínua.",
-
-        what_kicker: "Tecnologia, inovação, solidariedade, educação.",
-        what_title: "O que fazemos (e fazemos com impacto)",
-        what_lead: "Construímos uma infraestrutura de participação: simples no uso, robusta por dentro.",
-
-        what_1_t: "ActivEU Connect: Solidarity Action Day em Portugal",
-        what_1_m: "Plataforma • Matching • Doação • Certificação",
-        lbl_structured: "Voluntariado Estruturado",
-        lbl_cert: "Certificação e Impacto",
-        lbl_transparent: "Doações Transparentes",
-        lbl_partners: "Parcerias Educativas",
-        what_1_p: "A ActivEU Connect implementa o modelo europeu Solidarity Action Day em Portugal. Jovens ganham experiência real em ambiente profissional; empresas acolhem; e o valor reverte para causas verificadas.",
-
-        what_2_t: "SAD Permanente e SAD Anual",
-        what_2_m: "Doação sugerida • Reputação • Escala",
-        lbl_permanent: "Permanente",
-        lbl_annual: "Anual",
-        lbl_incentives: "Incentivos Reputacionais",
-        what_2_p: "No SAD Permanente existe uma contribuição sugerida por dia para fortalecer impacto e sustentabilidade. No SAD Anual a participação pode ser gratuita e a doação opcional, mas incentivada.",
-
-        what_3_t: "Projetos comunitários complementares",
-        what_3_m: "Inclusão • Intergeracionalidade • Cultura",
-        lbl_access: "Acessibilidade",
-        what_3_p: "Mini-festivais intergeracionais e recolha de histórias/jogos tradicionais para livro/documentário. Coesão social com desenho acessível.",
-
-        what_4_t: "YouthReach & Creative Support",
-        what_4_m: "Diagnóstico • Participação • Comunicação",
-        lbl_diagnosis: "Diagnóstico Jovem",
-        lbl_cocreation: "Co-criação",
-        lbl_content: "Conteúdo",
-        what_4_p: "Apoiamos municípios, escolas, empresas e organizações a compreender e envolver jovens em políticas, serviços e decisões. Com método, formação e comunicação adaptada.",
-
-        exp_title: "ActivEU Connect",
-        exp_text: "Um sistema completo: registo rápido, validação, matching justo, experiência, doação rastreável, avaliação e relatório de impacto.",
-        exp_cta: "Ver o processo",
-        exp_search: "Pesquisar no site",
-        exp_note: "Dica: carrega Ctrl/⌘ + K para abrir a command palette e saltar para qualquer secção.",
-
-        proj_kicker: "Portefólio",
-        proj_title: "Os nossos projetos",
-        proj_lead: "Estruturados para escalar, desenhados para criar confiança.",
-        proj_1_t: "A plataforma",
-        proj_1_p: "Matching meritocrático, verificação, recibos, relatórios de impacto e certificação.",
-        proj_2_t: "Solidarity Action Day",
-        proj_2_p: "Um dia que muda duas coisas ao mesmo tempo: o teu percurso e a vida de alguém.",
-        proj_3_t: "Apoio a entidades",
-        proj_3_p: "Diagnóstico jovem, processos participativos, formação interna e comunicação adaptada.",
-        proj_note: "Nota: esta secção está preparada para receber mais cards à medida que fores adicionando projetos.",
-
-        proc_kicker: "ActivEU Connect",
-        proc_title: "Processo",
-        proc_lead: "Registo rápido. Verificação simples. Matching justo. Experiência real. Impacto comprovável.",
-        p1_t: "Regista-te",
-        p1_p: "Em menos de dois minutos. Carregas uma prova académica simples. A plataforma valida e ativa o teu perfil com segurança.",
-        p2_t: "Candidata-te e destaca-te",
-        p2_p: "Exploras oportunidades e candidatas-te. O algoritmo analisa compatibilidade de forma meritocrática (sem foto, sem nome, sem idade).",
-        p3_t: "Participa e cria valor real",
-        p3_p: "Ganhas experiência prática e contribuis para a causa que escolheste. No fim, tens certificação e impacto mensurável.",
-
-        yr_title: "Ajudamos entidades a chegar aos jovens",
-        yr_lead: "Diagnóstico rigoroso, processos participativos estruturados, formação interna e comunicação institucional adaptada às novas gerações.",
-        yr_body:
-          "• Diagnóstico Jovem local e organizacional\n" +
-          "• Metodologias participativas para cocriar políticas e soluções\n" +
-          "• Workshops e sessões de co-criação\n" +
-          "• Formação interna: como trabalhar com jovens, comunicar melhor e implementar participação contínua\n" +
-          "• Orientação em narrativas e comunicação institucional jovem\n" +
-          "• Apoio técnico em produção audiovisual estratégica\n" +
-          "• Recomendações práticas e aplicáveis para reforçar programas, serviços e decisões",
-        yr_cta: "Falar connosco",
-        yr_cta2: "Ver tudo (pesquisa)",
-
-        about_kicker: "Sobre nós",
-        about_title: "Uma associação jovem com desenho europeu",
-        about_lead: "Acreditamos numa coisa simples: os jovens merecem mais oportunidades, mais voz e mais futuro em Portugal.",
-        about_body: "A ActivEU promove voluntariado jovem estruturado, educação não formal e iniciativas de impacto social. Unimos juventude, setor público, privado e sociedade civil com integridade, transparência e ambição de escala.",
-        t1_n: "Equipa ActivEU",
-        t1_r: "Coordenação",
-        t2_n: "Creative Support",
-        t2_r: "Multimédia",
-        t3_n: "YouthReach",
-        t3_r: "Participação jovem",
-        t4_n: "Connect",
-        t4_r: "Produto & Operações",
-        about_join: "Temos lugar para ti!",
-
-        foot_1: "Associação jovem solidária europeia. Transparência, impacto e ambição de escala.",
-        foot_2: "© {year} ActivEU.\nCtrl/⌘ + K para navegar como se estivesses em 2046."
-      },
-
-      en: {
-        brand_sub: "Solidarity Action Day in Portugal",
-        menu_title: "Menu",
-        nav_why: "Why it works",
-        nav_what: "What we do",
-        nav_projects: "Projects",
-        nav_process: "Process",
-        nav_youthreach: "YouthReach",
-        nav_about: "About",
-        cmd_open: "Open search",
-
-        stk_young: "Youth-led",
-        stk_solidarity: "Solidarity",
-        stk_european: "European",
-        stk_creative: "Creative",
-
-        hero_tagline: "Your day. Your action. Your impact.",
-        hero_micro: "Swap classes for real-world experience, support a verified cause, and leave with certified skills.",
-        cta_join: "Join the movement",
-        cta_learn: "See how it works",
-
-        hero_card_title: "ActivEU Connect",
-        hero_card_body: "The platform bringing Solidarity Action Day to Portugal with technology, transparency and merit-based matching.",
-        stat_day: "day = real experience",
-        stat_bias: "bias (no photo/name)",
-        stat_transparency: "transparent donation",
-        stat_cert: "certification & impact",
-
-        why_kicker: "A simple idea. A massive impact.",
-        why_title: "Why it works",
-        why_lead: "SAD creates value for youth, companies and causes at once. The design is intentional: rigor, usefulness and trust.",
-
-        why_1_t: "Young people who shape their future (and someone else's)",
-        why_1_p: "One day in a professional setting: discover what you like, gain experience, make better choices, and do real good.",
-        why_2_t: "Companies that discover purpose-driven talent",
-        why_2_p: "Host motivated youth, test fit, strengthen social reputation, and spot future collaborators with clarity.",
-        why_3_t: "Causes that keep doing essential work",
-        why_3_p: "Funds go to verified causes with transparency. Less friction, more continuity and public trust.",
-        why_4_t: "Education with meaning (outside the classroom)",
-        why_4_p: "Non-formal learning, real skills, civic responsibility. SAD expands education rather than competing with it.",
-        why_5_t: "Fair merit-based matching (less obvious bias)",
-        why_5_p: "Designed to reduce prejudice: no photo, no name, no age. Focus on compatibility and merit.",
-        why_6_t: "Transparency as a rule, not marketing",
-        why_6_p: "Traceable donations, receipts, impact reports. Trust is engineered, not hoped for.",
-        why_7_t: "Scale with integrity",
-        why_7_p: "Built to grow without losing quality: verification, clear rules, correct incentives and continuous evaluation.",
-
-        what_kicker: "Technology, innovation, solidarity, education.",
-        what_title: "What we do (and do it with impact)",
-        what_lead: "We build participation infrastructure: simple to use, robust inside.",
-
-        what_1_t: "ActivEU Connect: Solidarity Action Day in Portugal",
-        what_1_m: "Platform • Matching • Donation • Certification",
-        lbl_structured: "Structured Volunteering",
-        lbl_cert: "Certification & Impact",
-        lbl_transparent: "Transparent Donations",
-        lbl_partners: "Education Partners",
-        what_1_p: "ActivEU Connect implements the European Solidarity Action Day model in Portugal: youth gain real experience; companies host; funds go to verified causes.",
-
-        what_2_t: "Ongoing SAD and Annual SAD",
-        what_2_m: "Suggested donation • Reputation • Scale",
-        lbl_permanent: "Ongoing",
-        lbl_annual: "Annual",
-        lbl_incentives: "Reputation incentives",
-        what_2_p: "Ongoing SAD includes a suggested contribution per day to strengthen impact and sustainability. Annual SAD can be free to join, with optional donations encouraged.",
-
-        what_3_t: "Complementary community projects",
-        what_3_m: "Inclusion • Intergenerational • Culture",
-        lbl_access: "Accessibility",
-        what_3_p: "Intergenerational mini-festivals and a collection of stories/games for a book/documentary. Social cohesion with accessible design.",
-
-        what_4_t: "YouthReach & Creative Support",
-        what_4_m: "Diagnosis • Participation • Communication",
-        lbl_diagnosis: "Youth Diagnosis",
-        lbl_cocreation: "Co-creation",
-        lbl_content: "Content",
-        what_4_p: "We help municipalities, schools and organizations understand and engage young people in policies, services and decisions through method and training.",
-
-        exp_title: "ActivEU Connect",
-        exp_text: "A full system: quick signup, verification, fair matching, real experience, traceable donation, evaluation and impact report.",
-        exp_cta: "See the process",
-        exp_search: "Search the site",
-        exp_note: "Tip: press Ctrl/⌘ + K to open the command palette and jump anywhere.",
-
-        proj_kicker: "Portfolio",
-        proj_title: "Our projects",
-        proj_lead: "Designed to scale, built to earn trust.",
-        proj_1_t: "The platform",
-        proj_1_p: "Merit-based matching, verification, receipts, impact reporting and certification.",
-        proj_2_t: "Solidarity Action Day",
-        proj_2_p: "One day that changes two things at once: your path and someone else's life.",
-        proj_3_t: "Support for institutions",
-        proj_3_p: "Youth diagnosis, participation processes, internal training and tailored communication.",
-        proj_note: "Note: this section is ready to receive more cards as you add projects.",
-
-        proc_kicker: "ActivEU Connect",
-        proc_title: "Process",
-        proc_lead: "Fast signup. Simple verification. Fair matching. Real experience. Verifiable impact.",
-        p1_t: "Sign up",
-        p1_p: "Less than two minutes. Upload a simple academic proof. The platform validates and activates your profile securely.",
-        p2_t: "Apply and stand out",
-        p2_p: "Browse opportunities and apply. The algorithm checks compatibility meritocratically (no photo, no name, no age).",
-        p3_t: "Participate and create real value",
-        p3_p: "Gain practical experience and support the cause you chose. You leave with certification and measurable impact.",
-
-        yr_title: "We help institutions reach young people",
-        yr_lead: "Rigorous diagnosis, structured participation, internal training and communication adapted to new generations.",
-        yr_body:
-          "• Local and organizational youth diagnosis\n" +
-          "• Participation methods to co-create policies and solutions\n" +
-          "• Workshops and co-creation sessions\n" +
-          "• Internal training: work with youth, communicate better, implement continuous participation\n" +
-          "• Narrative and youth-focused institutional communication\n" +
-          "• Technical support for strategic audiovisual production\n" +
-          "• Practical recommendations to improve programs, services and decisions",
-        yr_cta: "Talk to us",
-        yr_cta2: "See all (search)",
-
-        about_kicker: "About",
-        about_title: "A youth-led association with a European design",
-        about_lead: "We believe in a simple thing: young people deserve more opportunities, more voice and more future in Portugal.",
-        about_body: "ActivEU promotes structured youth volunteering, non-formal education and social impact initiatives. We connect youth, public and private sectors with integrity, transparency and scalable ambition.",
-        t1_n: "ActivEU team",
-        t1_r: "Coordination",
-        t2_n: "Creative Support",
-        t2_r: "Multimedia",
-        t3_n: "YouthReach",
-        t3_r: "Youth participation",
-        t4_n: "Connect",
-        t4_r: "Product & Ops",
-        about_join: "There’s a place for you!",
-
-        foot_1: "Youth-led European solidarity association. Transparency, impact and scale.",
-        foot_2: "© {year} ActivEU.\nCtrl/⌘ + K to navigate like it’s 2046."
-      }
-    };
-
-    function applyLang(lang){
-      document.documentElement.setAttribute("data-lang", lang);
-      document.querySelectorAll("[data-i18n]").forEach(el=>{
-        const key = el.getAttribute("data-i18n");
-        const val = I18N[lang][key];
-        if(!val) return;
-
-        // preserve newlines in bullet blocks
-        if(String(val).includes("\n")){
-          el.innerHTML = String(val).split("\n").map(x=>`<div>${escapeHtml(x)}</div>`).join("");
-        }else{
-          el.textContent = val;
-        }
-      });
-
-      // footer year interpolation
-      const y = new Date().getFullYear();
-      const foot2 = I18N[lang].foot_2.replace("{year}", y);
-      const foot2El = document.querySelector('[data-i18n="foot_2"]');
-      if(foot2El){
-        foot2El.innerHTML = foot2.replace(/\n/g,"<br>");
-      }
-    }
-    function escapeHtml(str){
-      return str.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
-    }
-
-    // ---------- Scroll progress ----------
+    // ----- Progress -----
     const progress = document.getElementById("progress");
     function onScroll(){
       const h = document.documentElement;
       const sc = h.scrollTop || document.body.scrollTop;
       const max = (h.scrollHeight - h.clientHeight) || 1;
-      const p = Math.max(0, Math.min(1, sc / max));
-      progress.style.width = (p * 100).toFixed(2) + "%";
+      progress.style.width = (Math.max(0, Math.min(1, sc/max))*100).toFixed(2) + "%";
     }
     window.addEventListener("scroll", onScroll, {passive:true});
     onScroll();
 
-    // ---------- Drawer ----------
+    // ----- Drawer -----
     const drawer = document.getElementById("drawer");
     const menuBtn = document.getElementById("menuBtn");
     const closeDrawer = document.getElementById("closeDrawer");
     const drawerBg = document.getElementById("drawerBg");
-    const drawerLinks = Array.from(document.querySelectorAll(".drawerLink"));
-
-    function openDrawer(){
-      drawer.setAttribute("data-open","true");
-      drawer.setAttribute("aria-hidden","false");
-    }
-    function closeDrawerFn(){
-      drawer.setAttribute("data-open","false");
-      drawer.setAttribute("aria-hidden","true");
-    }
+    function openDrawer(){ drawer.dataset.open="true"; drawer.setAttribute("aria-hidden","false"); }
+    function closeDrawerFn(){ drawer.dataset.open="false"; drawer.setAttribute("aria-hidden","true"); }
     menuBtn.addEventListener("click", openDrawer);
     closeDrawer.addEventListener("click", closeDrawerFn);
     drawerBg.addEventListener("click", closeDrawerFn);
-    drawerLinks.forEach(a=>a.addEventListener("click", ()=>setTimeout(closeDrawerFn, 80)));
 
-    // ---------- Accordion -> dynamic explain panel ----------
-    const exTitle = document.getElementById("exTitle");
-    const exText  = document.getElementById("exText");
-
-    const explainCopy = {
-      connect: {
-        pt: ["ActivEU Connect", "Um sistema completo: registo rápido, validação, matching justo, experiência, doação rastreável, avaliação e relatório de impacto."],
-        en: ["ActivEU Connect", "A full system: quick signup, verification, fair matching, real experience, traceable donation, evaluation and impact report."]
-      },
-      sad: {
-        pt: ["SAD Permanente / SAD Anual", "Duas formas de escalar impacto: uma modalidade contínua com contribuição sugerida e uma modalidade anual para mobilização ampla."],
-        en: ["Ongoing SAD / Annual SAD", "Two ways to scale impact: an ongoing mode with suggested contribution and an annual mode for broad mobilization."]
-      },
-      community: {
-        pt: ["Projetos comunitários", "Coesão social com desenho acessível: intergeracionalidade, cultura e inclusão, com impacto local real."],
-        en: ["Community projects", "Social cohesion with accessible design: intergenerational culture and inclusion with real local impact."]
-      },
-      youthreach: {
-        pt: ["YouthReach & Creative Support", "Diagnóstico, participação e comunicação jovem para municípios, escolas e organizações. Método, formação e execução."],
-        en: ["YouthReach & Creative Support", "Youth diagnosis, participation and communication for municipalities, schools and organizations. Method, training and execution."]
-      }
-    };
-
-    document.querySelectorAll("#accordion details").forEach(d=>{
-      d.addEventListener("toggle", ()=>{
-        if(!d.open) return;
-        document.querySelectorAll("#accordion details").forEach(x=>{ if(x!==d) x.removeAttribute("open"); });
-        const key = d.getAttribute("data-key");
-        const lang = document.documentElement.getAttribute("data-lang") || "pt";
-        const pair = explainCopy[key]?.[lang];
-        if(pair){
-          exTitle.textContent = pair[0];
-          exText.textContent  = pair[1];
-        }
-      });
+    // close drawer on link click
+    document.querySelectorAll(".dLink").forEach(a=>{
+      a.addEventListener("click", ()=>setTimeout(closeDrawerFn, 60));
     });
 
-    // ---------- Active section highlighting + minimap ----------
+    // ----- Active section highlight -----
     const sections = Array.from(document.querySelectorAll("main section[id]"));
     const navLinks = Array.from(document.querySelectorAll(".navlink"));
-    const mobNow = document.getElementById("mobNow");
-    const minimapRail = document.getElementById("minimapRail");
-
-    // Build minimap dots
-    const dots = sections.map((sec)=>{
-      const b = document.createElement("button");
-      b.className = "dotNav";
-      b.type = "button";
-      b.setAttribute("aria-label", sec.getAttribute("data-title") || sec.id);
-      b.addEventListener("click", ()=>sec.scrollIntoView({behavior:"smooth", block:"start"}));
-      minimapRail.appendChild(b);
-      return b;
-    });
-
-    let currentIndex = 0;
-
     const io = new IntersectionObserver((entries)=>{
-      // pick the one most visible
-      const visible = entries
-        .filter(e=>e.isIntersecting)
-        .sort((a,b)=> b.intersectionRatio - a.intersectionRatio)[0];
+      const visible = entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
       if(!visible) return;
-
       const id = visible.target.id;
-      const idx = sections.findIndex(s=>s.id===id);
-      if(idx >= 0){
-        currentIndex = idx;
+      navLinks.forEach(a=> a.dataset.active = (a.dataset.id===id) ? "true" : "false");
+    }, {threshold:[0.18,0.28,0.38,0.55]});
+    sections.forEach(s=>io.observe(s));
 
-        navLinks.forEach(a=>{
-          a.dataset.active = (a.dataset.id === id) ? "true" : "false";
-        });
-        dots.forEach((d,i)=> d.dataset.active = (i===idx) ? "true" : "false");
-
-        const title = visible.target.getAttribute("data-title") || id;
-        mobNow.textContent = title;
-      }
-    }, { root: null, threshold: [0.18, 0.28, 0.38, 0.55] });
-
-    sections.forEach(s=> io.observe(s));
-
-    // Mobile prev/next
-    const mobPrev = document.getElementById("mobPrev");
-    const mobNext = document.getElementById("mobNext");
-    mobPrev.addEventListener("click", ()=>{
-      const next = Math.max(0, currentIndex - 1);
-      sections[next].scrollIntoView({behavior:"smooth", block:"start"});
-    });
-    mobNext.addEventListener("click", ()=>{
-      const next = Math.min(sections.length - 1, currentIndex + 1);
-      sections[next].scrollIntoView({behavior:"smooth", block:"start"});
-    });
-
-    // ---------- Command palette ----------
+    // ----- Command palette -----
     const palette = document.getElementById("palette");
-    const paletteBg = document.getElementById("paletteBg");
-    const paletteInput = document.getElementById("paletteInput");
-    const paletteList = document.getElementById("paletteList");
+    const palBg = document.getElementById("palBg");
+    const palInput = document.getElementById("palInput");
+    const palList = document.getElementById("palList");
+    const palModal = document.getElementById("palModal");
 
-    const openPaletteBtns = ["openPalette","openPalette2","openPalette3","openPalette4"]
-      .map(id=>document.getElementById(id))
-      .filter(Boolean);
+    const openPaletteBtns = ["openPalette","openPalette2","openPalette3"].map(id=>document.getElementById(id)).filter(Boolean);
 
     function openPalette(){
-      palette.setAttribute("data-open","true");
+      palette.dataset.open="true";
       palette.setAttribute("aria-hidden","false");
-      paletteInput.value = "";
-      renderPaletteItems("");
-      setTimeout(()=>paletteInput.focus(), 40);
+      palInput.value="";
+      renderItems("");
+      setTimeout(()=>palInput.focus(), 40);
+      sketchOnce(palModal);
     }
     function closePalette(){
-      palette.setAttribute("data-open","false");
+      palette.dataset.open="false";
       palette.setAttribute("aria-hidden","true");
     }
     openPaletteBtns.forEach(btn=>btn.addEventListener("click", openPalette));
-    paletteBg.addEventListener("click", closePalette);
+    palBg.addEventListener("click", closePalette);
 
-    document.addEventListener("keydown", (e)=>{
+    document.addEventListener("keydown",(e)=>{
       const isMac = navigator.platform.toLowerCase().includes("mac");
       const mod = isMac ? e.metaKey : e.ctrlKey;
-
-      if(mod && e.key.toLowerCase() === "k"){
+      if(mod && e.key.toLowerCase()==="k"){
         e.preventDefault();
-        if(palette.getAttribute("data-open")==="true") closePalette();
-        else openPalette();
+        palette.dataset.open==="true" ? closePalette() : openPalette();
       }
-      if(e.key === "Escape"){
-        if(palette.getAttribute("data-open")==="true") closePalette();
-        if(drawer.getAttribute("data-open")==="true") closeDrawerFn();
+      if(e.key==="Escape"){
+        if(palette.dataset.open==="true") closePalette();
+        if(drawer.dataset.open==="true") closeDrawerFn();
       }
     });
 
-    // Build searchable data
     const searchData = sections.map(sec=>{
       const title = sec.getAttribute("data-title") || sec.id;
       const text = (sec.innerText || "").replace(/\s+/g," ").trim();
-      return { id: sec.id, title, text };
+      return {id: sec.id, title, text};
     });
 
     function getFuse(){
       if(typeof Fuse === "undefined") return null;
-      return new Fuse(searchData, {
-        keys: ["title","text"],
-        threshold: 0.35,
-        ignoreLocation: true,
-        minMatchCharLength: 2
-      });
+      return new Fuse(searchData, {keys:["title","text"], threshold:0.35, ignoreLocation:true, minMatchCharLength:2});
     }
+    let fuse=null;
 
-    let fuse = null;
-    function renderPaletteItems(query){
-      paletteList.innerHTML = "";
+    function renderItems(q){
+      palList.innerHTML="";
       if(!fuse) fuse = getFuse();
-
-      const lang = document.documentElement.getAttribute("data-lang") || "pt";
-      const placeholder = lang === "pt"
-        ? "Pesquisar… (ex.: processo, projetos, YouthReach)"
-        : "Search… (e.g., process, projects, YouthReach)";
-      paletteInput.placeholder = placeholder;
-
-      let results = [];
-      if(!query){
-        results = searchData.map(x=>({ item:x })).slice(0, 8);
-      }else if(fuse){
-        results = fuse.search(query).slice(0, 10);
-      }else{
-        // fallback: simple filter
-        const q = query.toLowerCase();
-        results = searchData
-          .filter(x => x.title.toLowerCase().includes(q) || x.text.toLowerCase().includes(q))
-          .slice(0, 10)
-          .map(x=>({item:x}));
+      let results=[];
+      if(!q) results = searchData.map(x=>({item:x})).slice(0, 8);
+      else if(fuse) results = fuse.search(q).slice(0, 10);
+      else {
+        const qq=q.toLowerCase();
+        results = searchData.filter(x=>x.title.toLowerCase().includes(qq)||x.text.toLowerCase().includes(qq)).slice(0, 10).map(x=>({item:x}));
       }
-
-      results.forEach((r, idx)=>{
-        const it = r.item;
-        const div = document.createElement("div");
-        div.className = "item";
-        div.tabIndex = 0;
-        div.innerHTML = `<span>${escapeHtml(it.title)}</span><small>#${String(idx+1).padStart(2,'0')}</small>`;
+      results.forEach((r,i)=>{
+        const it=r.item;
+        const div=document.createElement("div");
+        div.className="item sketch";
+        div.dataset.sketch="item";
+        div.innerHTML = `<span>${escapeHtml(it.title)}</span><small>#${String(i+1).padStart(2,"0")}</small>`;
         div.addEventListener("click", ()=>{
           closePalette();
           document.getElementById(it.id).scrollIntoView({behavior:"smooth", block:"start"});
         });
-        div.addEventListener("keydown", (e)=>{
-          if(e.key === "Enter"){
-            closePalette();
-            document.getElementById(it.id).scrollIntoView({behavior:"smooth", block:"start"});
-          }
-        });
-        paletteList.appendChild(div);
+        palList.appendChild(div);
+        sketchOnce(div);
       });
 
-      if(results.length === 0){
-        const empty = document.createElement("div");
-        empty.style.padding = "14px";
-        empty.style.opacity = ".75";
-        empty.style.fontWeight = "800";
-        empty.textContent = lang === "pt" ? "Sem resultados." : "No results.";
-        paletteList.appendChild(empty);
+      if(results.length===0){
+        const empty=document.createElement("div");
+        empty.style.padding="14px";
+        empty.style.opacity=".75";
+        empty.style.fontWeight="1000";
+        empty.textContent="Sem resultados.";
+        palList.appendChild(empty);
       }
     }
+    palInput.addEventListener("input",(e)=>renderItems(e.target.value||""));
+    function escapeHtml(s){return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");}
 
-    paletteInput.addEventListener("input", (e)=> renderPaletteItems(e.target.value || ""));
+    // ----- Impact Simulator -----
+    const role = document.getElementById("role");
+    const participants = document.getElementById("participants");
+    const donation = document.getElementById("donation");
+    const quality = document.getElementById("quality");
 
-    // ---------- Language toggle ----------
-    const langBtn = document.getElementById("langBtn");
-    const langBtn2 = document.getElementById("langBtn2");
+    const participantsVal = document.getElementById("participantsVal");
+    const donationVal = document.getElementById("donationVal");
+    const qualityVal = document.getElementById("qualityVal");
+    const snapshot = document.getElementById("snapshot");
 
-    function toggleLang(){
-      const cur = document.documentElement.getAttribute("data-lang") || "pt";
-      const next = cur === "pt" ? "en" : "pt";
-      applyLang(next);
-      // refresh palette list for correct titles / placeholders
-      if(palette.getAttribute("data-open")==="true"){
-        renderPaletteItems(paletteInput.value || "");
-      }
+    function fmt(n){ return new Intl.NumberFormat("pt-PT").format(n); }
+
+    function compute(){
+      const r = role.value;
+      const p = Number(participants.value);
+      const d = Number(donation.value);
+      const q = Number(quality.value);
+
+      participantsVal.textContent = p;
+      donationVal.textContent = d;
+      qualityVal.textContent = q;
+
+      const monthlyDonation = p * d;
+      const annualDonation = monthlyDonation * 12;
+
+      // heuristic “impact index” – intentionally explainable, not “AI theater”
+      const trust = Math.min(100, Math.round(40 + (q*0.6) + (d*1.2)));
+      const employability = Math.min(100, Math.round(30 + (q*0.7) + (Math.log10(p+1)*12)));
+      const scale = Math.min(100, Math.round(25 + (Math.log10(p+1)*22) + (d*1.0)));
+
+      const focus =
+        r === "jovem" ? "Competências + clareza de vocação"
+        : r === "empresa" ? "Descoberta de talento + reputação"
+        : r === "escola" ? "Aprendizagem + cidadania"
+        : "Política pública jovem + mobilização";
+
+      const text =
+`IMPACT SNAPSHOT (client-side)
+Perfil: ${r.toUpperCase()}
+Foco: ${focus}
+
+Participantes/mês: ${fmt(p)}
+Doação média: €${fmt(d)}
+
+Doação estimada:
+• mensal: €${fmt(monthlyDonation)}
+• anual:  €${fmt(annualDonation)}
+
+Índices (0–100):
+• Confiança pública: ${trust}
+• Empregabilidade/competências: ${employability}
+• Escalabilidade: ${scale}
+
+Nota:
+Isto não é “IA decorativa”. São métricas explicáveis
+para tornar o impacto legível e partilhável.`;
+
+      snapshot.textContent = text;
     }
-    langBtn.addEventListener("click", toggleLang);
-    langBtn2.addEventListener("click", toggleLang);
+    [role, participants, donation, quality].forEach(el=> el.addEventListener("input", compute));
+    compute();
 
-    // ---------- Smooth anchor handling + close drawer ----------
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener("click", (e)=>{
-        const href = a.getAttribute("href");
-        const id = href.slice(1);
-        const el = document.getElementById(id);
-        if(!el) return;
-        e.preventDefault();
-        el.scrollIntoView({behavior:"smooth", block:"start"});
-        closeDrawerFn();
-      });
+    // copy / download
+    document.getElementById("copySnapshot").addEventListener("click", async ()=>{
+      try{
+        await navigator.clipboard.writeText(snapshot.textContent);
+      }catch(e){
+        // fallback
+        const ta=document.createElement("textarea");
+        ta.value=snapshot.textContent;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+      }
+    });
+    document.getElementById("downloadSnapshot").addEventListener("click", ()=>{
+      const blob = new Blob([snapshot.textContent], {type:"text/plain;charset=utf-8"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "activeu-impact-snapshot.txt";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
     });
 
-    // ---------- Init ----------
+    // ----- Voice Navigation (Web Speech API) -----
+    const voiceBtn = document.getElementById("voiceBtn");
+    const voiceLabel = document.getElementById("voiceLabel");
+    const voiceLog = document.getElementById("voiceLog");
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let rec = null;
+    let voiceOn = false;
+
+    function logVoice(msg){ voiceLog.textContent = msg; sketchOnce(voiceLog); }
+
+    function goTo(id){
+      const el = document.getElementById(id);
+      if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+    }
+    function handleVoice(text){
+      const t = (text||"").toLowerCase();
+
+      if(t.includes("abrir") && (t.includes("pesquisa") || t.includes("search"))){
+        openPalette();
+        return "A abrir pesquisa.";
+      }
+      if(t.includes("impact")){ goTo("impact"); return "A ir para Impact Lab."; }
+      if(t.includes("process")){ goTo("process"); return "A ir para Processo."; }
+      if(t.includes("youth")){ goTo("youthreach"); return "A ir para YouthReach."; }
+      if(t.includes("sobre") || t.includes("about")){ goTo("about"); return "A ir para Sobre."; }
+      if(t.includes("porque") || t.includes("why")){ goTo("why"); return "A ir para Porque funciona."; }
+      if(t.includes("o que fazemos") || (t.includes("fazemos") && t.includes("que")) || t.includes("what")){ goTo("what"); return "A ir para O que fazemos."; }
+
+      return "Não percebi. Diz: 'Ir para Impact', 'Ir para Processo', 'Abrir pesquisa'.";
+    }
+
+    if(SpeechRecognition){
+      rec = new SpeechRecognition();
+      rec.lang = "pt-PT";
+      rec.continuous = true;
+      rec.interimResults = false;
+
+      rec.onresult = (e)=>{
+        const last = e.results[e.results.length-1];
+        const text = last[0].transcript.trim();
+        const reply = handleVoice(text);
+        logVoice(`Ouvi: "${text}"\n${reply}`);
+      };
+      rec.onerror = (e)=>{
+        logVoice(`Voice erro: ${e.error || "desconhecido"}`);
+        voiceOn = false;
+        voiceBtn.dataset.on="false";
+        voiceLabel.textContent = "Voice";
+      };
+      rec.onend = ()=>{
+        if(voiceOn){
+          try{ rec.start(); }catch(_){}
+        }
+      };
+
+      voiceBtn.addEventListener("click", ()=>{
+        voiceOn = !voiceOn;
+        voiceBtn.dataset.on = voiceOn ? "true" : "false";
+        voiceLabel.textContent = voiceOn ? "Listening" : "Voice";
+        if(voiceOn){
+          logVoice("Estado: a ouvir… Diz: 'Ir para Impact' ou 'Abrir pesquisa'.");
+          try{ rec.start(); }catch(e){ logVoice("Não consegui iniciar Voice."); voiceOn=false; }
+        }else{
+          try{ rec.stop(); }catch(_){}
+          logVoice("Estado: parado.");
+        }
+      });
+    }else{
+      voiceBtn.addEventListener("click", ()=>{
+        logVoice("Voice não suportado neste browser. Usa Ctrl/⌘ + K para navegar.");
+      });
+    }
+
+    // ----- Language toggle (simple for now) -----
+    function toggleLang(){
+      const cur = document.documentElement.dataset.lang || "pt";
+      document.documentElement.dataset.lang = (cur==="pt") ? "en" : "pt";
+      // (para já mantive PT como base. Se quiseres, faço i18n total como no anterior, mas com este visual.)
+    }
+    document.getElementById("toggleLang").addEventListener("click", toggleLang);
+    document.getElementById("toggleLang2").addEventListener("click", toggleLang);
+
+    // ----- Rough.js: draw hand-drawn borders for elements -----
+    function sketchOnce(el){
+      if(!window.rough || !el) return;
+      if(el.dataset.sketched==="true") return;
+
+      const rect = el.getBoundingClientRect();
+      if(rect.width < 8 || rect.height < 8) return;
+
+      const svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
+      svg.setAttribute("width", rect.width);
+      svg.setAttribute("height", rect.height);
+      svg.style.position = "absolute";
+      svg.style.left = "0";
+      svg.style.top = "0";
+      svg.style.pointerEvents = "none";
+      svg.style.zIndex = "0";
+      svg.style.overflow = "visible";
+
+      el.style.position = el.style.position || "relative";
+      el.style.zIndex = "1";
+
+      const rc = rough.svg(svg);
+      const type = el.dataset.sketch || "card";
+
+      let opts = {
+        stroke: "rgba(20,10,18,.85)",
+        strokeWidth: 1.7,
+        roughness: 1.8,
+        bowing: 1.2,
+        fill: "transparent"
+      };
+
+      if(type==="kicker" || type==="badge" || type==="item"){
+        opts.strokeWidth = 1.5;
+        opts.roughness = 2.0;
+      }
+      if(type==="box"){
+        opts.strokeWidth = 1.8;
+        opts.roughness = 2.2;
+      }
+
+      const node = rc.rectangle(2,2, rect.width-4, rect.height-4, opts);
+      svg.appendChild(node);
+
+      // inject behind content
+      el.insertBefore(svg, el.firstChild);
+      el.dataset.sketched = "true";
+    }
+
+    function sketchAll(){
+      document.querySelectorAll(".sketch").forEach(sketchOnce);
+    }
+    window.addEventListener("load", ()=>{
+      sketchAll();
+      // resize observer to re-sketch if layout changes
+      const ro = new ResizeObserver((entries)=>{
+        for(const e of entries){
+          const el = e.target;
+          // remove old svg and redraw
+          const old = el.querySelector(":scope > svg");
+          if(old) old.remove();
+          el.dataset.sketched = "false";
+          sketchOnce(el);
+        }
+      });
+      document.querySelectorAll(".sketch").forEach(el=> ro.observe(el));
+    });
+
+    // subtle magnet hover for stickers (desktop)
+    const stickers = Array.from(document.querySelectorAll(".sticker"));
+    window.addEventListener("mousemove", (e)=>{
+      if(window.matchMedia("(max-width: 640px)").matches) return;
+      stickers.forEach(s=>{
+        const r = s.getBoundingClientRect();
+        const cx = r.left + r.width/2;
+        const cy = r.top + r.height/2;
+        const dx = (e.clientX - cx);
+        const dy = (e.clientY - cy);
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        const pull = Math.max(0, 1 - dist/260);
+        const tx = dx * 0.06 * pull;
+        const ty = dy * 0.06 * pull;
+        s.style.transform = `translate(${tx}px, ${ty}px) rotate(${getComputedStyle(s).getPropertyValue("--rot")})`;
+      });
+    }, {passive:true});
+
+    // Year
     document.getElementById("year").textContent = new Date().getFullYear();
-    applyLang("pt");
+
+    // ----- PWA Service Worker register -----
+    if("serviceWorker" in navigator){
+      window.addEventListener("load", ()=>{
+        navigator.serviceWorker.register("/sw.js").catch(()=>{});
+      });
+    }
   </script>
 </body>
 </html>
