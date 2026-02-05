@@ -1406,129 +1406,6 @@
         transition-duration: 0.001ms !important;
       }
     }
-
-    /* =========================
-       RESPONSIVE OPTIMIZATION (DROP-IN)
-       ========================= */
-
-    /* Layout geral mais fluído */
-    .page-shell {
-      padding: clamp(12px, 2.2vw, 18px) clamp(12px, 2.2vw, 16px) clamp(52px, 6vw, 84px);
-    }
-    section {
-      margin-bottom: clamp(56px, 7vw, 96px);
-    }
-
-    /* Header: melhor spacing em ecrãs pequenos */
-    .nav-inner {
-      padding: 9px clamp(12px, 2.2vw, 16px) 8px;
-    }
-    .logo-card img {
-      height: 24px;
-    }
-    @media (max-width: 520px) {
-      .logo-card img { height: 22px; }
-      .logo-text { display: none; }
-    }
-
-    /* HERO: grid mais adaptável e espaçamento */
-    .hero-grid {
-      gap: clamp(16px, 3vw, 28px);
-    }
-    .hero-top-note {
-      font-size: clamp(10px, 1.8vw, 11px);
-    }
-    .hero-subline {
-      font-size: clamp(16px, 2.4vw, 19px);
-    }
-    .hero-tagline {
-      font-size: clamp(13px, 2vw, 14px);
-    }
-    .hero-actions .btn-primary,
-    .hero-actions .btn-outline {
-      padding: 10px 18px;
-    }
-    @media (max-width: 520px) {
-      .hero-actions {
-        gap: 8px;
-      }
-      .hero-actions a {
-        width: 100%;
-        justify-content: center;
-        text-align: center;
-        display: inline-flex;
-      }
-    }
-
-    /* HERO right panel: evita “cortes”/overflow em mobile */
-    .hero-panel {
-      border-radius: clamp(26px, 7vw, 46px) clamp(26px, 7vw, 46px) 0 0;
-    }
-    .hero-panel-inner {
-      border-radius: clamp(18px, 6vw, 32px) clamp(18px, 6vw, 32px) 0 0;
-    }
-
-    /* Stickers: esconder mais cedo para evitar colisões em tablets pequenos */
-    @media (max-width: 1024px) {
-      .hero-sticker { display: none; }
-    }
-
-    /* STRIPE: cards com largura fluída e scroll mais suave */
-    .stripe-shell {
-      padding: clamp(14px, 2.2vw, 18px) clamp(12px, 2.2vw, 14px);
-      -webkit-overflow-scrolling: touch;
-    }
-    .stripe-inner {
-      grid-auto-columns: clamp(220px, 70vw, 320px);
-    }
-
-    /* Grids: trocar “breakpoints rígidos” por auto-fit */
-    .grid-2 {
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    }
-    .process-grid {
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    }
-    .stats-row {
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-    }
-    .circle-bottom-grid {
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    }
-
-    /* Circle visual: escala bem em mobile */
-    .circle-main {
-      width: clamp(190px, 38vw, 230px);
-      height: clamp(190px, 38vw, 230px);
-    }
-
-    /* Youthreach/About grids: também auto-fit */
-    .youthreach-grid {
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    }
-    .about-grid {
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    }
-
-    /* Tipografia de secções: ligeiramente mais fluída */
-    .section-title {
-      font-size: clamp(20px, 2.6vw, 26px);
-    }
-    .section-subtitle {
-      font-size: clamp(13px, 2vw, 14px);
-    }
-
-    /* Command button: melhor posição em ecrãs pequenos (não tapa conteúdo) */
-    .command-btn {
-      right: clamp(12px, 2vw, 18px);
-      bottom: clamp(12px, 2vw, 18px);
-    }
-
-    /* Melhorar tap targets em mobile */
-    @media (max-width: 520px) {
-      .role-pill { padding: 6px 12px; }
-      .menu-pill { padding: 7px 14px; }
-    }
   </style>
 </head>
 <body data-theme="hero">
@@ -2048,6 +1925,15 @@
       </div>
     </section>
 
+    <!-- FUTURO: LOOK WHAT WE MADE & TESTEMUNHOS
+         Estas secções ficam em espera, NÃO aparecem no site,
+         mas podes voltar aqui mais tarde e descomentar. 
+
+    <section id="portfolio">...</section>
+    <section id="clients">...</section>
+
+    -->
+
     <!-- ABOUT US + TU -->
     <section id="about" data-animate data-theme="about">
       <div class="section-header">
@@ -2259,67 +2145,46 @@
       });
     });
 
-    // ===== Mobile menu toggle (responsive + stable) =====
+    // ===== Mobile menu toggle =====
     const menuButton = document.querySelector(".menu-pill");
     const nav = document.querySelector(".nav-links");
 
     if (menuButton && nav) {
-      // cria classe CSS “is-open” para mobile
-      nav.classList.remove("is-open");
-
-      // estilos CSS para quando abre no mobile (inject leve, sem mexer no design)
-      const style = document.createElement("style");
-      style.textContent = `
-        @media (max-width: 900px){
-          .nav-links{
-            display:none;
-          }
-          .nav-links.is-open{
-            display:flex !important;
-            flex-direction:column;
-            position:absolute;
-            top:52px;
-            right:16px;
-            gap:12px;
-            padding:12px 14px;
-            border-radius:18px;
-            box-shadow: 0 14px 30px rgba(0,0,0,0.18);
-            background: rgba(255, 247, 229, 0.98);
-            border: 1px solid rgba(0,0,0,0.08);
-            backdrop-filter: blur(10px);
-            z-index: 60;
-          }
-          body[data-theme="about"] .nav-links.is-open{
-            background: rgba(2,6,23,0.96);
-            border-color: rgba(148,163,184,0.35);
-          }
+      const closeNavMobile = () => {
+        if (window.innerWidth <= 900) {
+          nav.style.display = "none";
         }
-      `;
-      document.head.appendChild(style);
+      };
 
       menuButton.addEventListener("click", (e) => {
         e.preventDefault();
+        const isOpen = nav.style.display === "flex";
         if (window.innerWidth <= 900) {
-          nav.classList.toggle("is-open");
+          nav.style.display = isOpen ? "none" : "flex";
+          nav.style.flexDirection = "column";
+          nav.style.position = "absolute";
+          nav.style.top = "52px";
+          nav.style.right = "16px";
+          nav.style.padding = "10px 12px";
+          nav.style.background = rootBody.getAttribute("data-theme") === "about" ? "#020617" : "#fff7e5";
+          nav.style.borderRadius = "18px";
+          nav.style.boxShadow = "0 14px 30px rgba(0,0,0,0.18)";
         }
       });
 
-      // fecha ao clicar num link no mobile
-      nav.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => {
-          if (window.innerWidth <= 900) nav.classList.remove("is-open");
-        });
+      navLinks.forEach((link) => {
+        link.addEventListener("click", closeNavMobile);
       });
 
-      // reset em resize
       window.addEventListener("resize", () => {
         if (window.innerWidth > 900) {
-          nav.classList.remove("is-open");
           nav.style.display = "flex";
           nav.style.position = "";
+          nav.style.boxShadow = "";
+          nav.style.background = "";
+          nav.style.padding = "";
         } else {
-          nav.style.display = "";
-          nav.style.position = "";
+          nav.style.display = "none";
         }
       });
     }
@@ -2638,3 +2503,4 @@
   </script>
 </body>
 </html>
+
