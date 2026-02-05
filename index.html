@@ -1,1450 +1,2506 @@
 <!DOCTYPE html>
-<html lang="pt" data-lang="pt">
+<html lang="pt">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="UTF-8" />
   <title>ActivEU – Solidarity Action Day em Portugal</title>
-  <meta name="description" content="ActivEU implementa em Portugal o Solidarity Action Day: experiência real, doação transparente e competências certificadas."/>
-  <meta name="theme-color" content="#fbf4e4"/>
-
-  <!-- Fonts: condensed display + clean body -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- Rough.js (hand-drawn UI) -->
-  <script defer src="https://cdn.jsdelivr.net/npm/roughjs@4.5.2/bundled/rough.js"></script>
-
-  <!-- Fuse.js (search palette) -->
-  <script defer src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
-
-  <!-- PWA -->
-  <link rel="manifest" href="/manifest.webmanifest">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="ActivEU é a associação jovem que traz para Portugal o modelo Solidarity Action Day: um dia em que trocas aulas por experiência real, doando o valor a causas solidárias."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
   <style>
-    :root{
-      --paper:#fbf4e4;
-      --paper2:#fff7ea;
-      --ink:#140a12;
-      --burg:#3a0520;
-      --burg2:#5b0b31;
-      --mint:#b9f3c8;
-      --mint2:#ddffe6;
-      --sun:#ffd56b;
-      --lav:#e9d7ff;
-      --sky:#bfe9ff;
+    :root {
+      --activ-blue: #0051a8;
+      --activ-yellow: #f7b500;
+      --accent-burgundy: #4b0823;
 
-      --stroke: rgba(20,10,18,.85);
-      --strokeSoft: rgba(20,10,18,.18);
+      --bg-hero: radial-gradient(circle at top, #fff9ef 0, #fff7e5 45%, #fffaf2 100%);
+      --bg-why: linear-gradient(135deg, #fff7e5, #e0f2fe);
+      --bg-what: radial-gradient(circle at top left, #fef3ff 0, #fff7e5 55%, #e5f6ff 100%);
+      --bg-process: linear-gradient(130deg, #ecfdf3, #fef9c3);
+      --bg-sad: radial-gradient(circle at top, #eef2ff, #fef9c3);
+      --bg-youthreach: radial-gradient(circle at top, #e5f6ff, #fdf2ff);
+      --bg-about: linear-gradient(145deg, #020617, #0f172a);
 
-      --shadow: 0 18px 60px rgba(0,0,0,.14);
-      --shadowSoft: 0 12px 28px rgba(0,0,0,.10);
+      --text-main: #1a1625;
+      --text-soft: #5f5b6b;
 
-      --r: 22px;
-      --max: 1200px;
+      --shadow-soft: 0 14px 40px rgba(0, 0, 0, 0.12);
+      --radius-xl: 26px;
     }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: var(--paper);
-      color: var(--ink);
-      overflow-x:hidden;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      color: var(--text-main);
       -webkit-font-smoothing: antialiased;
-      text-rendering: geometricPrecision;
-    }
-    a{ color:inherit; text-decoration:none; }
-    button{ font:inherit; }
-
-    .wrap{ max-width: var(--max); margin:0 auto; padding: 0 18px; }
-
-    /* paper texture + halftone */
-    .paperBg{
-      position:fixed; inset:0;
-      z-index:-3;
-      background:
-        radial-gradient(1200px 700px at 12% 0%, rgba(255,255,255,.65), transparent 58%),
-        radial-gradient(900px 600px at 88% 10%, rgba(255,255,255,.35), transparent 55%),
-        radial-gradient(900px 700px at 70% 90%, rgba(255,255,255,.25), transparent 60%);
-      pointer-events:none;
-    }
-    .grain{
-      position:fixed; inset:-40%;
-      z-index:-2;
-      pointer-events:none;
-      opacity:.12;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
-      transform:rotate(6deg);
-    }
-    .halftone{
-      position:fixed; inset:-10%;
-      z-index:-1;
-      pointer-events:none;
-      opacity:.22;
-      background:
-        radial-gradient(circle, rgba(58,5,32,.12) 1px, transparent 1.6px) 0 0/8px 8px;
-      mask-image: radial-gradient(700px 520px at 50% 16%, black 35%, transparent 72%);
+      background: var(--bg-hero);
+      transition: background 0.6s ease;
     }
 
-    /* scroll progress */
-    .progress{
-      position:fixed; top:0; left:0;
-      height:3px; width:0%;
-      z-index:999;
-      background: linear-gradient(90deg, var(--sun), var(--burg));
+    body[data-theme="hero"] { background: var(--bg-hero); }
+    body[data-theme="why"] { background: var(--bg-why); }
+    body[data-theme="what"] { background: var(--bg-what); }
+    body[data-theme="process"] { background: var(--bg-process); }
+    body[data-theme="sad"] { background: var(--bg-sad); }
+    body[data-theme="youthreach"] { background: var(--bg-youthreach); }
+    body[data-theme="about"] { background: var(--bg-about); }
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
-    /* header */
-    header{
-      position:sticky; top:0; z-index:50;
-      background: rgba(251,244,228,.82);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(0,0,0,.06);
-    }
-    .nav{
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 12px 0;
-      gap: 12px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      font-weight:900;
-      letter-spacing:.2px;
-    }
-    .logoMark{
-      width:34px; height:34px;
-      border-radius: 12px;
-      background: var(--mint2);
-      border: 1.6px solid var(--strokeSoft);
-      box-shadow: 0 10px 18px rgba(0,0,0,.08);
-      display:grid; place-items:center;
-      font-weight: 900;
-      color: var(--burg);
-    }
-    .brand small{
-      display:block;
-      margin-top:2px;
-      font-size: 11px;
-      opacity:.72;
-      font-weight:800;
+    .page-shell {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 16px 16px 72px;
     }
 
-    .links{
-      display:flex; gap:16px; align-items:center;
-      font-size: 12px;
-      opacity:.92;
-      white-space:nowrap;
-    }
-    .links a{
-      position:relative;
-      padding: 6px 2px;
-      font-weight: 800;
-    }
-    .links a[data-active="true"]::after,
-    .links a:hover::after{
-      content:"";
-      position:absolute; left:0; right:0; bottom:2px;
-      height: 2px;
-      background: var(--ink);
-      transform: rotate(-.4deg);
-      opacity:.75;
+    @media (max-width: 768px) {
+      .page-shell {
+        padding-inline: 12px;
+      }
     }
 
-    .actions{
-      display:flex; align-items:center; gap:10px;
-    }
-    .pill{
-      border-radius: 999px;
-      border: 1.6px solid rgba(0,0,0,.14);
-      background: #fff;
-      padding: 8px 12px;
-      font-weight: 900;
-      box-shadow: 0 10px 20px rgba(0,0,0,.07);
-      cursor:pointer;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-    }
-    .pill .kbd{
-      font-size: 11px;
-      opacity:.65;
-      padding: 2px 7px;
-      border-radius: 999px;
-      border: 1px dashed rgba(0,0,0,.24);
-      background: rgba(255,255,255,.75);
-      font-weight: 900;
-    }
-    .menuBtn{
-      border-radius: 999px;
-      border: 1.8px solid rgba(0,0,0,.14);
-      background: var(--mint);
-      padding: 8px 14px;
-      font-weight: 900;
-      box-shadow: 0 10px 20px rgba(0,0,0,.07);
-      cursor:pointer;
+    /* SCROLL PROGRESS BAR */
+
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      z-index: 80;
+      background: linear-gradient(to right, #f7b500, #4b0823);
+      transform-origin: left center;
     }
 
-    /* drawer */
-    .drawer{ position:fixed; inset:0; display:none; z-index:200; }
-    .drawer[data-open="true"]{ display:block; }
-    .drawer .bg{ position:absolute; inset:0; background: rgba(0,0,0,.35); backdrop-filter: blur(4px); }
-    .drawer .panel{
-      position:absolute; right:0; top:0; height:100%;
-      width: min(420px, 92vw);
-      background: var(--paper2);
-      border-left: 2px solid rgba(0,0,0,.12);
-      box-shadow: var(--shadow);
-      padding: 18px;
-      display:flex; flex-direction:column; gap: 12px;
-    }
-    .drawer h3{
-      margin:0;
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 28px;
-      letter-spacing: .8px;
-      color: var(--burg);
-    }
-    .dLink{
-      display:flex; justify-content:space-between; align-items:center;
-      padding: 12px 12px;
-      border-radius: 16px;
-      background: #fff;
-      border: 1.6px solid rgba(0,0,0,.12);
-      box-shadow: 0 12px 18px rgba(0,0,0,.08);
-      font-weight: 900;
-    }
-    .dLink span{ opacity:.65; font-weight: 900; }
+    /* HEADER / NAVBAR */
 
-    /* hero */
-    .hero{
-      padding: 34px 0 24px;
-      position:relative;
-    }
-    .heroGrid{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 18px;
-      align-items:start;
-    }
-    .heroTitle{
-      font-family:"Bebas Neue", sans-serif;
-      font-size: clamp(72px, 12vw, 178px);
-      line-height:.84;
-      letter-spacing: 1px;
-      color: var(--burg);
-      margin: 18px 0 10px;
-      text-shadow: 0 18px 50px rgba(58,5,32,.10);
-    }
-    .tagline{
-      font-weight: 900;
-      font-size: clamp(18px, 2.6vw, 38px);
-      letter-spacing: -0.7px;
-      max-width: 560px;
-    }
-    .micro{
-      margin-top: 10px;
-      font-size: 13px;
-      opacity:.78;
-      max-width: 520px;
-      line-height: 1.5;
-    }
-    .ctaRow{
-      display:flex;
-      flex-wrap:wrap;
-      gap: 10px;
-      margin-top: 14px;
-      align-items:center;
-    }
-    .cta{
-      border-radius: 999px;
-      border: 2px solid rgba(0,0,0,.14);
-      background: var(--sun);
-      padding: 10px 16px;
-      font-weight: 1000;
-      cursor:pointer;
-      box-shadow: 0 14px 22px rgba(0,0,0,.10);
-    }
-    .cta.secondary{ background:#fff; }
-
-    /* stickers (wiggle + magnet hover) */
-    .sticker{
-      position:absolute;
-      border-radius: 999px;
-      padding: 8px 12px;
-      font-size: 12px;
-      font-weight: 1000;
-      border: 1.6px solid rgba(0,0,0,.14);
-      background: #fff;
-      box-shadow: 0 16px 24px rgba(0,0,0,.10);
-      user-select:none;
-      transform: rotate(var(--rot, 0deg));
-      transition: transform .12s ease;
-      will-change: transform;
-    }
-    .sticker[data-tone="mint"]{ background: var(--mint2); }
-    .sticker[data-tone="lav"]{ background: var(--lav); }
-    .sticker[data-tone="sky"]{ background: var(--sky); }
-    .sticker[data-tone="sun"]{ background: #fff2c9; }
-    @keyframes wiggle{
-      0%,100%{ transform: translateY(0) rotate(var(--rot,0deg)); }
-      50%{ transform: translateY(-2px) rotate(calc(var(--rot,0deg) + .6deg)); }
-    }
-    .sticker{ animation: wiggle 3.2s ease-in-out infinite; }
-
-    /* scribbles */
-    .scribble{
-      position:absolute;
-      pointer-events:none;
-      opacity:.92;
-      filter: drop-shadow(0 8px 18px rgba(0,0,0,.10));
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 247, 229, 0.98),
+        rgba(255, 247, 229, 0.94),
+        transparent
+      );
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     }
 
-    /* right hero card (hand-drawn border drawn later) */
-    .heroCard{
-      position:relative;
-      background: rgba(255,255,255,.62);
-      border-radius: var(--r);
-      padding: 16px;
-      box-shadow: var(--shadowSoft);
-      overflow:hidden;
-    }
-    .rings{
-      position:absolute; inset:-50%;
-      background:
-        radial-gradient(circle at 50% 40%, rgba(255,88,210,.16) 0%, rgba(255,88,210,.08) 18%, transparent 40%),
-        repeating-radial-gradient(circle at 50% 40%, rgba(58,5,32,.10) 0px, rgba(58,5,32,.10) 3px, rgba(251,244,228,0) 16px, rgba(251,244,228,0) 28px);
-      transform: rotate(5deg);
-      opacity:.95;
-    }
-    .heroCard .inner{ position:relative; }
-    .heroCard h2{
-      margin:0;
-      font-family:"Bebas Neue", sans-serif;
-      font-size: 34px;
-      letter-spacing:.7px;
-      color: var(--burg);
-    }
-    .heroCard p{
-      margin: 10px 0 0;
-      font-size: 13px;
-      opacity:.82;
-      line-height:1.5;
-    }
-    .stats{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 12px;
-    }
-    .stat{
-      background: rgba(255,255,255,.72);
-      border-radius: 16px;
-      padding: 12px;
-      border: 1px solid rgba(0,0,0,.08); /* replaced by rough border */
-      box-shadow: 0 12px 18px rgba(0,0,0,.07);
-      position:relative;
-    }
-    .stat b{
-      display:block;
-      font-family:"Bebas Neue", sans-serif;
-      font-size: 28px;
-      letter-spacing:.6px;
-      line-height:1;
-      color: var(--ink);
-    }
-    .stat span{
-      font-size: 12px;
-      opacity:.75;
-      font-weight: 800;
+    body[data-theme="about"] header {
+      background: linear-gradient(
+        to bottom,
+        rgba(15, 23, 42, 0.96),
+        rgba(15, 23, 42, 0.92),
+        transparent
+      );
+      border-bottom-color: rgba(148, 163, 184, 0.55);
     }
 
-    /* sections */
-    section{ padding: 76px 0; position:relative; }
-    .head{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
+    .nav-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 9px 16px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 16px;
-      margin-bottom: 20px;
     }
-    .kicker{
-      display:inline-flex;
-      align-items:center;
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
       gap: 8px;
-      font-weight: 1000;
-      font-size: 12px;
+    }
+
+    .logo-card {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 12px;
       border-radius: 999px;
-      padding: 7px 10px;
-      background:#fff;
-      border:1px solid rgba(0,0,0,.10); /* rough later */
-      box-shadow: 0 12px 18px rgba(0,0,0,.06);
-    }
-    .kicker i{
-      width:10px; height:10px;
-      border-radius:50%;
-      background: var(--mint);
-      border: 1.6px solid rgba(0,0,0,.14);
-      display:inline-block;
-    }
-    .sectionTitle{
-      margin: 10px 0 0;
-      font-family:"Bebas Neue", sans-serif;
-      font-size: clamp(38px, 5vw, 74px);
-      line-height: .92;
-      letter-spacing: .8px;
-      color: var(--burg);
-    }
-    .lead{
-      margin: 10px 0 0;
-      font-size: 14px;
-      opacity:.80;
-      max-width: 560px;
-      line-height:1.5;
-      font-weight: 600;
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
     }
 
-    /* scallops */
-    .scallopTop,.scallopBottom{
-      position:absolute; left:0; right:0;
-      height: 38px;
-      background: var(--paper);
-      pointer-events:none;
-      z-index:2;
-    }
-    .scallopTop{ top:-1px; }
-    .scallopBottom{ bottom:-1px; transform: rotate(180deg); }
-    .scallopTop::before,.scallopBottom::before{
-      content:"";
-      position:absolute; left:0; right:0; top:-1px;
-      height: 40px;
-      background: radial-gradient(circle at 20px 20px, transparent 19px, var(--paper) 20px) 0 0/40px 40px;
+    .logo-card img {
+      height: 24px;
+      width: auto;
+      display: block;
     }
 
-    /* cards grid */
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 12px;
-      position:relative;
-      z-index:3;
-    }
-    .card{
-      grid-column: span 6;
-      background: rgba(255,255,255,.68);
-      border-radius: var(--r);
-      padding: 16px;
-      box-shadow: var(--shadowSoft);
-      position:relative;
-      overflow:hidden;
-    }
-    .card h3{ margin:0; font-size: 16px; font-weight: 1000; letter-spacing:-.2px; }
-    .card p{ margin: 8px 0 0; font-size: 13px; opacity:.84; line-height:1.5; font-weight: 600; }
-    .badge{
-      position:absolute; top: 12px; right: 12px;
+    .logo-text {
       font-size: 11px;
-      font-weight: 1000;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background:#fff;
-      border:1px solid rgba(0,0,0,.10); /* rough later */
-      transform: rotate(2deg);
+      color: #706b7c;
     }
-    .card.full{ grid-column: span 12; }
 
-    /* Impact Lab */
-    .impact{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      align-items:start;
+    body[data-theme="about"] .logo-text {
+      color: #e5e7eb;
     }
-    .panel{
-      background: rgba(255,255,255,.70);
-      border-radius: var(--r);
-      padding: 16px;
-      box-shadow: var(--shadowSoft);
-      position:relative;
-      overflow:hidden;
-    }
-    .panel h3{
-      margin:0;
-      font-family:"Bebas Neue", sans-serif;
-      font-size: 34px;
-      letter-spacing:.7px;
-      color: var(--burg);
-      line-height:1;
-    }
-    .panel p{
-      margin: 10px 0 0;
-      font-size: 13px;
-      opacity:.82;
-      line-height:1.5;
-      font-weight: 600;
-    }
-    .controls{
-      display:grid;
-      gap: 12px;
-      margin-top: 12px;
-    }
-    .row{
-      display:grid;
-      gap: 6px;
-    }
-    label{
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
       font-size: 12px;
-      font-weight: 900;
-      opacity:.82;
+      color: #4a4357;
     }
-    select, input[type="range"]{
+
+    .nav-links a {
+      position: relative;
+      padding-bottom: 2px;
+      transition: color 0.18s ease-out;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 1px;
+      background: #20192b;
+      transition: width 0.18s ease-out;
+    }
+
+    .nav-links a:hover::after {
       width: 100%;
     }
-    select{
-      padding: 10px 10px;
-      border-radius: 14px;
-      border: 1.6px solid rgba(0,0,0,.14);
-      background:#fff;
-      font-weight: 900;
-      outline:none;
-    }
-    .out{
-      margin-top: 12px;
-      padding: 14px;
-      border-radius: 18px;
-      background: rgba(255,255,255,.80);
-      border:1px solid rgba(0,0,0,.10); /* rough later */
-      box-shadow: 0 12px 18px rgba(0,0,0,.08);
-      font-size: 13px;
-      line-height:1.55;
-      font-weight: 700;
-      opacity:.9;
-      white-space:pre-line;
-    }
-    .tiny{
-      margin-top: 8px;
-      font-size: 12px;
-      opacity:.72;
-      font-weight: 700;
-      line-height:1.45;
+
+    body[data-theme="about"] .nav-links a {
+      color: #e5e7eb;
     }
 
-    /* palette */
-    .palette{
-      position:fixed; inset:0; z-index:250; display:none;
+    body[data-theme="about"] .nav-links a::after {
+      background: #facc15;
     }
-    .palette[data-open="true"]{ display:block; }
-    .palette .bg{
-      position:absolute; inset:0;
-      background: rgba(0,0,0,.35);
-      backdrop-filter: blur(6px);
-    }
-    .palette .modal{
-      position:absolute;
-      left:50%; top: 14%;
-      transform: translateX(-50%);
-      width: min(760px, 92vw);
-      background: var(--paper2);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .palette .top{
-      padding: 14px;
-      border-bottom: 1px solid rgba(0,0,0,.10);
-      display:flex; gap: 10px; align-items:center;
-      background: rgba(255,255,255,.55);
-    }
-    .palette input{
-      width:100%;
-      border-radius: 14px;
-      border: 1.6px solid rgba(0,0,0,.12);
-      padding: 12px 12px;
-      outline:none;
-      background:#fff;
-      font-weight: 900;
-    }
-    .palette .hint{
-      font-size: 12px;
-      opacity:.7;
-      font-weight: 1000;
-      white-space:nowrap;
-    }
-    .list{
-      max-height: 380px;
-      overflow:auto;
-      padding: 10px;
-      display:grid;
-      gap: 8px;
-    }
-    .item{
-      padding: 12px 12px;
-      border-radius: 16px;
-      background:#fff;
-      border:1px solid rgba(0,0,0,.10); /* rough later */
-      cursor:pointer;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap: 10px;
-      font-weight: 1000;
-      box-shadow: 0 12px 18px rgba(0,0,0,.08);
-    }
-    .item small{ opacity:.65; font-weight: 1000; }
 
-    /* voice bubble */
-    .voice{
-      display:inline-flex;
-      align-items:center;
+    .nav-right {
+      display: flex;
+      align-items: center;
       gap: 8px;
-      font-size: 12px;
-      font-weight: 1000;
-      padding: 7px 10px;
+    }
+
+    .menu-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
       border-radius: 999px;
+      border: 1px solid #20192b;
+      background: #20192b;
+      color: #fff7e5;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      box-shadow: var(--shadow-soft);
+      cursor: pointer;
+      transition:
+        transform 0.12s ease-out,
+        box-shadow 0.12s ease-out,
+        background-color 0.15s ease-out,
+        color 0.15s ease-out;
+    }
+
+    .menu-pill:hover {
+      background: #000;
+    }
+
+    body[data-theme="about"] .menu-pill {
+      border-color: #f4f4f5;
+      background: #f4f4f5;
+      color: #020617;
+    }
+
+    body[data-theme="about"] .menu-pill:hover {
+      background: #e5e7eb;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+      }
+    }
+
+    /* GENERIC SECTION */
+
+    section {
+      margin-bottom: 90px;
+    }
+
+    .section-header {
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid #20192b;
+      background: #20192b;
+      color: #fff7e5;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    body[data-theme="about"] .eyebrow {
+      border-color: #facc15;
+      background: #facc15;
+      color: #020617;
+    }
+
+    .section-title {
+      margin-top: 10px;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text-main);
+    }
+
+    .section-subtitle {
+      margin-top: 8px;
+      max-width: 680px;
+      font-size: 14px;
+      color: var(--text-soft);
+    }
+
+    body[data-theme="about"] .section-title,
+    body[data-theme="about"] .section-subtitle {
+      color: #e5e7eb;
+    }
+
+    /* HERO */
+
+    .hero {
+      position: relative;
+      padding-top: 22px;
+    }
+
+    .hero-bg-canvas-wrap {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.8;
+    }
+
+    #heroCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 28px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .hero-top-note {
+      font-size: 11px;
+      color: #6b6575;
+      margin-bottom: 6px;
+    }
+
+    .hero-word {
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: clamp(54px, 17vw, 120px);
+      line-height: 0.86;
+      letter-spacing: -0.09em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      background: linear-gradient(115deg, #4b0823, #f7b500, #0051a8);
+      background-size: 180% 180%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: heroGradient 18s ease-in-out infinite;
+    }
+
+    @keyframes heroGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .hero-subline {
+      font-size: 19px;
+      font-weight: 600;
+      color: #4a1536;
+      margin-bottom: 6px;
+    }
+
+    .hero-tagline {
+      font-size: 14px;
+      color: var(--text-soft);
+      max-width: 480px;
+      margin-bottom: 18px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .btn-primary,
+    .btn-outline,
+    .btn-outline-dark,
+    .join-btn,
+    .menu-pill {
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      border: 1px solid #20192b;
+      background: var(--activ-yellow);
+      padding: 10px 20px;
+      box-shadow: var(--shadow-soft);
+      transition:
+        transform 0.12s ease-out,
+        box-shadow 0.12s ease-out,
+        background-color 0.15s ease-out,
+        color 0.15s ease-out;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.05);
+    }
+
+    .btn-outline {
+      border-radius: 999px;
+      border: 1px solid #20192b;
+      background: #fffef7;
+      padding: 9px 16px;
+      font-weight: 500;
+      transition:
+        transform 0.12s ease-out,
+        box-shadow 0.12s ease-out,
+        background-color 0.15s ease-out,
+        color 0.15s ease-out;
+    }
+
+    .btn-outline-dark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid #111827;
       background: #fff;
-      border: 1px solid rgba(0,0,0,.10);
-      box-shadow: 0 12px 18px rgba(0,0,0,.08);
-      cursor:pointer;
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 12px;
+      transition:
+        transform 0.12s ease-out,
+        box-shadow 0.12s ease-out,
+        background-color 0.15s ease-out,
+        color 0.15s ease-out;
     }
-    .micDot{
-      width: 10px; height:10px; border-radius:50%;
-      border: 1.6px solid rgba(0,0,0,.14);
-      background: var(--mint);
-    }
-    .voice[data-on="true"] .micDot{ background: #ff7ab7; }
 
-    /* footer */
-    footer{
-      padding: 34px 0 60px;
-      border-top: 1px solid rgba(0,0,0,.08);
-      background: rgba(255,255,255,.16);
+    .btn-outline-dark:hover {
+      background: #111827;
+      color: white;
     }
-    .foot{
-      display:flex;
-      justify-content:space-between;
-      gap: 12px;
-      flex-wrap:wrap;
-      align-items:flex-end;
-    }
-    .foot small{ opacity:.75; line-height:1.45; font-weight: 700; }
 
-    /* responsive */
-    @media (max-width: 980px){
-      .heroGrid{ grid-template-columns: 1fr; }
-      .links{ display:none; }
-      .impact{ grid-template-columns: 1fr; }
+    .btn-primary:active,
+    .btn-outline:active,
+    .btn-outline-dark:active,
+    .join-btn:active,
+    .menu-pill:active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
     }
-    @media (max-width: 640px){
-      .card{ grid-column: span 12; }
-      .sticker, .scribble{ display:none; }
+
+    .hero-mini {
+      font-size: 12px;
+      color: #6b6575;
+    }
+
+    /* ROLE SWITCHER */
+
+    .role-switcher {
+      margin-top: 12px;
+      font-size: 11px;
+      color: #6b6575;
+    }
+
+    .role-label {
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .role-pill-row {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .role-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(15, 23, 42, 0.22);
+      background: #fffef7;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 500;
+      transition:
+        background-color 0.15s ease-out,
+        color 0.15s ease-out,
+        transform 0.12s ease-out,
+        box-shadow 0.12s ease-out;
+    }
+
+    .role-pill.is-active {
+      background: #111827;
+      color: #fef9c3;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.4);
+      transform: translateY(-1px);
+    }
+
+    /* HERO STICKERS */
+
+    .hero-sticker {
+      position: absolute;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #ffe8f2;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+      transform: rotate(-9deg);
+      white-space: nowrap;
+      pointer-events: none;
+      --r: -9deg;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .hero-sticker.green {
+      background: #e5ffe8;
+      --r: 8deg;
+      animation-delay: 0.7s;
+    }
+
+    .hero-sticker.blue {
+      background: #e1f0ff;
+      --r: -6deg;
+      animation-delay: 1.2s;
+    }
+
+    .hero-sticker.top-left {
+      top: 86px;
+      left: 10%;
+    }
+
+    .hero-sticker.left {
+      top: 188px;
+      left: 4%;
+    }
+
+    .hero-sticker.right {
+      top: 134px;
+      right: 8%;
+    }
+
+    .hero-sticker.top-right {
+      top: 40px;
+      right: 15%;
+    }
+
+    .hero-sticker.bottom {
+      top: 268px;
+      left: 52%;
+      transform: translateX(-50%) rotate(4deg);
+      --r: 4deg;
+      animation-delay: 1.5s;
+    }
+
+    @keyframes float {
+      0%,
+      100% {
+        transform: translateY(0) rotate(var(--r));
+      }
+      50% {
+        transform: translateY(-6px) rotate(calc(var(--r) + 2deg));
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero-sticker {
+        display: none;
+      }
+    }
+
+    /* HERO RIGHT PANEL & LYNX */
+
+    .hero-right {
+      position: relative;
+    }
+
+    .lynx-note {
+      font-size: 11px;
+      color: #6b6575;
+      margin-bottom: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+    }
+
+    .lynx-note img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+
+    .hero-panel {
+      position: relative;
+      border-radius: 46px 46px 0 0;
+      padding: 22px 20px 20px;
+      background-image:
+        radial-gradient(circle at top, #ffe7ff 0, #fff7e5 58%, #fff7e5 100%),
+        repeating-radial-gradient(circle at center, #f7b5ff 0, #f7b5ff 4px, #ffe7ff 4px, #ffe7ff 10px);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.35s ease-out, box-shadow 0.35s ease-out;
+    }
+
+    .hero-panel-inner {
+      border-radius: 32px 32px 0 0;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 18px 16px 16px;
+      transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+    }
+
+    .hero-panel-inner.is-switching {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    .hero-panel-box {
+      border-radius: 14px;
+      border: 2px solid #20192b;
+      background: #ffffff;
+      padding: 10px 12px;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    .hero-panel-box strong {
+      font-weight: 600;
+    }
+
+    .hero-panel-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 10px;
+      font-size: 11px;
+    }
+
+    .hero-panel-pill {
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(32, 25, 43, 0.2);
+      background: #f9fafb;
+      color: #4b4357;
+    }
+
+    .hero-panel[data-tilt-active="true"] {
+      box-shadow: 0 22px 55px rgba(0, 0, 0, 0.25);
+    }
+
+    /* WAVY DIVIDER */
+
+    .hero-wave {
+      margin-top: 40px;
+      height: 120px;
+      border-radius: 60px 60px 0 0;
+      background-image:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0) 0, #fff7e5 55%),
+        repeating-radial-gradient(circle at center, #f3b7ff 0, #f3b7ff 4px, #ffe7ff 4px, #ffe7ff 12px);
+      mask-image: radial-gradient(circle at top, transparent 0, black 60%);
+    }
+
+    /* WHY WE ARE THE BEST – STRIPE */
+
+    .stripe-section {
+      margin-top: -40px;
+    }
+
+    .stripe-shell {
+      border-radius: 34px;
+      background: linear-gradient(
+        to right,
+        #fef9c3,
+        #e0f2fe,
+        #fce7f3,
+        #dcfce7
+      );
+      padding: 18px 14px;
+      box-shadow: var(--shadow-soft);
+      overflow-x: auto;
+    }
+
+    .stripe-inner {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(220px, 260px);
+      gap: 14px;
+    }
+
+    .stripe-card {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 18px;
+      border: 1px solid rgba(17, 24, 39, 0.12);
+      padding: 12px 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--text-soft);
+      position: relative;
+      transition:
+        transform 0.22s ease-out,
+        box-shadow 0.22s ease-out,
+        border-color 0.22s ease-out;
+    }
+
+    .stripe-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+      border-color: rgba(32, 25, 43, 0.28);
+    }
+
+    .stripe-index {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      font-size: 11px;
+      color: #9ca3af;
+      font-weight: 600;
+    }
+
+    .stripe-title {
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 2px;
+    }
+
+    .stripe-text {
+      font-size: 12px;
+    }
+
+    /* GRID HELPERS */
+
+    .grid-2 {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (max-width: 900px) {
+      .grid-2 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card,
+    .feature-card,
+    .step,
+    .stat-card,
+    .youthreach-side,
+    .about-text-block,
+    .join-card {
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(255, 255, 255, 0.96);
+      padding: 14px 16px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+      font-size: 13px;
+      color: var(--text-soft);
+      transition:
+        transform 0.22s ease-out,
+        box-shadow 0.22s ease-out,
+        border-color 0.22s ease-out;
+    }
+
+    .card:hover,
+    .feature-card:hover,
+    .step:hover,
+    .stat-card:hover,
+    .youthreach-side:hover,
+    .about-text-block:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+      border-color: rgba(32, 25, 43, 0.28);
+    }
+
+    .join-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+    }
+
+    .card-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .pill-tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: #f9fafb;
+      color: #374151;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+
+    .card-lead {
+      font-size: 12px;
+      font-weight: 500;
+      color: #4b0b27;
+      margin-bottom: 6px;
+    }
+
+    .card-text {
+      font-size: 13px;
+    }
+
+    /* CIRCLE SECTION (WHAT WE DO INTRO) */
+
+    .circle-section {
+      margin-top: 40px;
+    }
+
+    .circle-shell {
+      border-radius: 50px;
+      background: #fff7e5;
+      box-shadow: var(--shadow-soft);
+      padding: 26px 20px 22px;
+    }
+
+    body[data-theme="about"] .circle-shell {
+      background: #020617;
+    }
+
+    .circle-top-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 22px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .circle-top-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .circle-text-box {
+      border-radius: 18px;
+      border: 2px solid #20192b;
+      background: #fffdf7;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+
+    body[data-theme="about"] .circle-text-box {
+      background: #020617;
+      color: #e5e7eb;
+      border-color: #facc15;
+    }
+
+    .circle-text-box strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    body[data-theme="about"] .circle-text-box strong {
+      color: #facc15;
+    }
+
+    .circle-visual-wrap {
+      display: flex;
+      justify-content: center;
+    }
+
+    .circle-main {
+      width: 230px;
+      height: 230px;
+      border-radius: 999px;
+      background-image:
+        radial-gradient(circle at 30% 20%, #ffe5b9, transparent 55%),
+        radial-gradient(circle at 70% 80%, #b4e0ff, transparent 60%),
+        linear-gradient(135deg, #004fb2, #f7b500);
+      position: relative;
+      overflow: hidden;
+      border: 4px solid #fffdf5;
+      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.18);
+    }
+
+    .circle-main::after {
+      content: "";
+      position: absolute;
+      inset: 12%;
+      border-radius: inherit;
+      background-image:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent),
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.35), transparent 60%);
+      mix-blend-mode: screen;
+    }
+
+    .circle-caption {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    body[data-theme="about"] .circle-caption {
+      color: #e5e7eb;
+    }
+
+    .circle-bottom-grid {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .circle-bottom-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .feature-card {
+      border-radius: 18px;
+      border: 1px solid rgba(32, 25, 43, 0.18);
+      background: #fffef9;
+      padding: 12px 12px 14px;
+      font-size: 13px;
+      color: var(--text-soft);
+      position: relative;
+    }
+
+    .feature-title {
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .feature-label {
+      position: absolute;
+      top: -12px;
+      left: 14px;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #111827;
+      color: #fff7e5;
+    }
+
+    /* PROCESSO */
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .process-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .step {
+      position: relative;
+      font-size: 13px;
+    }
+
+    .step-number {
+      position: absolute;
+      top: 8px;
+      left: 10px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #6b7280;
+    }
+
+    .step-title {
+      margin-top: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 6px;
+    }
+
+    .step-text {
+      font-size: 12px;
+      color: #4b5563;
+    }
+
+    /* SAD STATS */
+
+    .sad-stats {
+      margin-top: 70px;
+    }
+
+    .headline-center {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .headline-title {
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 32px;
+      letter-spacing: -0.05em;
+      color: var(--accent-burgundy);
+    }
+
+    body[data-theme="about"] .headline-title {
+      color: #e5e7eb;
+    }
+
+    .headline-note {
+      margin-top: 6px;
+      font-size: 14px;
+      color: var(--text-soft);
+    }
+
+    .floating-badges-row {
+      margin: 18px auto 18px;
+      max-width: 600px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      font-size: 11px;
+    }
+
+    .floating-badge {
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: #fffdf7;
+      border: 1px solid rgba(32, 25, 43, 0.16);
+    }
+
+    .stats-band {
+      border-radius: 26px;
+      padding: 16px 14px;
+      background: linear-gradient(
+        to right,
+        #ffe4f2,
+        #ffd8ff,
+        #e7f2ff
+      );
+      box-shadow: var(--shadow-soft);
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .stats-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .stat-card {
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.94);
+      padding: 10px 12px;
+      text-align: center;
+      border: 1px solid rgba(32, 25, 43, 0.18);
+    }
+
+    .stat-number {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .stat-label {
+      margin-top: 2px;
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .stats-note {
+      margin-top: 10px;
+      text-align: right;
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    /* YOUTHREACH */
+
+    .youthreach-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    }
+
+    @media (max-width: 900px) {
+      .youthreach-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .youthreach-list {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+
+    .youthreach-list li {
+      margin-bottom: 4px;
+    }
+
+    .youthreach-side {
+      font-size: 12px;
+      color: #4b5563;
+    }
+
+    /* ABOUT / JOIN */
+
+    .about-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr);
+    }
+
+    @media (max-width: 900px) {
+      .about-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .about-text-block {
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    body[data-theme="about"] .about-text-block {
+      background: rgba(15, 23, 42, 0.92);
+      border-color: rgba(148, 163, 184, 0.8);
+      color: #e5e7eb;
+    }
+
+    .about-text-block p + p {
+      margin-top: 10px;
+    }
+
+    .join-card {
+      background: #111827;
+      color: #f9fafb;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .join-title {
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .join-pill {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #facc15;
+      color: #111827;
+      font-size: 11px;
+      font-weight: 600;
+      align-self: flex-start;
+    }
+
+    .join-btn {
+      margin-top: 4px;
+      align-self: flex-start;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid #f9fafb;
+      background: #f9fafb;
+      color: #111827;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .join-btn:hover {
+      background: #e5e7eb;
+    }
+
+    /* FOOTER */
+
+    footer {
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      padding-top: 14px;
+      margin-top: 40px;
+      font-size: 11px;
+      color: #6b6575;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    footer span.brand {
+      font-weight: 600;
+      color: #1f2933;
+    }
+
+    body[data-theme="about"] footer {
+      border-top-color: rgba(148, 163, 184, 0.55);
+      color: #9ca3af;
+    }
+
+    body[data-theme="about"] footer span.brand {
+      color: #e5e7eb;
+    }
+
+    /* SCROLL REVEAL ANIMATIONS */
+
+    [data-animate] {
+      opacity: 0;
+      transform: translateY(24px);
+      transition:
+        opacity 0.65s ease-out,
+        transform 0.65s ease-out;
+      will-change: opacity, transform;
+    }
+
+    [data-animate].is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* COMMAND PALETTE */
+
+    .command-btn {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 90;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid rgba(15, 23, 42, 0.18);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 16px 45px rgba(15, 23, 42, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition:
+        transform 0.12s ease-out,
+        box-shadow 0.12s ease-out,
+        background-color 0.15s ease-out;
+    }
+
+    .command-btn:hover {
+      transform: translateY(-2px);
+      background: #f9fafb;
+    }
+
+    body[data-theme="about"] .command-btn {
+      background: #020617;
+      color: #e5e7eb;
+      border-color: rgba(148, 163, 184, 0.5);
+    }
+
+    .command-overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .command-overlay[data-open="true"] {
+      display: flex;
+    }
+
+    .command-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(10px);
+    }
+
+    .command-panel {
+      position: relative;
+      width: min(520px, 100% - 32px);
+      background: #f9fafb;
+      border-radius: 18px;
+      border: 1px solid rgba(15, 23, 42, 0.28);
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.6);
+      padding: 12px 12px 10px;
+      z-index: 101;
+    }
+
+    body[data-theme="about"] .command-panel {
+      background: #020617;
+      border-color: rgba(148, 163, 184, 0.8);
+      color: #e5e7eb;
+    }
+
+    .command-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      border-radius: 10px;
+      background: #ffffff;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      margin-bottom: 8px;
+    }
+
+    body[data-theme="about"] .command-input-wrap {
+      background: #020617;
+    }
+
+    .command-input-wrap span {
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    body[data-theme="about"] .command-input-wrap span {
+      color: #9ca3af;
+    }
+
+    .command-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 13px;
+      background: transparent;
+      color: #111827;
+    }
+
+    body[data-theme="about"] .command-input {
+      color: #e5e7eb;
+    }
+
+    .command-hint {
+      font-size: 10px;
+      color: #9ca3af;
+      margin-bottom: 6px;
+    }
+
+    .command-list {
+      list-style: none;
+      max-height: 220px;
+      overflow-y: auto;
+      margin: 0;
+      padding: 0;
+      border-radius: 10px;
+      background: #ffffff;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+    }
+
+    body[data-theme="about"] .command-list {
+      background: #020617;
+    }
+
+    .command-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 8px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background-color 0.12s ease-out;
+    }
+
+    .command-item span.label {
+      font-weight: 500;
+    }
+
+    .command-item span.meta {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    .command-item:hover,
+    .command-item[data-active="true"] {
+      background: #eff6ff;
+    }
+
+    body[data-theme="about"] .command-item:hover,
+    body[data-theme="about"] .command-item[data-active="true"] {
+      background: #0f172a;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        scroll-behavior: auto !important;
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
     }
   </style>
 </head>
-
-<body>
-  <div class="paperBg"></div>
-  <div class="grain"></div>
-  <div class="halftone"></div>
-  <div class="progress" id="progress"></div>
-
-  <!-- Drawer -->
-  <div class="drawer" id="drawer" data-open="false" aria-hidden="true">
-    <div class="bg" id="drawerBg"></div>
-    <div class="panel" role="dialog" aria-modal="true" aria-label="Menu">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
-        <h3>MENU</h3>
-        <button class="pill" id="closeDrawer" type="button" aria-label="Fechar">✕</button>
-      </div>
-      <a class="dLink" href="#why"><span>01</span> Porque funciona</a>
-      <a class="dLink" href="#impact"><span>02</span> Impact Lab</a>
-      <a class="dLink" href="#what"><span>03</span> O que fazemos</a>
-      <a class="dLink" href="#process"><span>04</span> Processo</a>
-      <a class="dLink" href="#youthreach"><span>05</span> YouthReach</a>
-      <a class="dLink" href="#about"><span>06</span> Sobre</a>
-
-      <div style="margin-top:auto; display:flex; gap:10px; flex-wrap:wrap;">
-        <button class="pill" id="openPalette2" type="button">
-          Pesquisa
-          <span class="kbd">Ctrl K</span>
-        </button>
-        <button class="pill" id="toggleLang2" type="button">PT / EN</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Command palette -->
-  <div class="palette" id="palette" data-open="false" aria-hidden="true">
-    <div class="bg" id="palBg"></div>
-    <div class="modal" id="palModal" role="dialog" aria-modal="true" aria-label="Pesquisa">
-      <div class="top">
-        <input id="palInput" type="text" autocomplete="off" placeholder="Pesquisar… (ex.: impacto, processo, YouthReach)"/>
-        <div class="hint">Esc</div>
-      </div>
-      <div class="list" id="palList"></div>
-    </div>
-  </div>
+<body data-theme="hero">
+  <div class="scroll-progress" id="scrollProgress"></div>
 
   <header>
-    <div class="wrap">
-      <div class="nav">
-        <div class="brand">
-          <div class="logoMark">A</div>
-          <div>
-            <div>ActivEU</div>
-            <small>Solidarity Action Day em Portugal</small>
+    <div class="nav-inner">
+      <div class="nav-left">
+        <div class="logo-wrap">
+          <div class="logo-card">
+            <img src="ActivEU_Logo_PNG.png" alt="ActivEU logo" />
+          </div>
+          <div class="logo-text">
+            Solidarity Action Day · Portugal
           </div>
         </div>
+      </div>
 
-        <nav class="links" aria-label="Primary">
-          <a class="navlink" data-id="why" href="#why">Porque funciona</a>
-          <a class="navlink" data-id="impact" href="#impact">Impact Lab</a>
-          <a class="navlink" data-id="what" href="#what">O que fazemos</a>
-          <a class="navlink" data-id="process" href="#process">Processo</a>
-          <a class="navlink" data-id="youthreach" href="#youthreach">YouthReach</a>
-          <a class="navlink" data-id="about" href="#about">Sobre</a>
-        </nav>
+      <nav class="nav-links">
+        <a href="#hero">Início</a>
+        <a href="#why">Porquê</a>
+        <a href="#what">O que fazemos</a>
+        <a href="#process">Processo</a>
+        <a href="#sad">SAD</a>
+        <a href="#youthreach">Serviços</a>
+        <a href="#about">Sobre</a>
+      </nav>
 
-        <div class="actions">
-          <button class="voice" id="voiceBtn" type="button" aria-label="Voice navigation" title="Diz: 'Ir para Impact', 'Ir para Processo'">
-            <span class="micDot"></span>
-            <span id="voiceLabel">Voice</span>
-          </button>
-          <button class="pill" id="openPalette" type="button">
-            Pesquisa
-            <span class="kbd">Ctrl K</span>
-          </button>
-          <button class="pill" id="toggleLang" type="button">PT / EN</button>
-          <button class="menuBtn" id="menuBtn" type="button">MENU</button>
-        </div>
+      <div class="nav-right">
+        <button class="menu-pill" type="button">MENU</button>
       </div>
     </div>
   </header>
 
-  <main>
+  <main class="page-shell">
     <!-- HERO -->
-    <section class="hero" id="top" data-title="ActivEU">
-      <div class="wrap">
+    <section id="hero" class="hero" data-animate data-theme="hero">
+      <div class="hero-bg-canvas-wrap">
+        <canvas id="heroCanvas"></canvas>
+      </div>
 
-        <!-- Stickers like Agenius -->
-        <div class="sticker" data-tone="mint" style="left:22px; top:34px; --rot:-2.2deg;">Jovem</div>
-        <div class="sticker" data-tone="sun"  style="left:154px; top:116px; --rot:1.8deg;">Solidária</div>
-        <div class="sticker" data-tone="lav"  style="right:210px; top:44px; --rot:-1.2deg;">Europeia</div>
-        <div class="sticker" data-tone="sky"  style="right:50px; top:132px; --rot:2.6deg;">Criativa</div>
+      <div class="hero-grid">
+        <div>
+          <div class="hero-top-note">
+            ActivEU · Associação jovem europeia
+          </div>
 
-        <!-- Scribbles/arrows -->
-        <svg class="scribble" style="left:-8px; top:0; width:260px; height:140px;" viewBox="0 0 260 140" aria-hidden="true">
-          <path d="M12 118 C42 76, 72 92, 98 56 C126 16, 160 34, 196 18 C218 8, 238 10, 250 20"
-                fill="none" stroke="rgba(20,10,18,.85)" stroke-width="2.6" stroke-linecap="round"/>
-          <path d="M236 22 l16 -4 l-8 14" fill="none" stroke="rgba(20,10,18,.85)" stroke-width="2.6" stroke-linecap="round"/>
-        </svg>
+          <div class="hero-word">ActivEU</div>
 
-        <div class="heroGrid">
-          <div>
-            <div class="heroTitle">ACTIVEU</div>
-            <div class="tagline">O teu dia. A tua ação. O teu impacto.</div>
-            <div class="micro">
-              Trocas aulas por experiência real em contexto profissional, apoias uma causa verificada e ganhas competências certificadas.
-            </div>
+          <p class="hero-subline">
+            O teu dia. A tua ação. O teu impacto.
+          </p>
 
-            <div class="ctaRow">
-              <a class="cta" href="#impact">Experimenta o Impact Lab</a>
-              <a class="cta secondary" href="#process">Ver como funciona</a>
+          <p class="hero-tagline">
+            Em vez de um dia “normal” de aulas, vives uma experiência real em contexto profissional, ganhas competências
+            e o valor é doado a causas solidárias. O Solidarity Action Day chega a Portugal com rosto, rigor e ambição.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#contact" class="btn-primary" data-magnetic>Junta-te ao Movimento</a>
+            <a href="#connect-intro" class="btn-outline" data-magnetic>Percebe como funciona</a>
+          </div>
+
+          <div class="role-switcher">
+            <span class="role-label">Ver o Solidarity Action Day pelos olhos de:</span>
+            <div class="role-pill-row">
+              <button class="role-pill is-active" data-role="student">Um estudante</button>
+              <button class="role-pill" data-role="company">Uma entidade de acolhimento</button>
+              <button class="role-pill" data-role="cause">Uma causa solidária</button>
             </div>
           </div>
 
-          <aside class="heroCard sketch" data-sketch="card" aria-label="Resumo ActivEU">
-            <div class="rings" aria-hidden="true"></div>
-            <div class="inner">
-              <h2>ActivEU Connect</h2>
-              <p>
-                Uma plataforma desenhada para confiança: verificação, matching justo, doação transparente e relatório de impacto.
+          <p class="hero-mini">
+            Jovens, empresas e causas ligadas por um modelo simples: um dia de trabalho solidário, impacto real para todos.
+          </p>
+        </div>
+
+        <div class="hero-right">
+          <div class="lynx-note">
+            <img src="Lynx.png" alt="Símbolo do lince ActivEU" />
+            <span> </span>
+          </div>
+          <div class="hero-panel" id="heroTilt">
+            <div class="hero-panel-inner" id="heroPanelInner">
+              <div class="hero-panel-box" id="panelBox1">
+                <strong>A plataforma ActivEU Connect</strong> utiliza um algoritmo meritocrático que te liga a empresas
+                e causas de forma justa e transparente, criando oportunidades reais de desenvolvimento para todos.
+              </div>
+              <div class="hero-panel-box" id="panelBox2">
+                O valor pago pela entidade de acolhimento é <strong>doado integralmente</strong> a causas solidárias
+                verificadas. Tu ganhas experiência e certificação; as causas ganham força para continuar o seu trabalho.
+              </div>
+
+              <div class="hero-panel-pill-row" id="panelPills">
+                <span class="hero-panel-pill">Experiência com impacto</span>
+                <span class="hero-panel-pill">Matching inteligente</span>
+                <span class="hero-panel-pill">Resultados que permanecem</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stickers -->
+        <div class="hero-sticker green top-left">Jovem</div>
+        <div class="hero-sticker left">Solidária</div>
+        <div class="hero-sticker blue right">Europeia</div>
+        <div class="hero-sticker top-right">Uma iniciativa europeia</div>
+        <div class="hero-sticker bottom">Junta-te ao Movimento</div>
+      </div>
+
+      <div class="hero-wave"></div>
+    </section>
+
+    <!-- WHY WE ARE THE BEST -->
+    <section id="why" class="stripe-section" data-animate data-theme="why">
+      <div class="section-header">
+        <div class="eyebrow">Why we are the best</div>
+        <h2 class="section-title">
+          Uma ideia simples. Um impacto gigantesco.
+        </h2>
+        <p class="section-subtitle">
+          Quando um dia de aulas se transforma em solidariedade, todos ganham: jovens, empresas, causas e comunidades.
+          O Solidarity Action Day cria um círculo virtuoso em que cada participação conta.
+        </p>
+      </div>
+
+      <div class="stripe-shell">
+        <div class="stripe-inner">
+          <article class="stripe-card">
+            <div class="stripe-index">1</div>
+            <div class="stripe-title">
+              Jovens que transformam o seu futuro (e o dos outros)
+            </div>
+            <p class="stripe-text">
+              Vives um dia em contexto profissional, descobres o que gostas, ganhas experiência e tomas decisões mais
+              conscientes sobre o teu percurso. Tudo isto enquanto fazes a diferença.
+            </p>
+          </article>
+
+          <article class="stripe-card">
+            <div class="stripe-index">2</div>
+            <div class="stripe-title">
+              Empresas que descobrem talento com propósito
+            </div>
+            <p class="stripe-text">
+              As empresas acolhem jovens motivados, testam compatibilidade, fortalecem a sua reputação social e
+              descobrem futuros colaboradores, numa iniciativa com impacto humano e comunitário.
+            </p>
+          </article>
+
+          <article class="stripe-card">
+            <div class="stripe-index">3</div>
+            <div class="stripe-title">
+              Causas que continuam o seu trabalho essencial
+            </div>
+            <p class="stripe-text">
+              O valor angariado é integralmente doado a causas solidárias verificadas, ajudando instituições a manter
+              e a fazer crescer projetos que mudam vidas todos os dias.
+            </p>
+          </article>
+
+          <article class="stripe-card">
+            <div class="stripe-index">4</div>
+            <div class="stripe-title">
+              Um dia que transforma percursos
+            </div>
+            <p class="stripe-text">
+              Para uns é o primeiro contacto com o mundo do trabalho. Para outros, o momento em que descobrem a sua
+              vocação. Para todos, uma experiência que marca.
+            </p>
+          </article>
+
+          <article class="stripe-card">
+            <div class="stripe-index">5</div>
+            <div class="stripe-title">
+              Impacto mensurável, transparente e partilhado
+            </div>
+            <p class="stripe-text">
+              Cada ação é acompanhada de dados tangíveis: quanto se angariou, quem se ajudou, o que se aprendeu.
+              Solidariedade com métricas, responsabilidade e verdade.
+            </p>
+          </article>
+
+          <article class="stripe-card">
+            <div class="stripe-index">6</div>
+            <div class="stripe-title">
+              O Solidarity Action Day chega a Portugal (e ainda melhor!)
+            </div>
+            <p class="stripe-text">
+              A versão portuguesa nasceu aqui: mais ambiciosa, inovadora e impactante do que nunca. Um modelo que une
+              tecnologia, solidariedade e juventude para criar impacto real em todo o país.
+            </p>
+          </article>
+
+          <article class="stripe-card">
+            <div class="stripe-index">7</div>
+            <div class="stripe-title">
+              Quando todos ganham, o mundo muda
+            </div>
+            <p class="stripe-text">
+              Jovens, empresas e causas unem-se num círculo virtuoso de impacto. É isto que torna o Solidarity Action
+              Day mais do que uma iniciativa: é um novo modelo de cooperação social.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT WE DO – INTRO + GRID -->
+    <section id="what" data-animate data-theme="what">
+      <div class="circle-section" id="connect-intro">
+        <div class="circle-shell">
+          <div class="circle-top-grid">
+            <div>
+              <div class="eyebrow">What we do &amp; do really well</div>
+              <h2 class="section-title">
+                ActivEU é mais do que um dia.
+              </h2>
+              <p class="section-subtitle">
+                O Solidarity Action Day é o coração do projeto, mas o trabalho não começa nem acaba aí. Construímos
+                um ecossistema que liga educação, voluntariado, bem-estar e cooperação europeia.
               </p>
 
-              <div class="stats">
-                <div class="stat sketch" data-sketch="stat">
-                  <b>1</b><span>dia = experiência real</span>
-                </div>
-                <div class="stat sketch" data-sketch="stat">
-                  <b>0</b><span>viés (sem foto/nome)</span>
-                </div>
-                <div class="stat sketch" data-sketch="stat">
-                  <b>✓</b><span>certificação</span>
-                </div>
-                <div class="stat sketch" data-sketch="stat">
-                  <b>100%</b><span>doação rastreável</span>
-                </div>
-              </div>
-
-              <div class="tiny" style="margin-top:10px;">
-                Dica: Ctrl/⌘ + K para navegar. Ou usa Voice e diz: “Ir para Impact”.
+              <div class="circle-text-box" style="margin-top: 12px;">
+                <strong>ActivEU Connect</strong> é a plataforma que implementa o modelo europeu Solidarity Action Day
+                em Portugal. Através desta plataforma digital, os jovens têm uma experiência de voluntariado estruturado
+                em ambiente profissional. As empresas acolhem participantes e fazem uma contribuição simbólica, doada
+                integralmente a causas sociais verificadas. Cada jovem recebe certificados e relatórios de impacto,
+                refletindo competências desenvolvidas e impacto criado. A ActivEU Connect garante justiça, segurança
+                e transparência em todo o processo, unindo juventude, setores público e privado e causas num só gesto
+                de solidariedade ativa.
               </div>
             </div>
-          </aside>
+
+            <div class="circle-visual-wrap">
+              <div>
+                <div class="circle-main"></div>
+                <p class="circle-caption">
+                  Um modelo europeu, agora com toque português: rigor, transparência e muito coração.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="circle-bottom-grid" style="margin-top: 26px;">
+            <article class="feature-card">
+              <div class="feature-label">Experiência com Impacto</div>
+              <div class="feature-title">Aprende em contexto real</div>
+              <p>
+                Aprendes em contexto profissional, desenvolves competências e transformas conhecimento em ação
+                solidária. Deixas de ouvir “falta-te experiência” e começas a construí-la, com propósito.
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-label">Matching Inteligente</div>
+              <div class="feature-title">O lugar certo para ti</div>
+              <p>
+                O algoritmo garante que apenas oportunidades realmente compatíveis aparecem no topo. A empresa vê
+                primeiro quem faz mais sentido para a função, e tu vais para um sítio onde fazes a diferença.
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-label">Resultados que Permanecem</div>
+              <div class="feature-title">Impacto que não acaba no fim do dia</div>
+              <p>
+                O valor é doado a causas solidárias que mudam o mundo, enquanto mostras o teu potencial e ganhas
+                competências certificadas. Um dia que se transforma em muitos outros.
+              </p>
+            </article>
+          </div>
         </div>
       </div>
-    </section>
 
-    <!-- WHY -->
-    <section id="why" data-title="Porque funciona">
-      <div class="scallopTop" aria-hidden="true"></div>
-      <div class="scallopBottom" aria-hidden="true"></div>
-
-      <div class="wrap">
-        <div class="head">
-          <div>
-            <div class="kicker sketch" data-sketch="kicker"><i></i> Uma ideia simples. Um impacto gigantesco.</div>
-            <h2 class="sectionTitle">Porque funciona</h2>
-            <p class="lead">
-              O SAD cria valor simultâneo para jovens, empresas e causas. O desenho é intencional: rigor, utilidade e confiança.
+      <!-- Grid de áreas principais -->
+      <div style="margin-top: 32px;">
+        <div class="grid-2">
+          <!-- ActivEU Connect -->
+          <article class="card">
+            <div class="card-tag-row">
+              <span class="pill-tag">Solidarity Action Day</span>
+              <span class="pill-tag">Voluntariado estruturado</span>
+              <span class="pill-tag">Certificação &amp; impacto</span>
+            </div>
+            <h3 class="card-title">
+              ActivEU Connect: Solidarity Action Day em Portugal
+            </h3>
+            <p class="card-lead">
+              O Solidarity Action Day em versão portuguesa. Tecnologia, inovação, solidariedade e educação a trabalhar em conjunto.
             </p>
-          </div>
-        </div>
-
-        <div class="grid">
-          <article class="card sketch" data-sketch="card">
-            <div class="badge sketch" data-sketch="badge">01</div>
-            <h3>Jovens que transformam o seu futuro (e o dos outros)</h3>
-            <p>Um dia em contexto profissional: descobres o que gostas, ganhas experiência e fazes a diferença.</p>
-          </article>
-
-          <article class="card sketch" data-sketch="card">
-            <div class="badge sketch" data-sketch="badge">02</div>
-            <h3>Empresas que descobrem talento com propósito</h3>
-            <p>Testam compatibilidade, reforçam reputação social e encontram futuros colaboradores sem ruído.</p>
-          </article>
-
-          <article class="card sketch" data-sketch="card">
-            <div class="badge sketch" data-sketch="badge">03</div>
-            <h3>Causas que continuam o seu trabalho essencial</h3>
-            <p>Doações verificadas e rastreáveis, com transparência. Menos fricção, mais continuidade.</p>
-          </article>
-
-          <article class="card sketch" data-sketch="card">
-            <div class="badge sketch" data-sketch="badge">04</div>
-            <h3>Meritocracia justa (sem enviesamentos óbvios)</h3>
-            <p>Sem foto, sem nome, sem idade. O foco é compatibilidade e mérito real, não perceções.</p>
-          </article>
-
-          <article class="card full sketch" data-sketch="card">
-            <div class="badge sketch" data-sketch="badge">05</div>
-            <h3>Escala com integridade</h3>
-            <p>Verificação prévia, regras claras, incentivos corretos e avaliação contínua para crescer sem perder qualidade.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- IMPACT LAB (the "2046" piece) -->
-    <section id="impact" data-title="Impact Lab">
-      <div class="wrap">
-        <div class="head">
-          <div>
-            <div class="kicker sketch" data-sketch="kicker"><i></i> Uma experiência “quase-app”, sem backend.</div>
-            <h2 class="sectionTitle">Impact Lab</h2>
-            <p class="lead">
-              Simula impacto. Gera um snapshot partilhável. Navega por voz. Aqui vês tecnologia com propósito.
+            <p class="card-text">
+              A ActivEU Connect é a base tecnológica que torna o modelo possível no terreno, garantindo que cada
+              participação é segura, justa e totalmente transparente.
             </p>
-          </div>
-        </div>
+          </article>
 
-        <div class="impact">
-          <div class="panel sketch" data-sketch="card">
-            <h3>Impact Simulator</h3>
-            <p>Escolhe perfil e ajusta variáveis. A ActivEU devolve um “Impact Snapshot” e podes fazer download local.</p>
-
-            <div class="controls">
-              <div class="row">
-                <label for="role">Perfil</label>
-                <select id="role">
-                  <option value="jovem">Jovem</option>
-                  <option value="empresa">Empresa</option>
-                  <option value="escola">Escola</option>
-                  <option value="municipio">Município</option>
-                </select>
-              </div>
-
-              <div class="row">
-                <label for="participants">Participantes por mês</label>
-                <input id="participants" type="range" min="10" max="2000" value="150" />
-                <div class="tiny"><b id="participantsVal">150</b> participantes/mês</div>
-              </div>
-
-              <div class="row">
-                <label for="donation">Doação média por dia (EUR)</label>
-                <input id="donation" type="range" min="0" max="25" value="10" />
-                <div class="tiny"><b id="donationVal">10</b> € por participação</div>
-              </div>
-
-              <div class="row">
-                <label for="quality">Qualidade da experiência (0–100)</label>
-                <input id="quality" type="range" min="40" max="100" value="86" />
-                <div class="tiny"><b id="qualityVal">86</b>/100</div>
-              </div>
-
-              <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top: 6px;">
-                <button class="cta secondary" id="copySnapshot" type="button">Copiar snapshot</button>
-                <button class="cta" id="downloadSnapshot" type="button">Download snapshot</button>
-              </div>
+          <!-- Educação e formação -->
+          <article class="card">
+            <div class="card-tag-row">
+              <span class="pill-tag">Cidadania europeia</span>
+              <span class="pill-tag">Educação</span>
+              <span class="pill-tag">Competências transversais</span>
+              <span class="pill-tag">Empregabilidade juvenil</span>
             </div>
+            <h3 class="card-title">
+              Educação e Formação Juvenil
+            </h3>
+            <p class="card-lead">
+              Capacitar jovens para agir com consciência, competência e liderança.
+            </p>
+            <p class="card-text">
+              A ActivEU promove formações, palestras, workshops e debates sobre cidadania, ética profissional,
+              direitos humanos, democracia europeia e sustentabilidade. Integramos programas de bem-estar juvenil,
+              com acompanhamento profissional e abordagens expressivas, artísticas e de contacto com a natureza,
+              para que cada jovem possa investir no seu crescimento e equilíbrio emocional.
+            </p>
+          </article>
 
-            <div class="out sketch" data-sketch="box" id="snapshot"></div>
-            <div class="tiny">Isto é client-side: não há tracking, não há cookies, não há “fake AI”. A experiência é real e respeita privacidade.</div>
-          </div>
-
-          <div class="panel sketch" data-sketch="card">
-            <h3>Voice Navigation</h3>
-            <p>Carrega no botão “Voice” e diz: “Ir para Impact”, “Ir para Processo”, “Ir para YouthReach”, “Abrir pesquisa”.</p>
-
-            <div class="out sketch" data-sketch="box" id="voiceLog">Estado: pronto.</div>
-
-            <div class="tiny">
-              Nota: funciona em browsers com Web Speech API (Chrome/Edge geralmente). Se não existir, o botão mantém-se, mas sem erro.
+          <!-- Ação comunitária -->
+          <article class="card">
+            <div class="card-tag-row">
+              <span class="pill-tag">Voluntariado local</span>
+              <span class="pill-tag">Cultura &amp; tradições</span>
+              <span class="pill-tag">Inclusão &amp; acessibilidade</span>
+              <span class="pill-tag">Solidariedade intergeracional</span>
             </div>
+            <h3 class="card-title">
+              Ação Comunitária e Encontro Intergeracional
+            </h3>
+            <p class="card-lead">
+              Iniciativas que aproximam gerações, celebram tradições e fortalecem o sentido de pertença.
+            </p>
+            <p class="card-text">
+              A ActivEU atua no terreno com projetos que valorizam o contacto humano e a identidade cultural.
+              Organizamos encontros intergeracionais, atividades culturais inclusivas e eventos comunitários que
+              promovem empatia, cooperação e solidariedade local.
+            </p>
+          </article>
 
-            <div style="margin-top:12px;">
-              <button class="pill" id="openPalette3" type="button">Abrir pesquisa <span class="kbd">Ctrl K</span></button>
+          <!-- Sustentabilidade -->
+          <article class="card">
+            <div class="card-tag-row">
+              <span class="pill-tag">Avaliação de impacto</span>
+              <span class="pill-tag">Relatórios &amp; auditoria</span>
+              <span class="pill-tag">Responsabilidade ambiental</span>
             </div>
+            <h3 class="card-title">
+              Sustentabilidade e Impacto Social
+            </h3>
+            <p class="card-lead">
+              Transparência, responsabilidade e compromisso com resultados mensuráveis.
+            </p>
+            <p class="card-text">
+              Todas as atividades são acompanhadas por indicadores sociais, educativos e ambientais, com auditorias
+              externas periódicas. Promovemos práticas de sustentabilidade ecológica em todas as dimensões da
+              associação, reduzindo desperdício e incentivando escolhas responsáveis.
+            </p>
+          </article>
 
-            <div class="tiny" style="margin-top:10px;">
-              Extra “2046”: este lab é uma demo de como a ActivEU pensa produto: explicável, útil, e com zero fricção.
+          <!-- Parcerias -->
+          <article class="card">
+            <div class="card-tag-row">
+              <span class="pill-tag">SAME Network</span>
+              <span class="pill-tag">Municípios</span>
+              <span class="pill-tag">Universidades &amp; escolas</span>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- WHAT -->
-    <section id="what" data-title="O que fazemos">
-      <div class="scallopTop" aria-hidden="true"></div>
-      <div class="scallopBottom" aria-hidden="true"></div>
-
-      <div class="wrap">
-        <div class="head">
-          <div>
-            <div class="kicker sketch" data-sketch="kicker"><i></i> Tecnologia, solidariedade, educação.</div>
-            <h2 class="sectionTitle">O que fazemos</h2>
-            <p class="lead">Construímos infraestrutura de participação: simples no uso, robusta por dentro.</p>
-          </div>
-        </div>
-
-        <div class="grid">
-          <article class="card sketch" data-sketch="card">
-            <div class="badge sketch" data-sketch="badge">A</div>
-            <h3>ActivEU Connect</h3>
-            <p>Matching meritocrático, verificação, doações rastreáveis e relatórios de impacto com certificação.</p>
-          </article>
-
-          <article class="card sketch" data-sketch="card">
-            <div class="badge sketch" data-sketch="badge">B</div>
-            <h3>SAD Permanente / SAD Anual</h3>
-            <p>Duas modalidades para escalar impacto: contínuo com contribuição sugerida e anual para mobilização ampla.</p>
-          </article>
-
-          <article class="card sketch" data-sketch="card">
-            <div class="badge sketch" data-sketch="badge">C</div>
-            <h3>Projetos comunitários</h3>
-            <p>Coesão social com desenho acessível: intergeracionalidade, cultura e inclusão em formatos replicáveis.</p>
-          </article>
-
-          <article class="card sketch" data-sketch="card">
-            <div class="badge sketch" data-sketch="badge">D</div>
-            <h3>YouthReach & Creative Support</h3>
-            <p>Diagnóstico jovem, processos participativos, formação interna e comunicação institucional adaptada.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROCESS -->
-    <section id="process" data-title="Processo">
-      <div class="wrap">
-        <div class="head">
-          <div>
-            <div class="kicker sketch" data-sketch="kicker"><i></i> Uma jornada clara (sem fricção).</div>
-            <h2 class="sectionTitle">Processo</h2>
-            <p class="lead">Registo rápido. Verificação simples. Matching justo. Experiência real. Impacto comprovável.</p>
-          </div>
-        </div>
-
-        <div class="grid">
-          <article class="card sketch" data-sketch="card">
-            <div class="badge sketch" data-sketch="badge">01</div>
-            <h3>Regista-te</h3>
-            <p>Em poucos minutos. Ativação segura e transparente.</p>
-          </article>
-          <article class="card sketch" data-sketch="card">
-            <div class="badge sketch" data-sketch="badge">02</div>
-            <h3>Candidata-te</h3>
-            <p>O algoritmo analisa compatibilidade (sem foto/nome/idade). Mérito e contexto, não perceção.</p>
-          </article>
-          <article class="card full sketch" data-sketch="card">
-            <div class="badge sketch" data-sketch="badge">03</div>
-            <h3>Participa e mede impacto</h3>
-            <p>Concluis a experiência, escolhes a causa, e recebes certificação + relatório de impacto.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- YOUTHREACH -->
-    <section id="youthreach" data-title="YouthReach">
-      <div class="scallopTop" aria-hidden="true"></div>
-      <div class="scallopBottom" aria-hidden="true"></div>
-
-      <div class="wrap">
-        <div class="head">
-          <div>
-            <div class="kicker sketch" data-sketch="kicker"><i></i> ActivEU YouthReach & Creative Support</div>
-            <h2 class="sectionTitle">Ajudamos entidades a chegar aos jovens</h2>
-            <p class="lead">Diagnóstico rigoroso, participação estruturada, formação interna e comunicação adaptada.</p>
-          </div>
-        </div>
-
-        <div class="grid">
-          <article class="card full sketch" data-sketch="card">
-            <h3>O que oferecemos</h3>
-            <p>
-              Diagnóstico Jovem local e organizacional • Metodologias participativas • Workshops e sessões de co-criação •
-              Formação interna (trabalho com jovens, comunicação, participação contínua) • Orientação em narrativas • Apoio multimédia estratégico.
+            <h3 class="card-title">
+              Parcerias e Cooperação Europeia
+            </h3>
+            <p class="card-lead">
+              Trabalhamos em rede para multiplicar impacto, em Portugal e na Europa.
+            </p>
+            <p class="card-text">
+              A ActivEU integra o movimento europeu Solidarity Action Day, coordenado pela SAME Network. Em Portugal,
+              colaboramos com municípios, escolas, universidades, empresas e fundações para adaptar continuamente o
+              modelo ao contexto nacional.
             </p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- ABOUT -->
-    <section id="about" data-title="Sobre">
-      <div class="wrap">
-        <div class="head">
-          <div>
-            <div class="kicker sketch" data-sketch="kicker"><i></i> Transparência. Impacto. Escala.</div>
-            <h2 class="sectionTitle">Sobre a ActivEU</h2>
-            <p class="lead">Uma associação jovem solidária europeia, com desenho institucional sério e ambição de referência.</p>
+    <!-- PROCESSO – OUR NOT SO SECRET SAUCE -->
+    <section id="process" data-animate data-theme="process">
+      <div class="section-header">
+        <div class="eyebrow">Our not so secret sauce</div>
+        <h2 class="section-title">
+          O processo que torna tudo isto possível.
+        </h2>
+        <p class="section-subtitle">
+          Pensámos cada passo para ser justo, rápido e seguro. Do registo ao certificado final, o foco é simples:
+          valor real para ti, para a entidade e para a causa que escolhes.
+        </p>
+      </div>
+
+      <div class="process-grid">
+        <article class="step">
+          <div class="step-number">01</div>
+          <h3 class="step-title">Regista-te</h3>
+          <p class="step-text">
+            Registas-te em menos de dois minutos. Carregas uma prova académica simples (declaração ou certificado).
+            É fácil e rápido. A plataforma valida e ativa o teu perfil com segurança.
+          </p>
+        </article>
+
+        <article class="step">
+          <div class="step-number">02</div>
+          <h3 class="step-title">Candidata-te e destaca-te</h3>
+          <p class="step-text">
+            Exploras oportunidades e candidatas-te às que te interessam. A partir daí, o nosso algoritmo analisa a
+            compatibilidade de forma meritocrática: sem foto, sem nome, sem idade – só aquilo que realmente importa.
+          </p>
+        </article>
+
+        <article class="step">
+          <div class="step-number">03</div>
+          <h3 class="step-title">Participa e cria valor real</h3>
+          <p class="step-text">
+            Ganhando experiência prática, contribuis diretamente para uma causa que escolheste. Mostras aquilo que
+            sabes fazer, entras em contacto com o mercado de trabalho e ficas com uma experiência autêntica para
+            acrescentar ao teu CV – validada e certificada.
+          </p>
+        </article>
+
+        <article class="step">
+          <div class="step-number">04</div>
+          <h3 class="step-title">Vê o impacto e avança</h3>
+          <p class="step-text">
+            No final, tu e a entidade deixam uma avaliação mútua, reforçando qualidade e confiança para futuras
+            oportunidades. Recebes um resumo claro do que fizeste e do que ajudaste a criar. O teu perfil evolui e
+            surgem novas oportunidades à tua medida.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- SAD GLOBAL STATS -->
+    <section id="sad" class="sad-stats" data-animate data-theme="sad">
+      <div class="headline-center">
+        <h2 class="headline-title">Solidarity Action Day</h2>
+        <p class="headline-note">
+          Um modelo europeu que mobiliza milhares de jovens todos os anos. Agora, com sotaque português.
+        </p>
+      </div>
+
+      <div class="floating-badges-row">
+        <span class="floating-badge">Solidarity Action Day</span>
+        <span class="floating-badge">Uma iniciativa europeia, agora com um toque português</span>
+        <span class="floating-badge">Impacto real para jovens, empresas e causas</span>
+      </div>
+
+      <div class="stats-band">
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-number">4M€+</div>
+            <div class="stat-label">angariados para causas solidárias</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">300k+</div>
+            <div class="stat-label">jovens envolvidos todos os anos</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">10+</div>
+            <div class="stat-label">países europeus participantes</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">60+</div>
+            <div class="stat-label">projetos apoiados anualmente</div>
           </div>
         </div>
 
-        <div class="grid">
-          <article class="card full sketch" data-sketch="card">
-            <h3>Missão</h3>
-            <p>
-              Empoderar jovens para serem cidadãos informados, críticos e solidários, ligando juventude, setor público, privado e sociedade civil.
-            </p>
-          </article>
+        <p class="stats-note">
+          Dados globais da iniciativa Solidarity Action Day (movimento europeu SAME).
+        </p>
+      </div>
+    </section>
+
+    <!-- YOUTHREACH & CREATIVE SUPPORT -->
+    <section id="youthreach" data-animate data-theme="youthreach">
+      <div class="section-header">
+        <div class="eyebrow">ActivEU YouthReach &amp; Creative Support</div>
+        <h2 class="section-title">
+          Ajudamos entidades a chegar (mesmo) aos jovens.
+        </h2>
+      </div>
+
+      <div class="youthreach-grid">
+        <div>
+          <p class="section-subtitle" style="margin-top:0;">
+            Apoiamos municípios, escolas, empresas e organizações a compreender, envolver e integrar jovens nas suas
+            políticas, iniciativas e decisões. Fazemo-lo através de diagnóstico rigoroso, processos participativos
+            estruturados, formação interna especializada e comunicação institucional adaptada às novas gerações.
+          </p>
+
+          <ul class="youthreach-list">
+            <li>Diagnóstico jovem local e organizacional.</li>
+            <li>Metodologias participativas que convocam jovens para cocriar políticas e soluções.</li>
+            <li>Workshops e sessões de co-criação que aproximam entidades da juventude.</li>
+            <li>Formação para equipas internas sobre trabalho com jovens e comunicação institucional.</li>
+            <li>Orientação em narrativas e comunicação institucional jovem.</li>
+            <li>Apoio técnico em produção audiovisual estratégica (quando aplicável).</li>
+            <li>Recomendações práticas e aplicáveis para reforçar programas, serviços e decisões.</li>
+          </ul>
         </div>
+
+        <aside class="youthreach-side" id="contact">
+          <p>
+            Criamos modelos personalizados que aproximam instituições da juventude com legitimidade, profissionalismo
+            e impacto real. Ideal para municípios, escolas, universidades e organizações que querem mais do que
+            campanhas simbólicas.
+          </p>
+          <a href="mailto:executivo@activeu.pt" class="btn-outline-dark" data-magnetic>
+            Marcar reunião
+          </a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- FUTURO: LOOK WHAT WE MADE & TESTEMUNHOS
+         Estas secções ficam em espera, NÃO aparecem no site,
+         mas podes voltar aqui mais tarde e descomentar. 
+
+    <section id="portfolio">...</section>
+    <section id="clients">...</section>
+
+    -->
+
+    <!-- ABOUT US + TU -->
+    <section id="about" data-animate data-theme="about">
+      <div class="section-header">
+        <div class="eyebrow">About us</div>
+        <h2 class="section-title">
+          Acreditamos que os jovens merecem mais oportunidades, mais voz e mais futuro em Portugal.
+        </h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-text-block">
+          <p>
+            A ActivEU nasce da experiência de jovens portugueses em iniciativas europeias de participação e
+            solidariedade. Depois de viverem o impacto do Solidarity Action Day noutros países, a pergunta tornou-se
+            inevitável: porque é que isto não existe em Portugal?
+          </p>
+          <p>
+            A resposta foi simples: se não existe, criamos nós. Hoje, a ActivEU é uma associação jovem apartidária,
+            com órgãos sociais eleitos, regulamento interno rigoroso e uma visão clara: fazer do Solidarity Action Day
+            um marco anual da juventude em Portugal, em ligação permanente com a Europa.
+          </p>
+          <p>
+            Trabalhamos com seriedade institucional, sem perder aquilo que nos trouxe até aqui: a vontade de provar
+            que, quando confias nos jovens, o resultado ultrapassa qualquer expectativa.
+          </p>
+        </div>
+
+        <aside class="join-card">
+          <div class="join-pill">Temos lugar para ti!</div>
+          <div class="join-title">Tu.</div>
+          <p>
+            Procuramos jovens que queiram aprender, trabalhar com responsabilidade e construir algo que fique depois
+            de nós. Voluntariado, equipa, estágios, grupos de trabalho – se te vês a criar impacto real, podemos
+            começar por uma conversa.
+          </p>
+          <a href="mailto:executivo@activeu.pt" class="join-btn" data-magnetic>
+            Junta-te a nós!
+          </a>
+        </aside>
       </div>
     </section>
 
     <footer>
-      <div class="wrap">
-        <div class="foot">
-          <div>
-            <div style="display:flex;align-items:center;gap:10px;">
-              <div class="logoMark">A</div>
-              <div style="font-weight:1000;">ActivEU</div>
-            </div>
-            <small style="display:block;margin-top:10px;">
-              © <span id="year"></span> ActivEU. Offline-ready (PWA). Ctrl/⌘ + K. Voice nav.
-            </small>
-          </div>
-          <small>
-            Se isto não parece “desenhado” como o Agenius, então ainda não chegámos ao nível certo.
-          </small>
-        </div>
+      <div>
+        <span class="brand">ActivEU</span>
+        <span> · Associação Jovem Solidária Europeia</span>
+      </div>
+      <div>
+        © <span id="year"></span> ActivEU · Portugal
       </div>
     </footer>
   </main>
 
+  <!-- COMMAND PALETTE -->
+  <button class="command-btn" type="button" id="commandBtn" aria-label="Abrir painel de comandos">
+    ⌘K
+  </button>
+
+  <div class="command-overlay" id="commandOverlay" aria-hidden="true">
+    <div class="command-backdrop"></div>
+    <div class="command-panel" role="dialog" aria-modal="true" aria-labelledby="commandTitle">
+      <div class="command-input-wrap">
+        <span>🔍</span>
+        <input
+          type="text"
+          class="command-input"
+          id="commandInput"
+          placeholder="Escreve 'sad', 'serviços', 'sobre'…"
+          autocomplete="off"
+        />
+      </div>
+      <div class="command-hint">
+        Usa ↑↓ para navegar · Enter para ir · Esc para fechar
+      </div>
+      <ul class="command-list" id="commandList"></ul>
+    </div>
+  </div>
+
   <script>
-    // ----- Progress -----
-    const progress = document.getElementById("progress");
-    function onScroll(){
-      const h = document.documentElement;
-      const sc = h.scrollTop || document.body.scrollTop;
-      const max = (h.scrollHeight - h.clientHeight) || 1;
-      progress.style.width = (Math.max(0, Math.min(1, sc/max))*100).toFixed(2) + "%";
-    }
-    window.addEventListener("scroll", onScroll, {passive:true});
-    onScroll();
+    // ano no footer
+    document.getElementById("year").textContent =
+      new Date().getFullYear().toString();
 
-    // ----- Drawer -----
-    const drawer = document.getElementById("drawer");
-    const menuBtn = document.getElementById("menuBtn");
-    const closeDrawer = document.getElementById("closeDrawer");
-    const drawerBg = document.getElementById("drawerBg");
-    function openDrawer(){ drawer.dataset.open="true"; drawer.setAttribute("aria-hidden","false"); }
-    function closeDrawerFn(){ drawer.dataset.open="false"; drawer.setAttribute("aria-hidden","true"); }
-    menuBtn.addEventListener("click", openDrawer);
-    closeDrawer.addEventListener("click", closeDrawerFn);
-    drawerBg.addEventListener("click", closeDrawerFn);
+    // ===== Scroll progress bar =====
+    const progressBar = document.getElementById("scrollProgress");
+    const updateProgress = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const docHeight =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progressBar.style.width = progress + "%";
+    };
+    window.addEventListener("scroll", updateProgress);
+    updateProgress();
 
-    // close drawer on link click
-    document.querySelectorAll(".dLink").forEach(a=>{
-      a.addEventListener("click", ()=>setTimeout(closeDrawerFn, 60));
-    });
+    // ===== Scroll reveal for sections + theme switching =====
+    const animatedSections = document.querySelectorAll("[data-animate]");
+    const rootBody = document.body;
 
-    // ----- Active section highlight -----
-    const sections = Array.from(document.querySelectorAll("main section[id]"));
-    const navLinks = Array.from(document.querySelectorAll(".navlink"));
-    const io = new IntersectionObserver((entries)=>{
-      const visible = entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
-      if(!visible) return;
-      const id = visible.target.id;
-      navLinks.forEach(a=> a.dataset.active = (a.dataset.id===id) ? "true" : "false");
-    }, {threshold:[0.18,0.28,0.38,0.55]});
-    sections.forEach(s=>io.observe(s));
-
-    // ----- Command palette -----
-    const palette = document.getElementById("palette");
-    const palBg = document.getElementById("palBg");
-    const palInput = document.getElementById("palInput");
-    const palList = document.getElementById("palList");
-    const palModal = document.getElementById("palModal");
-
-    const openPaletteBtns = ["openPalette","openPalette2","openPalette3"].map(id=>document.getElementById(id)).filter(Boolean);
-
-    function openPalette(){
-      palette.dataset.open="true";
-      palette.setAttribute("aria-hidden","false");
-      palInput.value="";
-      renderItems("");
-      setTimeout(()=>palInput.focus(), 40);
-      sketchOnce(palModal);
-    }
-    function closePalette(){
-      palette.dataset.open="false";
-      palette.setAttribute("aria-hidden","true");
-    }
-    openPaletteBtns.forEach(btn=>btn.addEventListener("click", openPalette));
-    palBg.addEventListener("click", closePalette);
-
-    document.addEventListener("keydown",(e)=>{
-      const isMac = navigator.platform.toLowerCase().includes("mac");
-      const mod = isMac ? e.metaKey : e.ctrlKey;
-      if(mod && e.key.toLowerCase()==="k"){
-        e.preventDefault();
-        palette.dataset.open==="true" ? closePalette() : openPalette();
-      }
-      if(e.key==="Escape"){
-        if(palette.dataset.open==="true") closePalette();
-        if(drawer.dataset.open==="true") closeDrawerFn();
-      }
-    });
-
-    const searchData = sections.map(sec=>{
-      const title = sec.getAttribute("data-title") || sec.id;
-      const text = (sec.innerText || "").replace(/\s+/g," ").trim();
-      return {id: sec.id, title, text};
-    });
-
-    function getFuse(){
-      if(typeof Fuse === "undefined") return null;
-      return new Fuse(searchData, {keys:["title","text"], threshold:0.35, ignoreLocation:true, minMatchCharLength:2});
-    }
-    let fuse=null;
-
-    function renderItems(q){
-      palList.innerHTML="";
-      if(!fuse) fuse = getFuse();
-      let results=[];
-      if(!q) results = searchData.map(x=>({item:x})).slice(0, 8);
-      else if(fuse) results = fuse.search(q).slice(0, 10);
-      else {
-        const qq=q.toLowerCase();
-        results = searchData.filter(x=>x.title.toLowerCase().includes(qq)||x.text.toLowerCase().includes(qq)).slice(0, 10).map(x=>({item:x}));
-      }
-      results.forEach((r,i)=>{
-        const it=r.item;
-        const div=document.createElement("div");
-        div.className="item sketch";
-        div.dataset.sketch="item";
-        div.innerHTML = `<span>${escapeHtml(it.title)}</span><small>#${String(i+1).padStart(2,"0")}</small>`;
-        div.addEventListener("click", ()=>{
-          closePalette();
-          document.getElementById(it.id).scrollIntoView({behavior:"smooth", block:"start"});
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const theme = entry.target.getAttribute("data-theme");
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            if (theme) {
+              rootBody.setAttribute("data-theme", theme);
+            }
+          }
         });
-        palList.appendChild(div);
-        sketchOnce(div);
+      },
+      {
+        root: null,
+        threshold: 0.35,
+      }
+    );
+    animatedSections.forEach((section) => revealObserver.observe(section));
+
+    // ===== Stats counters (SAD section) =====
+    const counters = [
+      { selector: ".stat-card:nth-child(1) .stat-number", end: 4_000_000, suffix: "€+" },
+      { selector: ".stat-card:nth-child(2) .stat-number", end: 300_000, suffix: "+" },
+      { selector: ".stat-card:nth-child(3) .stat-number", end: 10, suffix: "+" },
+      { selector: ".stat-card:nth-child(4) .stat-number", end: 60, suffix: "+" },
+    ];
+
+    function formatNumber(value) {
+      if (value >= 1_000_000) return (value / 1_000_000).toFixed(1).replace(".0", "") + "M";
+      if (value >= 1_000) return (value / 1_000).toFixed(0) + "k";
+      return value.toString();
+    }
+
+    function animateCounters() {
+      counters.forEach(({ selector, end, suffix }) => {
+        const el = document.querySelector(selector);
+        if (!el) return;
+        const duration = 1400;
+        const start = 0;
+        const startTime = performance.now();
+
+        function tick(now) {
+          const progress = Math.min((now - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+          const current = Math.floor(start + (end - start) * eased);
+          el.textContent = formatNumber(current) + suffix;
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
       });
-
-      if(results.length===0){
-        const empty=document.createElement("div");
-        empty.style.padding="14px";
-        empty.style.opacity=".75";
-        empty.style.fontWeight="1000";
-        empty.textContent="Sem resultados.";
-        palList.appendChild(empty);
-      }
     }
-    palInput.addEventListener("input",(e)=>renderItems(e.target.value||""));
-    function escapeHtml(s){return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");}
 
-    // ----- Impact Simulator -----
-    const role = document.getElementById("role");
-    const participants = document.getElementById("participants");
-    const donation = document.getElementById("donation");
-    const quality = document.getElementById("quality");
-
-    const participantsVal = document.getElementById("participantsVal");
-    const donationVal = document.getElementById("donationVal");
-    const qualityVal = document.getElementById("qualityVal");
-    const snapshot = document.getElementById("snapshot");
-
-    function fmt(n){ return new Intl.NumberFormat("pt-PT").format(n); }
-
-    function compute(){
-      const r = role.value;
-      const p = Number(participants.value);
-      const d = Number(donation.value);
-      const q = Number(quality.value);
-
-      participantsVal.textContent = p;
-      donationVal.textContent = d;
-      qualityVal.textContent = q;
-
-      const monthlyDonation = p * d;
-      const annualDonation = monthlyDonation * 12;
-
-      // heuristic “impact index” – intentionally explainable, not “AI theater”
-      const trust = Math.min(100, Math.round(40 + (q*0.6) + (d*1.2)));
-      const employability = Math.min(100, Math.round(30 + (q*0.7) + (Math.log10(p+1)*12)));
-      const scale = Math.min(100, Math.round(25 + (Math.log10(p+1)*22) + (d*1.0)));
-
-      const focus =
-        r === "jovem" ? "Competências + clareza de vocação"
-        : r === "empresa" ? "Descoberta de talento + reputação"
-        : r === "escola" ? "Aprendizagem + cidadania"
-        : "Política pública jovem + mobilização";
-
-      const text =
-`IMPACT SNAPSHOT (client-side)
-Perfil: ${r.toUpperCase()}
-Foco: ${focus}
-
-Participantes/mês: ${fmt(p)}
-Doação média: €${fmt(d)}
-
-Doação estimada:
-• mensal: €${fmt(monthlyDonation)}
-• anual:  €${fmt(annualDonation)}
-
-Índices (0–100):
-• Confiança pública: ${trust}
-• Empregabilidade/competências: ${employability}
-• Escalabilidade: ${scale}
-
-Nota:
-Isto não é “IA decorativa”. São métricas explicáveis
-para tornar o impacto legível e partilhável.`;
-
-      snapshot.textContent = text;
+    const statsSection = document.querySelector(".sad-stats");
+    if (statsSection) {
+      const statsObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              animateCounters();
+              statsObserver.disconnect();
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+      statsObserver.observe(statsSection);
     }
-    [role, participants, donation, quality].forEach(el=> el.addEventListener("input", compute));
-    compute();
 
-    // copy / download
-    document.getElementById("copySnapshot").addEventListener("click", async ()=>{
-      try{
-        await navigator.clipboard.writeText(snapshot.textContent);
-      }catch(e){
-        // fallback
-        const ta=document.createElement("textarea");
-        ta.value=snapshot.textContent;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        ta.remove();
-      }
-    });
-    document.getElementById("downloadSnapshot").addEventListener("click", ()=>{
-      const blob = new Blob([snapshot.textContent], {type:"text/plain;charset=utf-8"});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "activeu-impact-snapshot.txt";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
+    // ===== Nav link highlight by scroll =====
+    const navLinks = document.querySelectorAll(".nav-links a");
+    const sectionsMap = Array.from(navLinks).map((link) => {
+      const target = document.querySelector(link.getAttribute("href"));
+      return { link, section: target };
     });
 
-    // ----- Voice Navigation (Web Speech API) -----
-    const voiceBtn = document.getElementById("voiceBtn");
-    const voiceLabel = document.getElementById("voiceLabel");
-    const voiceLog = document.getElementById("voiceLog");
-
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    let rec = null;
-    let voiceOn = false;
-
-    function logVoice(msg){ voiceLog.textContent = msg; sketchOnce(voiceLog); }
-
-    function goTo(id){
-      const el = document.getElementById(id);
-      if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+    function highlightNav() {
+      let active = sectionsMap[0];
+      const scrollPos = window.scrollY + 100;
+      sectionsMap.forEach((item) => {
+        if (item.section && item.section.offsetTop <= scrollPos) {
+          active = item;
+        }
+      });
+      sectionsMap.forEach(({ link }) => {
+        if (link === active.link) {
+          link.style.fontWeight = "600";
+          link.style.color = rootBody.getAttribute("data-theme") === "about" ? "#facc15" : "#1f2933";
+        } else {
+          link.style.fontWeight = "400";
+          link.style.color = rootBody.getAttribute("data-theme") === "about" ? "#e5e7eb" : "#4a4357";
+        }
+      });
     }
-    function handleVoice(text){
-      const t = (text||"").toLowerCase();
+    window.addEventListener("scroll", highlightNav);
+    highlightNav();
 
-      if(t.includes("abrir") && (t.includes("pesquisa") || t.includes("search"))){
-        openPalette();
-        return "A abrir pesquisa.";
-      }
-      if(t.includes("impact")){ goTo("impact"); return "A ir para Impact Lab."; }
-      if(t.includes("process")){ goTo("process"); return "A ir para Processo."; }
-      if(t.includes("youth")){ goTo("youthreach"); return "A ir para YouthReach."; }
-      if(t.includes("sobre") || t.includes("about")){ goTo("about"); return "A ir para Sobre."; }
-      if(t.includes("porque") || t.includes("why")){ goTo("why"); return "A ir para Porque funciona."; }
-      if(t.includes("o que fazemos") || (t.includes("fazemos") && t.includes("que")) || t.includes("what")){ goTo("what"); return "A ir para O que fazemos."; }
+    // ===== Smooth scroll for internal links =====
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+        const targetId = this.getAttribute("href");
+        if (!targetId || targetId === "#") return;
+        const target = document.querySelector(targetId);
+        if (!target) return;
+        e.preventDefault();
+        const offset = 80; // espaço para o header
+        const top =
+          target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: "smooth" });
+      });
+    });
 
-      return "Não percebi. Diz: 'Ir para Impact', 'Ir para Processo', 'Abrir pesquisa'.";
-    }
+    // ===== Mobile menu toggle =====
+    const menuButton = document.querySelector(".menu-pill");
+    const nav = document.querySelector(".nav-links");
 
-    if(SpeechRecognition){
-      rec = new SpeechRecognition();
-      rec.lang = "pt-PT";
-      rec.continuous = true;
-      rec.interimResults = false;
-
-      rec.onresult = (e)=>{
-        const last = e.results[e.results.length-1];
-        const text = last[0].transcript.trim();
-        const reply = handleVoice(text);
-        logVoice(`Ouvi: "${text}"\n${reply}`);
-      };
-      rec.onerror = (e)=>{
-        logVoice(`Voice erro: ${e.error || "desconhecido"}`);
-        voiceOn = false;
-        voiceBtn.dataset.on="false";
-        voiceLabel.textContent = "Voice";
-      };
-      rec.onend = ()=>{
-        if(voiceOn){
-          try{ rec.start(); }catch(_){}
+    if (menuButton && nav) {
+      const closeNavMobile = () => {
+        if (window.innerWidth <= 900) {
+          nav.style.display = "none";
         }
       };
 
-      voiceBtn.addEventListener("click", ()=>{
-        voiceOn = !voiceOn;
-        voiceBtn.dataset.on = voiceOn ? "true" : "false";
-        voiceLabel.textContent = voiceOn ? "Listening" : "Voice";
-        if(voiceOn){
-          logVoice("Estado: a ouvir… Diz: 'Ir para Impact' ou 'Abrir pesquisa'.");
-          try{ rec.start(); }catch(e){ logVoice("Não consegui iniciar Voice."); voiceOn=false; }
-        }else{
-          try{ rec.stop(); }catch(_){}
-          logVoice("Estado: parado.");
+      menuButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        const isOpen = nav.style.display === "flex";
+        if (window.innerWidth <= 900) {
+          nav.style.display = isOpen ? "none" : "flex";
+          nav.style.flexDirection = "column";
+          nav.style.position = "absolute";
+          nav.style.top = "52px";
+          nav.style.right = "16px";
+          nav.style.padding = "10px 12px";
+          nav.style.background = rootBody.getAttribute("data-theme") === "about" ? "#020617" : "#fff7e5";
+          nav.style.borderRadius = "18px";
+          nav.style.boxShadow = "0 14px 30px rgba(0,0,0,0.18)";
         }
       });
-    }else{
-      voiceBtn.addEventListener("click", ()=>{
-        logVoice("Voice não suportado neste browser. Usa Ctrl/⌘ + K para navegar.");
+
+      navLinks.forEach((link) => {
+        link.addEventListener("click", closeNavMobile);
       });
-    }
 
-    // ----- Language toggle (simple for now) -----
-    function toggleLang(){
-      const cur = document.documentElement.dataset.lang || "pt";
-      document.documentElement.dataset.lang = (cur==="pt") ? "en" : "pt";
-      // (para já mantive PT como base. Se quiseres, faço i18n total como no anterior, mas com este visual.)
-    }
-    document.getElementById("toggleLang").addEventListener("click", toggleLang);
-    document.getElementById("toggleLang2").addEventListener("click", toggleLang);
-
-    // ----- Rough.js: draw hand-drawn borders for elements -----
-    function sketchOnce(el){
-      if(!window.rough || !el) return;
-      if(el.dataset.sketched==="true") return;
-
-      const rect = el.getBoundingClientRect();
-      if(rect.width < 8 || rect.height < 8) return;
-
-      const svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
-      svg.setAttribute("width", rect.width);
-      svg.setAttribute("height", rect.height);
-      svg.style.position = "absolute";
-      svg.style.left = "0";
-      svg.style.top = "0";
-      svg.style.pointerEvents = "none";
-      svg.style.zIndex = "0";
-      svg.style.overflow = "visible";
-
-      el.style.position = el.style.position || "relative";
-      el.style.zIndex = "1";
-
-      const rc = rough.svg(svg);
-      const type = el.dataset.sketch || "card";
-
-      let opts = {
-        stroke: "rgba(20,10,18,.85)",
-        strokeWidth: 1.7,
-        roughness: 1.8,
-        bowing: 1.2,
-        fill: "transparent"
-      };
-
-      if(type==="kicker" || type==="badge" || type==="item"){
-        opts.strokeWidth = 1.5;
-        opts.roughness = 2.0;
-      }
-      if(type==="box"){
-        opts.strokeWidth = 1.8;
-        opts.roughness = 2.2;
-      }
-
-      const node = rc.rectangle(2,2, rect.width-4, rect.height-4, opts);
-      svg.appendChild(node);
-
-      // inject behind content
-      el.insertBefore(svg, el.firstChild);
-      el.dataset.sketched = "true";
-    }
-
-    function sketchAll(){
-      document.querySelectorAll(".sketch").forEach(sketchOnce);
-    }
-    window.addEventListener("load", ()=>{
-      sketchAll();
-      // resize observer to re-sketch if layout changes
-      const ro = new ResizeObserver((entries)=>{
-        for(const e of entries){
-          const el = e.target;
-          // remove old svg and redraw
-          const old = el.querySelector(":scope > svg");
-          if(old) old.remove();
-          el.dataset.sketched = "false";
-          sketchOnce(el);
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 900) {
+          nav.style.display = "flex";
+          nav.style.position = "";
+          nav.style.boxShadow = "";
+          nav.style.background = "";
+          nav.style.padding = "";
+        } else {
+          nav.style.display = "none";
         }
       });
-      document.querySelectorAll(".sketch").forEach(el=> ro.observe(el));
+    }
+
+    // ===== Magnetic buttons (WOW micro-interaction) =====
+    const magneticButtons = document.querySelectorAll("[data-magnetic]");
+
+    magneticButtons.forEach((btn) => {
+      const strength = 18;
+      btn.addEventListener("mousemove", (e) => {
+        const rect = btn.getBoundingClientRect();
+        const relX = e.clientX - rect.left - rect.width / 2;
+        const relY = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform =
+          "translate(" +
+          (relX / rect.width) * strength +
+          "px," +
+          (relY / rect.height) * strength +
+          "px)";
+      });
+      btn.addEventListener("mouseleave", () => {
+        btn.style.transform = "translate(0,0)";
+      });
     });
 
-    // subtle magnet hover for stickers (desktop)
-    const stickers = Array.from(document.querySelectorAll(".sticker"));
-    window.addEventListener("mousemove", (e)=>{
-      if(window.matchMedia("(max-width: 640px)").matches) return;
-      stickers.forEach(s=>{
-        const r = s.getBoundingClientRect();
-        const cx = r.left + r.width/2;
-        const cy = r.top + r.height/2;
-        const dx = (e.clientX - cx);
-        const dy = (e.clientY - cy);
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        const pull = Math.max(0, 1 - dist/260);
-        const tx = dx * 0.06 * pull;
-        const ty = dy * 0.06 * pull;
-        s.style.transform = `translate(${tx}px, ${ty}px) rotate(${getComputedStyle(s).getPropertyValue("--rot")})`;
+    // ===== Hero panel tilt (3D efeito cartão) =====
+    const heroTilt = document.getElementById("heroTilt");
+    if (heroTilt) {
+      const tiltStrength = 10;
+      heroTilt.addEventListener("mousemove", (e) => {
+        const rect = heroTilt.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const rotY = ((x - rect.width / 2) / rect.width) * tiltStrength;
+        const rotX = -((y - rect.height / 2) / rect.height) * tiltStrength;
+        heroTilt.style.transform =
+          "rotateX(" + rotX + "deg) rotateY(" + rotY + "deg)";
+        heroTilt.setAttribute("data-tilt-active", "true");
       });
-    }, {passive:true});
-
-    // Year
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // ----- PWA Service Worker register -----
-    if("serviceWorker" in navigator){
-      window.addEventListener("load", ()=>{
-        navigator.serviceWorker.register("/sw.js").catch(()=>{});
+      heroTilt.addEventListener("mouseleave", () => {
+        heroTilt.style.transform = "rotateX(0deg) rotateY(0deg)";
+        heroTilt.setAttribute("data-tilt-active", "false");
       });
     }
+
+    // ===== HERO ROLE SWITCHER =====
+    const rolePills = document.querySelectorAll(".role-pill");
+    const panelInner = document.getElementById("heroPanelInner");
+    const box1 = document.getElementById("panelBox1");
+    const box2 = document.getElementById("panelBox2");
+    const pillsRow = document.getElementById("panelPills");
+
+    const roleContent = {
+      student: {
+        box1: "<strong>Enquanto estudante</strong>, usas o Solidarity Action Day para ganhar experiência real, testar caminhos profissionais e ter algo concreto para acrescentar ao teu CV – sem pagar nada pelo processo.",
+        box2: "Passas um dia numa entidade de acolhimento, mostras aquilo que sabes fazer e, no final, recebes certificação e um resumo do impacto que ajudaste a criar. O valor do teu trabalho é doado a uma causa que escolheste.",
+        pills: [
+          "Primeiro contacto com o mercado de trabalho",
+          "Competências que contam mesmo",
+          "Experiência certificada e impacto social"
+        ]
+      },
+      company: {
+        box1: "Enquanto <strong>entidade de acolhimento</strong>, abres as portas da tua organização a jovens motivados, num modelo claro, seguro e simples de implementar.",
+        box2: "Recebes talento fresco durante um dia, sem burocracia excessiva, e a tua contribuição financeira é inteiramente doada a causas credíveis. Ganha a equipa, ganha a comunidade, ganha a tua reputação.",
+        pills: [
+          "Responsabilidade social com rosto",
+          "Descoberta de talento jovem",
+          "Modelo transparente e acompanhando"
+        ]
+      },
+      cause: {
+        box1: "Enquanto <strong>causa solidária</strong>, recebes apoio financeiro gerado por milhares de jovens e entidades que acreditam no trabalho que fazes todos os dias.",
+        box2: "As doações chegam-te com transparência, acompanhadas por relatórios claros. Podes concentrar-te na missão, enquanto a ActivEU garante o modelo, a tecnologia e a ponte com a juventude.",
+        pills: [
+          "Financiamento sustentável",
+          "Ligação direta à juventude",
+          "Transparência e confiança institucional"
+        ]
+      }
+    };
+
+    function setRole(role) {
+      const content = roleContent[role];
+      if (!content) return;
+      rolePills.forEach((pill) => {
+        pill.classList.toggle("is-active", pill.getAttribute("data-role") === role);
+      });
+      panelInner.classList.add("is-switching");
+      setTimeout(() => {
+        box1.innerHTML = content.box1;
+        box2.innerHTML = content.box2;
+        pillsRow.innerHTML = "";
+        content.pills.forEach((text) => {
+          const span = document.createElement("span");
+          span.className = "hero-panel-pill";
+          span.textContent = text;
+          pillsRow.appendChild(span);
+        });
+        panelInner.classList.remove("is-switching");
+      }, 180);
+    }
+
+    rolePills.forEach((pill) => {
+      pill.addEventListener("click", () => {
+        const role = pill.getAttribute("data-role");
+        setRole(role);
+      });
+    });
+
+    // ===== Hero animated background (canvas particles) =====
+    const canvas = document.getElementById("heroCanvas");
+    if (canvas && canvas.getContext) {
+      const ctx = canvas.getContext("2d");
+      let width, height;
+      let particles = [];
+
+      function resizeCanvas() {
+        const rect = canvas.parentElement.getBoundingClientRect();
+        width = rect.width;
+        height = rect.height;
+        const ratio = window.devicePixelRatio || 1;
+        canvas.width = width * ratio;
+        canvas.height = height * ratio;
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      }
+
+      function createParticles() {
+        const count = 40;
+        particles = [];
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: 1.8 + Math.random() * 2,
+            dx: (Math.random() - 0.5) * 0.2,
+            dy: (Math.random() - 0.5) * 0.2,
+            alpha: 0.3 + Math.random() * 0.4,
+          });
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+
+        const gradient = ctx.createLinearGradient(0, 0, width, height);
+        gradient.addColorStop(0, "rgba(255,247,229,0.85)");
+        gradient.addColorStop(1, "rgba(247,181,255,0.35)");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = "rgba(10,25,56,0.7)";
+        particles.forEach((p) => {
+          ctx.globalAlpha = p.alpha;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+
+          p.x += p.dx;
+          p.y += p.dy;
+
+          if (p.x < 0) p.x = width;
+          if (p.x > width) p.x = 0;
+          if (p.y < 0) p.y = height;
+          if (p.y > height) p.y = 0;
+        });
+
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(draw);
+      }
+
+      function initCanvas() {
+        resizeCanvas();
+        createParticles();
+        draw();
+      }
+
+      window.addEventListener("resize", initCanvas);
+      initCanvas();
+    }
+
+    // ===== COMMAND PALETTE =====
+    const commandBtn = document.getElementById("commandBtn");
+    const commandOverlay = document.getElementById("commandOverlay");
+    const commandInput = document.getElementById("commandInput");
+    const commandList = document.getElementById("commandList");
+
+    const commandItems = [
+      { id: "hero", label: "Início", keywords: "inicio home activ eu" },
+      { id: "why", label: "Porquê", keywords: "porque why melhor" },
+      { id: "what", label: "O que fazemos", keywords: "o que fazemos actividades connect plataforma" },
+      { id: "process", label: "Processo", keywords: "processo como funciona passos" },
+      { id: "sad", label: "Solidarity Action Day", keywords: "sad solidarity action day europa dados impacto" },
+      { id: "youthreach", label: "Serviços a entidades", keywords: "servicos entidades youthreach creative consultoria" },
+      { id: "about", label: "Sobre a ActivEU", keywords: "sobre about equipa associacao" },
+      { id: "contact", label: "Contacto directo", keywords: "contacto email reuniao marca" }
+    ];
+
+    let activeIndex = 0;
+
+    function renderCommandList(filter = "") {
+      const query = filter.trim().toLowerCase();
+      const filtered = commandItems.filter((item) => {
+        if (!query) return true;
+        return (
+          item.label.toLowerCase().includes(query) ||
+          item.keywords.includes(query)
+        );
+      });
+
+      commandList.innerHTML = "";
+      filtered.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.className = "command-item";
+        li.dataset.id = item.id;
+        li.dataset.active = index === 0 ? "true" : "false";
+        li.innerHTML = `
+          <span class="label">${item.label}</span>
+          <span class="meta">#${item.id}</span>
+        `;
+        commandList.appendChild(li);
+      });
+
+      activeIndex = 0;
+    }
+
+    function openCommandPalette() {
+      commandOverlay.setAttribute("data-open", "true");
+      commandOverlay.setAttribute("aria-hidden", "false");
+      renderCommandList();
+      commandInput.value = "";
+      setTimeout(() => commandInput.focus(), 10);
+    }
+
+    function closeCommandPalette() {
+      commandOverlay.setAttribute("data-open", "false");
+      commandOverlay.setAttribute("aria-hidden", "true");
+    }
+
+    function navigateCommand(delta) {
+      const items = commandList.querySelectorAll(".command-item");
+      if (!items.length) return;
+      activeIndex = (activeIndex + delta + items.length) % items.length;
+      items.forEach((item, index) => {
+        item.dataset.active = index === activeIndex ? "true" : "false";
+        if (index === activeIndex) {
+          item.scrollIntoView({ block: "nearest" });
+        }
+      });
+    }
+
+    function activateCommand() {
+      const active = commandList.querySelector('.command-item[data-active="true"]');
+      if (!active) return;
+      const id = active.dataset.id;
+      const target = document.getElementById(id);
+      if (!target) return;
+      closeCommandPalette();
+      const offset = 80;
+      const top =
+        target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+
+    commandBtn.addEventListener("click", openCommandPalette);
+
+    commandOverlay.addEventListener("click", (e) => {
+      if (e.target === commandOverlay || e.target.classList.contains("command-backdrop")) {
+        closeCommandPalette();
+      }
+    });
+
+    commandInput.addEventListener("input", (e) => {
+      renderCommandList(e.target.value);
+    });
+
+    commandList.addEventListener("click", (e) => {
+      const item = e.target.closest(".command-item");
+      if (!item) return;
+      commandList
+        .querySelectorAll(".command-item")
+        .forEach((el) => (el.dataset.active = "false"));
+      item.dataset.active = "true";
+      activateCommand();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
+      const cmdKey = isMac ? e.metaKey : e.ctrlKey;
+
+      if ((cmdKey && e.key.toLowerCase() === "k") || (e.key === "/" && !commandOverlay.dataset.open)) {
+        e.preventDefault();
+        if (commandOverlay.getAttribute("data-open") === "true") {
+          closeCommandPalette();
+        } else {
+          openCommandPalette();
+        }
+      }
+
+      if (commandOverlay.getAttribute("data-open") === "true") {
+        if (e.key === "Escape") {
+          e.preventDefault();
+          closeCommandPalette();
+        } else if (e.key === "ArrowDown") {
+          e.preventDefault();
+          navigateCommand(1);
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          navigateCommand(-1);
+        } else if (e.key === "Enter") {
+          e.preventDefault();
+          activateCommand();
+        }
+      }
+    });
   </script>
 </body>
 </html>
+
