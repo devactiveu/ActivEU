@@ -12,22 +12,31 @@ import JoinUs from '@/components/JoinUs';
 import Footer from '@/components/Footer';
 
 const Index = () => {
-  return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <Hero />
-      <Stats />
-      <WhyBest />
-      <WhatWeDo />
-      <Process />
-      <Projects />
-      <Testimonials />
-      <YouthReach />
-      <AboutUs />
-      <JoinUs />
-      <Footer />
-    </div>
-  );
+    return (
+        <div className="relative min-h-screen">
+
+            <div
+                className="fixed inset-0 -z-10 bg-cover bg-center"
+                style={{ backgroundImage: "url('/Imagens/fundo.jpg')" }}
+            />
+
+            <div className="fixed inset-0 -z-10 bg-black/50" />
+
+            <Header />
+            <Hero />
+            <Stats />
+            <WhyBest />
+            <WhatWeDo />
+            <Process />
+            <Projects />
+            <Testimonials />
+            <YouthReach />
+            <AboutUs />
+            <JoinUs />
+            <Footer />
+
+        </div>
+    );
 };
 
 export default Index;

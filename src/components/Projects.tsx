@@ -10,6 +10,7 @@ const projects = [
     descPt: 'Primeira edição do modelo europeu adaptado ao contexto português. Jovens de várias escolas participaram em experiências profissionais solidárias.',
     descEn: 'First edition of the European model adapted to the Portuguese context. Students from various schools participated in solidarity professional experiences.',
     tags: ['SAME Network', 'Piloto', '2024'],
+    image: '/Imagens/solidarityactionday.jpg',
     color: 'bg-secondary',
   },
   {
@@ -18,6 +19,7 @@ const projects = [
     descPt: 'Ciclo de workshops sobre direitos, democracia e participação juvenil na Europa. Em parceria com escolas e municípios.',
     descEn: 'Workshop cycle on rights, democracy and youth participation in Europe. In partnership with schools and municipalities.',
     tags: ['Educação', 'Europa', 'Workshops'],
+    image: '/Imagens/formacaoemcidadaniaeuropeia.jpg',
     color: 'bg-accent',
   },
   {
@@ -26,6 +28,7 @@ const projects = [
     descPt: 'Programa de atividades que aproximou jovens e seniores através de cultura, tradição e partilha de histórias.',
     descEn: 'Activity program that brought youth and seniors together through culture, tradition and story sharing.',
     tags: ['Comunidade', 'Inclusão', 'Cultura'],
+    image: '/Imagens/encontrosintergeracionais.jpg',
     color: 'bg-secondary',
   },
   {
@@ -34,6 +37,7 @@ const projects = [
     descPt: 'Desenvolvimento da plataforma tecnológica que garante o processo meritocrático, transparente e certificado do Solidarity Action Day.',
     descEn: 'Development of the technology platform ensuring the meritocratic, transparent and certified Solidarity Action Day process.',
     tags: ['Tecnologia', 'Inovação', 'Digital'],
+    image: '/Imagens/plataformadigital.jpg',
     color: 'bg-accent',
   },
   {
@@ -42,6 +46,7 @@ const projects = [
     descPt: 'Programa piloto de apoio psicológico e atividades na natureza, criando espaços seguros para jovens investirem no seu bem-estar.',
     descEn: 'Pilot program of psychological support and nature activities, creating safe spaces for young people to invest in their well-being.',
     tags: ['Saúde Mental', 'Natureza', 'Piloto'],
+    image: '/Imagens/bemestarjuvenil.jpg',
     color: 'bg-secondary',
   },
   {
@@ -50,6 +55,7 @@ const projects = [
     descPt: 'Colaboração institucional para expandir o modelo ActivEU a nível municipal e nacional, fortalecendo a rede de parceiros.',
     descEn: 'Institutional collaboration to expand the ActivEU model at municipal and national level, strengthening the partner network.',
     tags: ['Parcerias', 'Institucional', 'Rede'],
+    image: '/Imagens/parceira.jpg',
     color: 'bg-accent',
   },
 ];
@@ -86,11 +92,16 @@ const Projects = () => {
               transition={{ duration: 0.5, delay: i * 0.08 }}
               className="card-editorial group relative"
             >
-              {/* Placeholder image area */}
-              <div className={`${project.color} rounded-xl h-48 mb-5 flex items-center justify-center overflow-hidden`}>
-                <span className="font-display text-6xl text-primary/10 select-none group-hover:scale-110 transition-transform duration-500">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
+              <div className="rounded-xl h-48 mb-5 overflow-hidden">
+                {project.image ? (
+                    <img
+                        src={project.image}
+                        alt={project.titleEn}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                ) : (
+                    <div className={`${project.color} w-full h-full`} />
+                )}
               </div>
 
               <div className="flex flex-wrap gap-1.5 mb-3">
