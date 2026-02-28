@@ -4,39 +4,39 @@
 
 @layer base {
   :root {
-    --background: 252 100% 99%;
-    --foreground: 245 35% 12%;
+    /* Brand-aligned palette (ActivEU logo) */
+    --background: 220 35% 98%;
+    --foreground: 218 34% 16%;
     --card: 0 0% 100%;
-    --card-foreground: 350 30% 12%;
+    --card-foreground: 218 34% 16%;
     --popover: 0 0% 100%;
-    --popover-foreground: 350 30% 12%;
-    --primary: 261 80% 52%;
+    --popover-foreground: 218 34% 16%;
+
+    --primary: 217 79% 30%; /* Logo blue #103E8A */
     --primary-foreground: 0 0% 100%;
-    --secondary: 214 100% 93%;
-    --secondary-foreground: 232 35% 30%;
-    --muted: 240 45% 95%;
-    --muted-foreground: 244 16% 42%;
-    --accent: 172 72% 86%;
-    --accent-foreground: 172 55% 20%;
+
+    --secondary: 46 100% 93%;
+    --secondary-foreground: 217 55% 25%;
+
+    --muted: 219 24% 94%;
+    --muted-foreground: 218 18% 40%;
+
+    --accent: 41 100% 84%; /* Logo yellow #FFA807 */
+    --accent-foreground: 217 65% 22%;
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 232 55% 90%;
-    --input: 232 55% 90%;
-    --ring: 261 80% 52%;
+    --border: 218 26% 88%;
+    --input: 218 26% 88%;
+    --ring: 217 79% 30%;
     --radius: 0.75rem;
 
-    --burgundy: 261 80% 52%;
-    --burgundy-light: 286 83% 62%;
-    --lilac: 262 85% 92%;
-    --mint: 172 72% 86%;
-    --pale-yellow: 44 100% 88%;
-    --eu-blue: 224 92% 61%;
-    --cream: 252 100% 99%;
-    --cream-dark: 248 65% 95%;
-
-    --pink-glow: 326 95% 71%;
-    --cyan-glow: 189 94% 69%;
-    --violet-glow: 260 95% 69%;
+    --eu-blue: 217 79% 30%;
+    --eu-blue-soft: 216 100% 97%;
+    --eu-blue-light: 217 62% 46%;
+    --eu-gold: 39 100% 51%;
+    --eu-gold-soft: 44 100% 93%;
+    --cream: 220 35% 98%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -57,10 +57,8 @@
     @apply bg-background text-foreground;
     font-family: 'DM Sans', sans-serif;
     background-image:
-      radial-gradient(circle at 8% 6%, hsl(var(--pink-glow) / 0.24), transparent 28%),
-      radial-gradient(circle at 82% 10%, hsl(var(--cyan-glow) / 0.26), transparent 30%),
-      radial-gradient(circle at 50% 88%, hsl(var(--violet-glow) / 0.18), transparent 35%);
-    background-attachment: fixed;
+      radial-gradient(circle at 85% 8%, hsl(var(--eu-gold) / 0.14), transparent 24%),
+      radial-gradient(circle at 8% 15%, hsl(var(--eu-blue-light) / 0.1), transparent 28%);
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Bebas Neue', sans-serif;
@@ -78,7 +76,7 @@
   }
   .text-gradient-burgundy {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(120deg, hsl(var(--primary)), hsl(var(--eu-blue)), hsl(var(--pink-glow)));
+    background-image: linear-gradient(120deg, hsl(var(--eu-blue)), hsl(var(--eu-blue-light)));
   }
   .section-padding {
     @apply px-5 sm:px-8 md:px-12 lg:px-20 xl:px-28;
@@ -91,102 +89,89 @@
 @layer components {
   .sticker {
     @apply inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-medium font-body shadow-sm;
-    @apply border border-border/50 backdrop-blur-sm;
+    @apply border border-border/60 backdrop-blur-sm;
     @apply transition-transform duration-300 hover:scale-105;
   }
   .sticker-burgundy {
-    @apply bg-primary/10 text-primary;
-  }
-  .sticker-mint {
-    background-color: hsl(var(--mint));
-    color: hsl(var(--accent-foreground));
-  }
-  .sticker-lilac {
-    background-color: hsl(var(--lilac));
-    color: hsl(270 35% 30%);
-  }
-  .sticker-yellow {
-    background-color: hsl(var(--pale-yellow));
-    color: hsl(48 60% 25%);
-  }
-  .sticker-blue {
-    background-color: hsl(220 65% 92%);
+    background: hsl(var(--eu-blue-soft));
     color: hsl(var(--eu-blue));
   }
+  .sticker-mint {
+    background: hsl(var(--eu-gold-soft));
+    color: hsl(var(--secondary-foreground));
+  }
+  .sticker-lilac {
+    background: hsl(216 100% 96%);
+    color: hsl(var(--eu-blue));
+  }
+  .sticker-yellow {
+    background: hsl(var(--eu-gold-soft));
+    color: hsl(40 85% 28%);
+  }
+  .sticker-blue {
+    background: hsl(var(--eu-blue-soft));
+    color: hsl(var(--eu-blue));
+  }
+
   .pill-button {
     @apply inline-flex items-center justify-center rounded-full font-body font-medium transition-all duration-300;
   }
   .pill-button-primary {
     @apply pill-button text-primary-foreground px-8 py-3.5 text-base;
-    background-image: linear-gradient(120deg, hsl(var(--primary)), hsl(var(--eu-blue)));
+    background-image: linear-gradient(125deg, hsl(var(--eu-blue)), hsl(var(--eu-blue-light)));
     @apply hover:shadow-lg hover:shadow-primary/25 hover:-translate-y-0.5;
   }
   .pill-button-outline {
-    @apply pill-button border-2 border-primary text-primary px-8 py-3.5 text-base;
-    @apply hover:bg-primary hover:text-primary-foreground;
+    @apply pill-button border-2 px-8 py-3.5 text-base;
+    border-color: hsl(var(--eu-blue));
+    color: hsl(var(--eu-blue));
+    @apply hover:text-primary-foreground;
+  }
+  .pill-button-outline:hover {
+    background: hsl(var(--eu-blue));
   }
   .pill-button-small {
     @apply pill-button text-primary-foreground px-5 py-2 text-sm;
-    background-image: linear-gradient(120deg, hsl(var(--primary)), hsl(var(--eu-blue)));
-    @apply hover:shadow-md hover:shadow-primary/20;
+    background-image: linear-gradient(125deg, hsl(var(--eu-blue)), hsl(var(--eu-blue-light)));
+    @apply hover:shadow-md hover:shadow-primary/25;
   }
 
   .gradient-section-warm {
     background:
-      radial-gradient(ellipse at 20% 10%, hsl(var(--pink-glow) / 0.25) 0%, transparent 42%),
-      radial-gradient(ellipse at 80% 90%, hsl(var(--pale-yellow) / 0.38) 0%, transparent 52%),
-      radial-gradient(ellipse at 50% 20%, hsl(var(--background)) 0%, hsl(var(--background)) 68%);
+      radial-gradient(ellipse at 88% 12%, hsl(var(--eu-gold) / 0.14) 0%, transparent 46%),
+      radial-gradient(ellipse at 6% 84%, hsl(var(--eu-blue-light) / 0.08) 0%, transparent 50%),
+      linear-gradient(180deg, hsl(var(--background)), hsl(var(--background)));
   }
   .gradient-section-mint {
-    background: radial-gradient(ellipse at 50% 100%, hsl(var(--mint) / 0.4) 0%, hsl(var(--background)) 70%);
+    background: radial-gradient(ellipse at 50% 100%, hsl(var(--eu-gold) / 0.1) 0%, hsl(var(--background)) 70%);
   }
   .gradient-section-lilac {
-    background: radial-gradient(ellipse at 30% 50%, hsl(var(--lilac) / 0.4) 0%, hsl(var(--background)) 70%);
+    background: radial-gradient(ellipse at 30% 50%, hsl(var(--eu-blue-light) / 0.08) 0%, hsl(var(--background)) 70%);
   }
   .gradient-arc {
     background: repeating-conic-gradient(
       from 0deg,
-      hsl(var(--primary) / 0.09) 0deg 8deg,
+      hsl(var(--eu-blue) / 0.05) 0deg 8deg,
       transparent 8deg 18deg
     );
   }
 
   .card-editorial {
-    @apply rounded-3xl p-6 md:p-8 border border-white/60;
-    @apply transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1;
-    background: linear-gradient(135deg, hsl(0 0% 100% / 0.82), hsl(var(--secondary) / 0.62));
-    backdrop-filter: blur(20px);
+    @apply rounded-2xl bg-card p-6 md:p-8 border border-border/70;
+    @apply transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1;
   }
 
   .stat-band {
     @apply text-primary-foreground rounded-2xl md:rounded-full;
-    background-image: linear-gradient(120deg, hsl(var(--primary)), hsl(var(--eu-blue)), hsl(var(--pink-glow)));
+    background-image: linear-gradient(125deg, hsl(var(--eu-blue)), hsl(var(--eu-blue-light)));
     @apply flex flex-wrap items-center justify-center gap-6 md:gap-12 px-8 py-6 md:py-5;
-  }
-
-  .aurora-outline {
-    position: relative;
-    isolation: isolate;
-  }
-
-  .aurora-outline::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    background: linear-gradient(130deg, hsl(var(--pink-glow) / 0.8), hsl(var(--eu-blue) / 0.8), hsl(var(--mint) / 0.85));
-    z-index: -1;
-    opacity: 0.65;
-    filter: blur(0.5px);
   }
 }
 
-/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
