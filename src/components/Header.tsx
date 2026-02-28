@@ -25,22 +25,19 @@ const Header = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 section-padding">
-        <div className="flex items-center justify-between py-4">
-          {/* Logo */}
+      <header className="fixed top-0 left-0 right-0 z-50 section-padding pt-4">
+        <div className="flex items-center justify-between py-3 px-4 md:px-6 rounded-2xl border border-white/70 bg-white/65 backdrop-blur-xl shadow-lg shadow-primary/10">
           <div className="flex items-center gap-3">
-            <button onClick={() => scrollTo('hero')} className="font-display text-2xl md:text-3xl text-primary tracking-wider">
+            <button onClick={() => scrollTo('hero')} className="font-display text-2xl md:text-3xl text-gradient-burgundy tracking-wider">
               ACTIVEU
             </button>
-            <span className="hidden md:block text-xs text-muted-foreground font-body max-w-[160px] leading-tight">
+            <span className="hidden md:block text-xs text-muted-foreground font-body max-w-[180px] leading-tight">
               {t('Solidarity Action Day em Portugal', 'Solidarity Action Day in Portugal')}
             </span>
           </div>
 
-          {/* Right controls */}
           <div className="flex items-center gap-3">
-            {/* Language toggle */}
-            <div className="flex items-center rounded-full border border-border bg-card/80 backdrop-blur-md overflow-hidden text-sm font-body">
+            <div className="flex items-center rounded-full border border-border bg-card/90 overflow-hidden text-sm font-body">
               <button
                 onClick={() => setLang('pt')}
                 className={`px-3 py-1.5 transition-colors ${lang === 'pt' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}
@@ -55,7 +52,6 @@ const Header = () => {
               </button>
             </div>
 
-            {/* Menu pill */}
             <button
               onClick={() => setMenuOpen(true)}
               className="pill-button-small"
@@ -66,7 +62,6 @@ const Header = () => {
         </div>
       </header>
 
-      {/* Fullscreen menu overlay */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -74,7 +69,7 @@ const Header = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[100] bg-primary flex flex-col items-center justify-center"
+            className="fixed inset-0 z-[100] bg-[radial-gradient(circle_at_20%_10%,hsl(var(--pink-glow)/0.45),transparent_35%),radial-gradient(circle_at_80%_80%,hsl(var(--cyan-glow)/0.3),transparent_40%),linear-gradient(135deg,hsl(var(--primary)),hsl(var(--eu-blue)))] flex flex-col items-center justify-center"
           >
             <button
               onClick={() => setMenuOpen(false)}
@@ -90,7 +85,7 @@ const Header = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.05 + 0.1 }}
                   onClick={() => scrollTo(item.id)}
-                  className="font-display text-4xl md:text-6xl text-primary-foreground hover:opacity-70 transition-opacity tracking-wide"
+                  className="font-display text-4xl md:text-6xl text-primary-foreground hover:opacity-75 transition-opacity tracking-wide"
                 >
                   {lang === 'pt' ? item.pt : item.en}
                 </motion.button>
