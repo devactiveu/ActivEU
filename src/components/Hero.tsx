@@ -2,12 +2,12 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
 
 const stickers = [
-  { pt: 'Jovem', en: 'Young', className: 'sticker sticker-burgundy', style: { top: '15%', left: '5%' }, anim: 'animate-float' },
-  { pt: 'Solidária', en: 'Solidarity', className: 'sticker sticker-mint', style: { top: '9%', right: '30%' }, anim: 'animate-float-delayed' },
-  { pt: 'Europeia', en: 'European', className: 'sticker sticker-blue', style: { top: '29%', left: '3%' }, anim: 'animate-float-delayed' },
-  { pt: 'Criativa', en: 'Creative', className: 'sticker sticker-lilac', style: { bottom: '30%', left: '8%' }, anim: 'animate-float' },
-  { pt: 'Meritocrática', en: 'Merit-based', className: 'sticker sticker-yellow', style: { bottom: '22%', right: '35%' }, anim: 'animate-float-delayed' },
-  { pt: 'Transparente', en: 'Transparent', className: 'sticker sticker-burgundy', style: { top: '43%', left: '12%' }, anim: 'animate-float' },
+  { pt: 'Jovem', en: 'Young', className: 'sticker sticker-burgundy', style: { top: '10%', left: '1%' }, anim: 'animate-float' },
+  { pt: 'Solidária', en: 'Solidarity', className: 'sticker sticker-mint', style: { top: '8%', right: '8%' }, anim: 'animate-float-delayed' },
+  { pt: 'Europeia', en: 'European', className: 'sticker sticker-blue', style: { top: '32%', left: '2%' }, anim: 'animate-float-delayed' },
+  { pt: 'Criativa', en: 'Creative', className: 'sticker sticker-lilac', style: { bottom: '14%', left: '3%' }, anim: 'animate-float' },
+  { pt: 'Meritocrática', en: 'Merit-based', className: 'sticker sticker-yellow', style: { bottom: '24%', right: '6%' }, anim: 'animate-float-delayed' },
+  { pt: 'Transparente', en: 'Transparent', className: 'sticker sticker-burgundy', style: { top: '54%', right: '4%' }, anim: 'animate-float' },
 ];
 
 const Hero = () => {
@@ -18,11 +18,11 @@ const Hero = () => {
       <div className="absolute inset-0 gradient-section-warm opacity-90" />
       <div className="absolute top-0 right-0 w-1/2 h-full gradient-arc opacity-25" />
 
-      <div className="hidden lg:block">
+      <div className="hidden xl:block pointer-events-none">
         {stickers.map((s, i) => (
           <div
             key={i}
-            className={`absolute ${s.className} ${s.anim} z-10 select-none`}
+            className={`absolute ${s.className} ${s.anim} z-0 select-none`}
             style={s.style}
           >
             {t(s.pt, s.en)}
@@ -38,7 +38,7 @@ const Hero = () => {
             transition={{ duration: 0.8 }}
           >
             <span className="sticker sticker-yellow mb-5 text-xs uppercase tracking-[0.12em]">
-              {t('Cores e identidade oficiais ActivEU', 'Official ActivEU identity and colors')}
+              {t('Solidarity Action Day em Portugal', 'Solidarity Action Day in Portugal')}
             </span>
             <h1 className="font-display text-[clamp(4rem,12vw,10rem)] leading-[0.85] text-gradient-burgundy mb-6">
               ACTIVEU
@@ -86,12 +86,6 @@ const Hero = () => {
                 {[t('Voluntariado', 'Volunteering'), t('Certificação', 'Certification'), t('Impacto', 'Impact')].map((label) => (
                   <span key={label} className="sticker sticker-mint text-xs">{label}</span>
                 ))}
-              </div>
-              <div className="mt-6 flex items-center gap-2 text-muted-foreground">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center font-display text-primary text-lg">
-                  ⭐
-                </div>
-                <span className="font-body text-xs">{t('Design alinhado com o símbolo ActivEU', 'Design aligned with the ActivEU symbol')}</span>
               </div>
             </div>
           </div>
