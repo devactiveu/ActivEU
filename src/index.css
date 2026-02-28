@@ -4,35 +4,39 @@
 
 @layer base {
   :root {
-    --background: 38 40% 96%;
-    --foreground: 350 30% 12%;
+    --background: 252 100% 99%;
+    --foreground: 245 35% 12%;
     --card: 0 0% 100%;
     --card-foreground: 350 30% 12%;
     --popover: 0 0% 100%;
     --popover-foreground: 350 30% 12%;
-    --primary: 348 58% 28%;
-    --primary-foreground: 40 40% 97%;
-    --secondary: 348 30% 93%;
-    --secondary-foreground: 348 50% 25%;
-    --muted: 38 15% 91%;
-    --muted-foreground: 350 10% 45%;
-    --accent: 162 35% 88%;
-    --accent-foreground: 162 45% 18%;
+    --primary: 261 80% 52%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 214 100% 93%;
+    --secondary-foreground: 232 35% 30%;
+    --muted: 240 45% 95%;
+    --muted-foreground: 244 16% 42%;
+    --accent: 172 72% 86%;
+    --accent-foreground: 172 55% 20%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 38 20% 88%;
-    --input: 38 20% 88%;
-    --ring: 348 58% 28%;
+    --border: 232 55% 90%;
+    --input: 232 55% 90%;
+    --ring: 261 80% 52%;
     --radius: 0.75rem;
 
-    --burgundy: 348 58% 28%;
-    --burgundy-light: 348 45% 40%;
-    --lilac: 270 35% 90%;
-    --mint: 162 35% 88%;
-    --pale-yellow: 48 65% 92%;
-    --eu-blue: 220 65% 52%;
-    --cream: 38 40% 96%;
-    --cream-dark: 38 25% 90%;
+    --burgundy: 261 80% 52%;
+    --burgundy-light: 286 83% 62%;
+    --lilac: 262 85% 92%;
+    --mint: 172 72% 86%;
+    --pale-yellow: 44 100% 88%;
+    --eu-blue: 224 92% 61%;
+    --cream: 252 100% 99%;
+    --cream-dark: 248 65% 95%;
+
+    --pink-glow: 326 95% 71%;
+    --cyan-glow: 189 94% 69%;
+    --violet-glow: 260 95% 69%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -52,6 +56,11 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'DM Sans', sans-serif;
+    background-image:
+      radial-gradient(circle at 8% 6%, hsl(var(--pink-glow) / 0.24), transparent 28%),
+      radial-gradient(circle at 82% 10%, hsl(var(--cyan-glow) / 0.26), transparent 30%),
+      radial-gradient(circle at 50% 88%, hsl(var(--violet-glow) / 0.18), transparent 35%);
+    background-attachment: fixed;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Bebas Neue', sans-serif;
@@ -69,7 +78,7 @@
   }
   .text-gradient-burgundy {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(348 58% 28%), hsl(348 45% 40%));
+    background-image: linear-gradient(120deg, hsl(var(--primary)), hsl(var(--eu-blue)), hsl(var(--pink-glow)));
   }
   .section-padding {
     @apply px-5 sm:px-8 md:px-12 lg:px-20 xl:px-28;
@@ -108,20 +117,25 @@
     @apply inline-flex items-center justify-center rounded-full font-body font-medium transition-all duration-300;
   }
   .pill-button-primary {
-    @apply pill-button bg-primary text-primary-foreground px-8 py-3.5 text-base;
-    @apply hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-0.5;
+    @apply pill-button text-primary-foreground px-8 py-3.5 text-base;
+    background-image: linear-gradient(120deg, hsl(var(--primary)), hsl(var(--eu-blue)));
+    @apply hover:shadow-lg hover:shadow-primary/25 hover:-translate-y-0.5;
   }
   .pill-button-outline {
     @apply pill-button border-2 border-primary text-primary px-8 py-3.5 text-base;
     @apply hover:bg-primary hover:text-primary-foreground;
   }
   .pill-button-small {
-    @apply pill-button bg-primary text-primary-foreground px-5 py-2 text-sm;
+    @apply pill-button text-primary-foreground px-5 py-2 text-sm;
+    background-image: linear-gradient(120deg, hsl(var(--primary)), hsl(var(--eu-blue)));
     @apply hover:shadow-md hover:shadow-primary/20;
   }
 
   .gradient-section-warm {
-    background: radial-gradient(ellipse at 50% 0%, hsl(var(--pale-yellow) / 0.5) 0%, hsl(var(--background)) 70%);
+    background:
+      radial-gradient(ellipse at 20% 10%, hsl(var(--pink-glow) / 0.25) 0%, transparent 42%),
+      radial-gradient(ellipse at 80% 90%, hsl(var(--pale-yellow) / 0.38) 0%, transparent 52%),
+      radial-gradient(ellipse at 50% 20%, hsl(var(--background)) 0%, hsl(var(--background)) 68%);
   }
   .gradient-section-mint {
     background: radial-gradient(ellipse at 50% 100%, hsl(var(--mint) / 0.4) 0%, hsl(var(--background)) 70%);
@@ -132,19 +146,38 @@
   .gradient-arc {
     background: repeating-conic-gradient(
       from 0deg,
-      hsl(var(--primary) / 0.03) 0deg 10deg,
-      transparent 10deg 20deg
+      hsl(var(--primary) / 0.09) 0deg 8deg,
+      transparent 8deg 18deg
     );
   }
 
   .card-editorial {
-    @apply rounded-2xl bg-card p-6 md:p-8 border border-border/60;
-    @apply transition-all duration-500 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1;
+    @apply rounded-3xl p-6 md:p-8 border border-white/60;
+    @apply transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1;
+    background: linear-gradient(135deg, hsl(0 0% 100% / 0.82), hsl(var(--secondary) / 0.62));
+    backdrop-filter: blur(20px);
   }
 
   .stat-band {
-    @apply bg-primary text-primary-foreground rounded-2xl md:rounded-full;
+    @apply text-primary-foreground rounded-2xl md:rounded-full;
+    background-image: linear-gradient(120deg, hsl(var(--primary)), hsl(var(--eu-blue)), hsl(var(--pink-glow)));
     @apply flex flex-wrap items-center justify-center gap-6 md:gap-12 px-8 py-6 md:py-5;
+  }
+
+  .aurora-outline {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .aurora-outline::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(130deg, hsl(var(--pink-glow) / 0.8), hsl(var(--eu-blue) / 0.8), hsl(var(--mint) / 0.85));
+    z-index: -1;
+    opacity: 0.65;
+    filter: blur(0.5px);
   }
 }
 
