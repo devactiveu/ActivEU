@@ -2,23 +2,21 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
 
 const stickers = [
-  { pt: 'Jovem', en: 'Young', className: 'sticker sticker-burgundy', style: { top: '16%', left: '4%' }, anim: 'animate-float' },
-  { pt: 'Solidária', en: 'Solidarity', className: 'sticker sticker-mint', style: { top: '10%', right: '30%' }, anim: 'animate-float-delayed' },
-  { pt: 'Europeia', en: 'European', className: 'sticker sticker-blue', style: { top: '30%', left: '2%' }, anim: 'animate-float-delayed' },
-  { pt: 'Criativa', en: 'Creative', className: 'sticker sticker-lilac', style: { bottom: '28%', left: '8%' }, anim: 'animate-float' },
-  { pt: 'Meritocrática', en: 'Merit-based', className: 'sticker sticker-yellow', style: { bottom: '22%', right: '36%' }, anim: 'animate-float-delayed' },
-  { pt: 'Inovadora', en: 'Innovative', className: 'sticker sticker-burgundy', style: { top: '44%', left: '10%' }, anim: 'animate-float' },
+  { pt: 'Jovem', en: 'Young', className: 'sticker sticker-burgundy', style: { top: '15%', left: '5%' }, anim: 'animate-float' },
+  { pt: 'Solidária', en: 'Solidarity', className: 'sticker sticker-mint', style: { top: '9%', right: '30%' }, anim: 'animate-float-delayed' },
+  { pt: 'Europeia', en: 'European', className: 'sticker sticker-blue', style: { top: '29%', left: '3%' }, anim: 'animate-float-delayed' },
+  { pt: 'Criativa', en: 'Creative', className: 'sticker sticker-lilac', style: { bottom: '30%', left: '8%' }, anim: 'animate-float' },
+  { pt: 'Meritocrática', en: 'Merit-based', className: 'sticker sticker-yellow', style: { bottom: '22%', right: '35%' }, anim: 'animate-float-delayed' },
+  { pt: 'Transparente', en: 'Transparent', className: 'sticker sticker-burgundy', style: { top: '43%', left: '12%' }, anim: 'animate-float' },
 ];
 
 const Hero = () => {
   const { t } = useLanguage();
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center overflow-hidden section-padding pt-28 pb-16">
+    <section id="hero" className="relative min-h-screen flex items-center overflow-hidden section-padding pt-24">
       <div className="absolute inset-0 gradient-section-warm opacity-90" />
-      <div className="absolute top-0 right-0 w-1/2 h-full gradient-arc opacity-45" />
-      <div className="absolute -top-16 left-1/3 h-64 w-64 rounded-full bg-fuchsia-400/20 blur-3xl" />
-      <div className="absolute bottom-0 right-16 h-80 w-80 rounded-full bg-cyan-400/20 blur-3xl" />
+      <div className="absolute top-0 right-0 w-1/2 h-full gradient-arc opacity-25" />
 
       <div className="hidden lg:block">
         {stickers.map((s, i) => (
@@ -39,29 +37,26 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <span className="sticker sticker-lilac mb-6 text-xs uppercase tracking-[0.16em]">
-              {t('Plataforma Oficial em Portugal', 'Official Platform in Portugal')}
+            <span className="sticker sticker-yellow mb-5 text-xs uppercase tracking-[0.12em]">
+              {t('Cores e identidade oficiais ActivEU', 'Official ActivEU identity and colors')}
             </span>
-            <h1 className="font-display text-[clamp(3.8rem,11vw,9.6rem)] leading-[0.85] text-gradient-burgundy mb-6">
+            <h1 className="font-display text-[clamp(4rem,12vw,10rem)] leading-[0.85] text-gradient-burgundy mb-6">
               ACTIVEU
             </h1>
-            <p className="font-display text-2xl md:text-4xl text-foreground/80 mb-4">
-              {t(
-                'O teu dia. A tua ação. O teu impacto.',
-                'Your day. Your action. Your impact.'
-              )}
+            <p className="font-display text-2xl md:text-4xl text-foreground/85 mb-4">
+              {t('O teu dia. A tua ação. O teu impacto.', 'Your day. Your action. Your impact.')}
             </p>
-            <p className="font-body text-base md:text-lg text-muted-foreground max-w-2xl mb-10 leading-relaxed">
+            <p className="font-body text-base md:text-lg text-muted-foreground max-w-xl mb-10 leading-relaxed">
               {t(
-                'Uma homepage muito mais vibrante, com energia visual inspirada em templates editoriais modernos: gradientes vivos, cartões glassmorphism e foco em conversão para jovens e empresas.',
-                'A far more vibrant homepage with visual energy inspired by modern editorial templates: vivid gradients, glassmorphism cards, and conversion-focused messaging for youth and companies.'
+                'Um dia de experiência profissional real que substitui um dia de escola. O valor gerado é doado integralmente a causas sociais verificadas. Jovens, empresas e solidariedade — juntos.',
+                'A day of real professional experience replacing a school day. The value generated is fully donated to verified social causes. Youth, businesses and solidarity — together.'
               )}
             </p>
             <div className="flex flex-wrap gap-4">
               <a href="#join" className="pill-button-primary">
                 {t('Junta-te ao Movimento', 'Join the Movement')}
               </a>
-              <a href="#process" className="pill-button-outline aurora-outline bg-white/60 backdrop-blur-md">
+              <a href="#process" className="pill-button-outline bg-white/80 backdrop-blur-sm">
                 {t('Percebe como funciona', 'See how it works')}
               </a>
             </div>
@@ -74,9 +69,8 @@ const Hero = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <div className="card-editorial relative overflow-hidden aurora-outline">
-            <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-accent/40 -translate-y-1/2 translate-x-1/2" />
-            <div className="absolute -bottom-10 -left-10 w-32 h-32 rounded-full bg-fuchsia-300/35 blur-2xl" />
+          <div className="card-editorial relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-accent/30 -translate-y-1/2 translate-x-1/2" />
             <div className="relative">
               <span className="sticker sticker-burgundy mb-4 text-xs">ActivEU Connect</span>
               <h3 className="font-display text-3xl text-foreground mt-4 mb-3">
@@ -84,24 +78,20 @@ const Hero = () => {
               </h3>
               <p className="font-body text-sm text-muted-foreground mb-6 leading-relaxed">
                 {t(
-                  'Visual premium, mais colorido e moderno para elevar credibilidade e atenção em poucos segundos.',
-                  'Premium visual style with richer color and modern motion to boost credibility and attention in seconds.'
+                  'Plataforma que liga jovens a empresas num dia de experiência profissional solidária. Meritocrática, transparente e certificada.',
+                  'Platform connecting youth to companies in a day of solidarity professional experience. Meritocratic, transparent and certified.'
                 )}
               </p>
               <div className="flex flex-wrap gap-2">
-                {[
-                  t('Voluntariado', 'Volunteering'),
-                  t('Certificação', 'Certification'),
-                  t('Impacto', 'Impact'),
-                ].map((label) => (
+                {[t('Voluntariado', 'Volunteering'), t('Certificação', 'Certification'), t('Impacto', 'Impact')].map((label) => (
                   <span key={label} className="sticker sticker-mint text-xs">{label}</span>
                 ))}
               </div>
               <div className="mt-6 flex items-center gap-2 text-muted-foreground">
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center font-display text-primary text-lg">
-                  ✨
+                  ⭐
                 </div>
-                <span className="font-body text-xs">{t('Nova direção visual ActivEU', 'New ActivEU visual direction')}</span>
+                <span className="font-body text-xs">{t('Design alinhado com o símbolo ActivEU', 'Design aligned with the ActivEU symbol')}</span>
               </div>
             </div>
           </div>
