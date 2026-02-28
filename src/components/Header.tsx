@@ -26,7 +26,7 @@ const Header = () => {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 section-padding pt-4">
-        <div className="flex items-center justify-between py-3 px-4 md:px-6 rounded-2xl border border-white/70 bg-white/65 backdrop-blur-xl shadow-lg shadow-primary/10">
+        <div className="flex items-center justify-between py-3 px-4 md:px-6 rounded-2xl border border-border/70 bg-white/90 backdrop-blur-lg shadow-md shadow-primary/10">
           <div className="flex items-center gap-3">
             <button onClick={() => scrollTo('hero')} className="font-display text-2xl md:text-3xl text-gradient-burgundy tracking-wider">
               ACTIVEU
@@ -37,7 +37,7 @@ const Header = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="flex items-center rounded-full border border-border bg-card/90 overflow-hidden text-sm font-body">
+            <div className="flex items-center rounded-full border border-border bg-card/95 overflow-hidden text-sm font-body">
               <button
                 onClick={() => setLang('pt')}
                 className={`px-3 py-1.5 transition-colors ${lang === 'pt' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}
@@ -52,10 +52,7 @@ const Header = () => {
               </button>
             </div>
 
-            <button
-              onClick={() => setMenuOpen(true)}
-              className="pill-button-small"
-            >
+            <button onClick={() => setMenuOpen(true)} className="pill-button-small">
               MENU
             </button>
           </div>
@@ -68,8 +65,8 @@ const Header = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[100] bg-[radial-gradient(circle_at_20%_10%,hsl(var(--pink-glow)/0.45),transparent_35%),radial-gradient(circle_at_80%_80%,hsl(var(--cyan-glow)/0.3),transparent_40%),linear-gradient(135deg,hsl(var(--primary)),hsl(var(--eu-blue)))] flex flex-col items-center justify-center"
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[100] bg-[radial-gradient(circle_at_15%_10%,hsl(var(--eu-gold)/0.25),transparent_35%),linear-gradient(135deg,hsl(var(--eu-blue)),hsl(var(--eu-blue-light)))] flex flex-col items-center justify-center"
           >
             <button
               onClick={() => setMenuOpen(false)}
@@ -77,6 +74,7 @@ const Header = () => {
             >
               <X size={32} />
             </button>
+
             <nav className="flex flex-col items-center gap-6">
               {navItems.map((item, i) => (
                 <motion.button
@@ -85,7 +83,7 @@ const Header = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.05 + 0.1 }}
                   onClick={() => scrollTo(item.id)}
-                  className="font-display text-4xl md:text-6xl text-primary-foreground hover:opacity-75 transition-opacity tracking-wide"
+                  className="font-display text-4xl md:text-6xl text-primary-foreground hover:opacity-80 transition-opacity tracking-wide"
                 >
                   {lang === 'pt' ? item.pt : item.en}
                 </motion.button>
