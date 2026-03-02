@@ -3,7 +3,7 @@ import { motion, useInView, animate } from 'framer-motion';
 import { useRef, useEffect } from 'react';
 
 const stats = [
-  { number: 4_000_000, suffix: ' M€+', pt: 'angariados para causas solidárias', en: 'raised for social causes' },
+  { number: 4_000_000, suffix: '€+', pt: 'angariados para causas solidárias', en: 'raised for social causes' },
   { number: 300_000, suffix: '+', pt: 'Jovens por ano', en: 'Youth per year' },
   { number: 10, suffix: '+', pt: 'Países Europeus', en: 'European Countries' },
   { number: 60, suffix: '+', pt: 'Projetos apoiados', en: 'Supported Projects' },
