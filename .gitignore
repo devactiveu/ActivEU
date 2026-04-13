@@ -1,0 +1,25 @@
+# Dependencies
+ActivEU-main/node_modules/
+node_modules/
+
+# Build output
+ActivEU-main/dist/
+dist/
+
+# Vite cache
+.vite/
+
+# Claude Code local settings
+.claude/
+
+# Logs
+*.log
+.preview-err.log
+.preview-out.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# QA screenshots (generated)
+ActivEU-main/qa-shots/
