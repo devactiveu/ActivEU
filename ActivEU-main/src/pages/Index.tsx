@@ -16,12 +16,28 @@ import {
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
   ScrollProgress,
+  FadeIn,
+  SectionReveal,
+  RevealItem,
+  SparkCounter,
+  CursorGlow,
+  TextRevealLine,
+  SlideIn,
 } from "@/components/activeu/motion-primitives";
+import { PageLoader } from "@/components/activeu/PageLoader";
+import { AmbientField } from "@/components/activeu/AmbientField";
+import { Tilt3DCard } from "@/components/activeu/Tilt3DCard";
+import { LiquidDivider } from "@/components/activeu/LiquidDivider";
+import { ValueMarquee } from "@/components/activeu/ValueMarquee";
+import {
+  DoodleUnderline,
+  DoodleBadge,
+  SectionTransition,
+} from "@/components/activeu/DoodleSystem";
 
-type NavItem = {
-  id: string;
-  label: string;
-};
+// ── Types ──────────────────────────────────────────────────────────────────
+
+type NavItem = { id: string; label: string };
 
 type FeatureCard = {
   icon: LucideIcon;
@@ -36,23 +52,36 @@ type StoryCard = {
   tag: string;
 };
 
+type MetricCard = {
+  end: number;
+  suffix: string;
+  label: string;
+  body: string;
+};
+
 type SectionIntroProps = {
   eyebrow: string;
   title: string;
   body: string;
 };
 
+// ── SectionIntro — fades in on scroll ─────────────────────────────────────
+
 const SectionIntro = ({ eyebrow, title, body }: SectionIntroProps) => (
-  <div className="mx-auto mb-10 max-w-3xl text-center md:mb-14">
-    <p className="eyebrow mb-4 justify-center">{eyebrow}</p>
-    <h2 className="text-balance text-3xl font-semibold tracking-tight text-slate-950 md:text-5xl">
-      {title}
-    </h2>
-    <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-600 md:text-lg">
-      {body}
-    </p>
-  </div>
+  <FadeIn>
+    <div className="mx-auto mb-10 max-w-3xl text-center md:mb-14">
+      <p className="eyebrow mb-4 justify-center">{eyebrow}</p>
+      <h2 className="text-balance text-3xl font-semibold tracking-tight text-slate-950 md:text-5xl">
+        {title}
+      </h2>
+      <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-600 md:text-lg">
+        {body}
+      </p>
+    </div>
+  </FadeIn>
 );
+
+// ── Page ───────────────────────────────────────────────────────────────────
 
 const Index = () => {
   const { lang, setLang, t } = useLanguage();
@@ -134,19 +163,22 @@ const Index = () => {
     },
   ];
 
-  const metrics = [
+  const metrics: MetricCard[] = [
     {
-      value: "3",
+      end: 3,
+      suffix: "",
       label: t("frentes ligadas", "connected fronts"),
       body: t("jovens, empresas e causas", "young people, companies and causes"),
     },
     {
-      value: "1",
+      end: 1,
+      suffix: "",
       label: t("experiência integrada", "integrated experience"),
       body: t("do conceito à ativação no terreno", "from concept to activation on the ground"),
     },
     {
-      value: "100%",
+      end: 100,
+      suffix: "%",
       label: t("foco na clareza", "clarity-first"),
       body: t("mensagem simples, legível e acionável", "simple, legible and actionable messaging"),
     },
@@ -200,10 +232,27 @@ const Index = () => {
     },
   ];
 
+  const marqueeLabels = [
+    t("Juventude com voz", "Youth with voice"),
+    t("Empresas com propósito", "Companies with purpose"),
+    t("Causas verificadas", "Verified causes"),
+    t("Impacto real", "Real impact"),
+    t("Europa solidária", "Solidarity Europe"),
+    t("Coordenação séria", "Serious coordination"),
+    t("Presença humana", "Human presence"),
+    t("Narrativa clara", "Clear narrative"),
+  ];
+
   return (
     <>
+      {/* ── Global UI layer ── */}
+      <PageLoader />
       <ScrollProgress />
+      <CursorGlow />
+
       <div className="min-h-screen overflow-x-hidden bg-[linear-gradient(180deg,#fffdf8_0%,#fff8ef_32%,#ffffff_100%)] text-slate-950">
+
+        {/* ── HEADER ─────────────────────────────────────────────────────── */}
         <header className="fixed inset-x-0 top-0 z-50 px-4 py-4">
           <div className="mx-auto flex max-w-6xl items-center justify-between rounded-full border border-white/70 bg-white/85 px-4 py-3 shadow-[0_20px_60px_rgba(15,23,42,0.08)] backdrop-blur md:px-6">
             <button
@@ -246,14 +295,17 @@ const Index = () => {
                   </button>
                 ))}
               </div>
-              <button
-                className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+              <motion.button
+                className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white"
                 onClick={() => scrollToId("contact")}
                 type="button"
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
                 {t("Falar com a ActivEU", "Talk to ActivEU")}
                 <ArrowRight className="h-4 w-4" />
-              </button>
+              </motion.button>
             </div>
 
             <button
@@ -267,6 +319,7 @@ const Index = () => {
           </div>
         </header>
 
+        {/* ── MOBILE MENU ────────────────────────────────────────────────── */}
         <AnimatePresence>
           {menuOpen ? (
             <motion.div
@@ -325,61 +378,103 @@ const Index = () => {
         </AnimatePresence>
 
         <main className="overflow-hidden">
-          <section id="hero" className="px-4 pb-16 pt-32 md:px-6 md:pb-24 md:pt-40">
-            <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-                <div className="max-w-2xl">
+
+          {/* ═══════════════════════════════════════════════════════════════
+              HERO — ambient background + expressive typography + animated metrics
+          ════════════════════════════════════════════════════════════════ */}
+          <section id="hero" className="relative overflow-hidden px-4 pb-16 pt-32 md:px-6 md:pb-24 md:pt-40">
+
+            {/* Ambient motion background */}
+            <AmbientField variant="hero" className="pointer-events-none absolute inset-0 z-0" />
+
+            <div className="relative z-10 mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+
+              {/* ── Left column ── */}
+              <div className="max-w-2xl">
+
+                {/* Eyebrow — fades in immediately */}
+                <FadeIn>
                   <p className="eyebrow mb-6">
                     {t("Plataforma de impacto social com clareza", "A social impact platform with clarity")}
                   </p>
-                  <h1 className="max-w-[8.5ch] text-4xl font-semibold leading-[0.94] tracking-[-0.04em] text-slate-950 sm:max-w-[9ch] sm:text-5xl md:max-w-xl md:text-6xl lg:text-[5.5rem]">
-                    {t(
-                      "Ligamos juventude, empresas e causas.",
-                      "We connect youth, companies and causes."
-                    )}
-                  </h1>
+                </FadeIn>
+
+                {/* Headline — line-by-line reveal with blur (Expressive Typography) */}
+                <h1 className="max-w-[8.5ch] text-4xl font-semibold leading-[0.94] tracking-[-0.04em] text-slate-950 sm:max-w-[9ch] sm:text-5xl md:max-w-xl md:text-6xl lg:text-[5.5rem]">
+                  <TextRevealLine className="block">
+                    {t("Ligamos juventude,", "We connect youth,")}
+                  </TextRevealLine>
+                  <TextRevealLine className="block" delay={0.1}>
+                    {t("empresas e causas.", "companies and causes.")}
+                  </TextRevealLine>
+                </h1>
+
+                {/* Subtitle */}
+                <FadeIn delay={0.38}>
                   <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600 md:text-xl">
                     {t(
                       "Desenhamos experiências sociais mais humanas, legíveis e memoráveis para jovens, empresas e parceiros que querem gerar impacto real.",
                       "We design social experiences that feel more human, legible and memorable for young people, companies and partners seeking real impact."
                     )}
                   </p>
+                </FadeIn>
+
+                {/* CTAs — microinteraction hover/tap */}
+                <FadeIn delay={0.52}>
                   <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                    <button
-                      className="inline-flex items-center justify-center gap-2 rounded-full bg-[#f97316] px-6 py-4 text-base font-semibold text-white shadow-[0_20px_50px_rgba(249,115,22,0.28)] transition hover:bg-[#ea580c]"
+                    <motion.button
+                      className="inline-flex items-center justify-center gap-2 rounded-full bg-[#f97316] px-6 py-4 text-base font-semibold text-white shadow-[0_20px_50px_rgba(249,115,22,0.28)]"
                       onClick={() => scrollToId("contact")}
                       type="button"
+                      whileHover={{ scale: 1.04 }}
+                      whileTap={{ scale: 0.96 }}
+                      transition={{ type: "spring", stiffness: 420, damping: 26 }}
                     >
                       {t("Agendar conversa", "Schedule a conversation")}
                       <ArrowRight className="h-4 w-4" />
-                    </button>
-                    <button
-                      className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-4 text-base font-semibold text-slate-800 transition hover:border-slate-300 hover:bg-slate-50"
+                    </motion.button>
+                    <motion.button
+                      className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-4 text-base font-semibold text-slate-800"
                       onClick={() => scrollToId("model")}
                       type="button"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      transition={{ type: "spring", stiffness: 420, damping: 26 }}
                     >
                       {t("Ver como funciona", "See how it works")}
                       <ChevronRight className="h-4 w-4" />
-                    </button>
+                    </motion.button>
                   </div>
-                  <div className="mt-10 grid gap-4 sm:grid-cols-3">
-                    {metrics.map((metric) => (
-                      <div key={metric.label}>
-                        <div className="landing-chip-card h-full">
-                          <p className="text-3xl font-semibold tracking-[-0.05em] text-slate-950">{metric.value}</p>
-                          <p className="mt-3 text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">{metric.label}</p>
-                          <p className="mt-2 text-sm leading-6 text-slate-600">{metric.body}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                </FadeIn>
 
+                {/* Metrics — staggered reveal with SparkCounter (animated numbers) */}
+                <SectionReveal className="mt-10 grid gap-4 sm:grid-cols-3">
+                  {metrics.map((metric) => (
+                    <RevealItem key={metric.label}>
+                      <div className="landing-chip-card h-full">
+                        <p className="text-3xl font-semibold tracking-[-0.05em] text-slate-950">
+                          <SparkCounter end={metric.end} suffix={metric.suffix} />
+                        </p>
+                        <p className="mt-3 text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">
+                          {metric.label}
+                        </p>
+                        <p className="mt-2 text-sm leading-6 text-slate-600">{metric.body}</p>
+                      </div>
+                    </RevealItem>
+                  ))}
+                </SectionReveal>
+              </div>
+
+              {/* ── Right column — hero image frame ── */}
+              <FadeIn delay={0.22}>
                 <div className="landing-hero-frame relative overflow-hidden">
                   <img
                     alt={t("Equipa ActivEU em colaboração", "ActivEU team in collaboration")}
                     className="absolute inset-0 h-full w-full object-cover"
                     src="/Imagens/team.jpg"
                   />
+
+                  {/* Glass overlay bottom caption */}
                   <div className="absolute inset-x-6 bottom-6 rounded-[28px] bg-slate-950/82 p-6 text-white shadow-[0_30px_70px_rgba(15,23,42,0.32)] backdrop-blur">
                     <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/65">
                       {t("O que entregamos", "What we deliver")}
@@ -391,6 +486,8 @@ const Index = () => {
                       )}
                     </p>
                   </div>
+
+                  {/* Info panel top-right */}
                   <div className="landing-panel absolute right-5 top-5 hidden max-w-[220px] sm:block">
                     <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#f97316]">
                       {t("Leitura imediata", "Immediate read")}
@@ -402,39 +499,68 @@ const Index = () => {
                       )}
                     </p>
                   </div>
+
+                  {/* Floating doodle badge — subtle human touch */}
+                  <DoodleBadge
+                    text={t("Impacto real", "Real impact")}
+                    className="absolute bottom-[8.5rem] left-5 z-10 hidden sm:block"
+                  />
                 </div>
+              </FadeIn>
             </div>
           </section>
 
+          {/* ── VALUE MARQUEE — horizontal scrolling brand values ── */}
+          <ValueMarquee labels={marqueeLabels} className="mt-6" />
+
+          {/* ── LIQUID DIVIDER ── */}
+          <LiquidDivider color="hsl(42 100% 97%)" height={64} />
+
+          {/* ═══════════════════════════════════════════════════════════════
+              MODEL — faux 3D tilt cards + staggered step reveal
+          ════════════════════════════════════════════════════════════════ */}
           <section id="model" className="px-4 py-16 md:px-6 md:py-24">
             <div className="mx-auto max-w-6xl">
               <SectionIntro
                 eyebrow={t("Modelo ActivEU", "The ActivEU model")}
-                title={t("Uma estrutura simples para criar colaboração real.", "A simple structure for building real collaboration.")}
+                title={t(
+                  "Uma estrutura simples para criar colaboração real.",
+                  "A simple structure for building real collaboration."
+                )}
                 body={t(
                   "Em vez de excesso visual e promessas vagas, a homepage passa a explicar com clareza o que a ActivEU faz e para quem cria valor.",
                   "Instead of visual overload and vague promises, the homepage now explains clearly what ActivEU does and who it creates value for."
                 )}
               />
 
-              <div className="grid gap-6 lg:grid-cols-3">
+              {/* Pillar cards — staggered reveal + faux 3D tilt on hover */}
+              <SectionReveal className="grid gap-6 lg:grid-cols-3">
                 {pillars.map((pillar) => (
-                  <div key={pillar.title}>
-                    <article className="landing-panel h-full p-7">
-                      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#fff1e8] text-[#f97316]">
-                        <pillar.icon className="h-6 w-6" />
-                      </div>
-                      <h3 className="mt-6 text-2xl font-semibold tracking-tight text-slate-950">{pillar.title}</h3>
-                      <p className="mt-3 text-base leading-7 text-slate-600">{pillar.body}</p>
-                    </article>
-                  </div>
+                  <RevealItem key={pillar.title} className="h-full">
+                    <Tilt3DCard className="h-full" maxTilt={8} hoverScale={1.02}>
+                      <article className="landing-panel h-full p-7">
+                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#fff1e8] text-[#f97316]">
+                          <pillar.icon className="h-6 w-6" />
+                        </div>
+                        <h3 className="mt-6 text-2xl font-semibold tracking-tight text-slate-950">
+                          {pillar.title}
+                        </h3>
+                        <p className="mt-3 text-base leading-7 text-slate-600">{pillar.body}</p>
+                      </article>
+                    </Tilt3DCard>
+                  </RevealItem>
                 ))}
-              </div>
+              </SectionReveal>
 
-              <div className="mt-8 grid gap-6 lg:grid-cols-3">
+              {/* Step cards — staggered reveal + lift on hover */}
+              <SectionReveal className="mt-8 grid gap-6 lg:grid-cols-3">
                 {steps.map((step) => (
-                  <div key={step.title}>
-                    <article className="rounded-[30px] border border-slate-200 bg-white p-7 shadow-[0_25px_70px_rgba(15,23,42,0.05)]">
+                  <RevealItem key={step.title}>
+                    <motion.article
+                      className="rounded-[30px] border border-slate-200 bg-white p-7 shadow-[0_25px_70px_rgba(15,23,42,0.05)]"
+                      whileHover={{ y: -4, boxShadow: "0 36px 80px rgba(15,23,42,0.10)" }}
+                      transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                    >
                       <div className="flex items-center gap-3">
                         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-950 text-white">
                           <step.icon className="h-5 w-5" />
@@ -442,18 +568,27 @@ const Index = () => {
                         <h3 className="text-lg font-semibold text-slate-950">{step.title}</h3>
                       </div>
                       <p className="mt-5 text-base leading-7 text-slate-600">{step.body}</p>
-                    </article>
-                  </div>
+                    </motion.article>
+                  </RevealItem>
                 ))}
-              </div>
+              </SectionReveal>
             </div>
           </section>
 
+          {/* ── WAVE TRANSITION → PROOF ── */}
+          <SectionTransition variant="wave" />
+
+          {/* ═══════════════════════════════════════════════════════════════
+              PROOF — slide-in image (left) + staggered cards (right)
+          ════════════════════════════════════════════════════════════════ */}
           <section id="proof" className="bg-white px-4 py-16 md:px-6 md:py-24">
             <div className="mx-auto max-w-6xl">
               <SectionIntro
                 eyebrow={t("Prova e confiança", "Proof and trust")}
-                title={t("Impacto comunicável sem perder humanidade.", "Impact that stays communicable without losing humanity.")}
+                title={t(
+                  "Impacto comunicável sem perder humanidade.",
+                  "Impact that stays communicable without losing humanity."
+                )}
                 body={t(
                   "A ActivEU precisa de parecer credível e viva ao mesmo tempo. Por isso a prova surge como conteúdo claro, não como ruído decorativo.",
                   "ActivEU needs to feel credible and alive at the same time. That is why proof shows up as clear content, not decorative noise."
@@ -461,6 +596,9 @@ const Index = () => {
               />
 
               <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+
+                {/* Photo — slides in from left */}
+                <SlideIn direction="left">
                   <div className="landing-proof-photo overflow-hidden">
                     <img
                       alt={t("Parceria ActivEU em ação", "ActivEU partnership in action")}
@@ -468,8 +606,10 @@ const Index = () => {
                       src="/Imagens/parceira.jpg"
                     />
                   </div>
+                </SlideIn>
 
-                <div className="grid gap-4">
+                {/* Proof cards — staggered + lift on hover */}
+                <SectionReveal className="grid gap-4">
                   {[
                     {
                       title: t("Narrativa clara", "Clear narrative"),
@@ -493,53 +633,91 @@ const Index = () => {
                       ),
                     },
                   ].map((item) => (
-                    <div key={item.title}>
-                      <article className="landing-panel h-full p-7">
-                        <h3 className="text-2xl font-semibold tracking-tight text-slate-950">{item.title}</h3>
+                    <RevealItem key={item.title}>
+                      <motion.article
+                        className="landing-panel h-full p-7"
+                        whileHover={{ y: -3, scale: 1.01 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                      >
+                        <h3 className="text-2xl font-semibold tracking-tight text-slate-950">
+                          {item.title}
+                        </h3>
                         <p className="mt-3 text-base leading-7 text-slate-600">{item.body}</p>
-                      </article>
-                    </div>
+                      </motion.article>
+                    </RevealItem>
                   ))}
-                </div>
+                </SectionReveal>
               </div>
             </div>
           </section>
 
+          {/* ── RIBBON TRANSITION → STORIES ── */}
+          <SectionTransition variant="ribbon" flip />
+
+          {/* ═══════════════════════════════════════════════════════════════
+              STORIES — editorial cards with hover lift + doodle underline
+          ════════════════════════════════════════════════════════════════ */}
           <section id="stories" className="px-4 py-16 md:px-6 md:py-24">
             <div className="mx-auto max-w-6xl">
               <SectionIntro
                 eyebrow={t("Histórias", "Stories")}
-                title={t("Experiências que deixam imagem e memória.", "Experiences that leave both image and memory behind.")}
+                title={t(
+                  "Experiências que deixam imagem e memória.",
+                  "Experiences that leave both image and memory behind."
+                )}
                 body={t(
                   "Aqui a linguagem é mais editorial: menos blocos pequenos, mais cenas fortes, mais contexto e melhor leitura.",
                   "The language becomes more editorial here: fewer small blocks, stronger scenes, more context and better readability."
                 )}
               />
 
-              <div className="grid gap-6 lg:grid-cols-2">
+              <SectionReveal className="grid gap-6 lg:grid-cols-2">
                 {stories.map((story) => (
-                  <div key={story.title}>
-                    <article className="landing-story-card overflow-hidden">
-                      <img alt={story.title} className="h-[320px] w-full object-cover md:h-[380px]" src={story.image} />
+                  <RevealItem key={story.title}>
+                    <motion.article
+                      className="landing-story-card overflow-hidden"
+                      whileHover={{ y: -8, boxShadow: "0 44px 90px rgba(15,23,42,0.18)" }}
+                      transition={{ type: "spring", stiffness: 280, damping: 22 }}
+                    >
+                      <img
+                        alt={story.title}
+                        className="h-[320px] w-full object-cover md:h-[380px]"
+                        src={story.image}
+                      />
                       <div className="p-7 md:p-8">
                         <p className="eyebrow">{story.tag}</p>
-                        <h3 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950">{story.title}</h3>
+                        <div className="relative mt-4">
+                          <h3 className="text-3xl font-semibold tracking-tight text-slate-950">
+                            {story.title}
+                          </h3>
+                          {/* Self-drawing doodle underline — hand-made feel */}
+                          <DoodleUnderline className="mt-1 w-full max-w-[220px]" />
+                        </div>
                         <p className="mt-4 text-base leading-7 text-slate-600">{story.body}</p>
                       </div>
-                    </article>
-                  </div>
+                    </motion.article>
+                  </RevealItem>
                 ))}
-              </div>
+              </SectionReveal>
             </div>
           </section>
 
+          {/* ═══════════════════════════════════════════════════════════════
+              CONTACT — CTA panel with staggered audience cards
+          ════════════════════════════════════════════════════════════════ */}
           <section id="contact" className="px-4 pb-14 pt-4 md:px-6 md:pb-24">
             <div className="mx-auto max-w-6xl">
+              <FadeIn>
                 <div className="landing-cta-panel grid gap-10 p-8 md:p-12 lg:grid-cols-[1fr_0.95fr]">
+
+                  {/* Left — CTA copy */}
                   <div>
                     <p className="eyebrow">{t("Próximo passo", "Next step")}</p>
                     <h2 className="mt-4 max-w-xl text-balance text-4xl font-semibold tracking-tight text-white md:text-5xl">
-                      {t("Se a ActivEU quer impressionar, primeiro tem de ser fácil de perceber.", "If ActivEU wants to impress, it first needs to be easy to understand.")}
+                      {t(
+                        "Se a ActivEU quer impressionar, primeiro tem de ser fácil de perceber.",
+                        "If ActivEU wants to impress, it first needs to be easy to understand."
+                      )}
                     </h2>
                     <p className="mt-5 max-w-2xl text-lg leading-8 text-white/72">
                       {t(
@@ -548,48 +726,69 @@ const Index = () => {
                       )}
                     </p>
                     <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                      <button
-                        className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-4 text-base font-semibold text-slate-950 transition hover:bg-white/90"
+                      <motion.button
+                        className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-4 text-base font-semibold text-slate-950"
                         onClick={() => window.location.assign("mailto:geral@activeu.pt")}
                         type="button"
+                        whileHover={{ scale: 1.04 }}
+                        whileTap={{ scale: 0.97 }}
+                        transition={{ type: "spring", stiffness: 420, damping: 26 }}
                       >
                         geral@activeu.pt
                         <ArrowRight className="h-4 w-4" />
-                      </button>
-                      <button
-                        className="inline-flex items-center justify-center gap-2 rounded-full border border-white/18 bg-white/8 px-6 py-4 text-base font-semibold text-white transition hover:bg-white/12"
+                      </motion.button>
+                      <motion.button
+                        className="inline-flex items-center justify-center gap-2 rounded-full border border-white/18 bg-white/8 px-6 py-4 text-base font-semibold text-white"
                         onClick={() => scrollToId("hero")}
                         type="button"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{ type: "spring", stiffness: 420, damping: 26 }}
                       >
                         {t("Rever homepage", "Review homepage")}
                         <ChevronRight className="h-4 w-4" />
-                      </button>
+                      </motion.button>
                     </div>
                     <div className="mt-8 flex flex-wrap gap-3 text-sm text-white/70">
-                      <span className="rounded-full border border-white/12 px-4 py-2">{t("Lisboa", "Lisbon")}</span>
-                      <span className="rounded-full border border-white/12 px-4 py-2">{t("Parcerias e voluntariado", "Partnerships and volunteering")}</span>
-                      <span className="rounded-full border border-white/12 px-4 py-2">{t("Programas intergeracionais", "Intergenerational programs")}</span>
+                      <span className="rounded-full border border-white/12 px-4 py-2">
+                        {t("Lisboa", "Lisbon")}
+                      </span>
+                      <span className="rounded-full border border-white/12 px-4 py-2">
+                        {t("Parcerias e voluntariado", "Partnerships and volunteering")}
+                      </span>
+                      <span className="rounded-full border border-white/12 px-4 py-2">
+                        {t("Programas intergeracionais", "Intergenerational programs")}
+                      </span>
                     </div>
                   </div>
 
-                  <div className="grid gap-4">
+                  {/* Right — audience cards (staggered reveal) */}
+                  <SectionReveal className="grid gap-4">
                     {audiences.map((audience) => (
-                      <article key={audience.title} className="landing-audience-card">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-[#f8b65f]">
-                          <audience.icon className="h-5 w-5" />
-                        </div>
-                        <div className="mt-5">
-                          <h3 className="text-xl font-semibold text-white">{audience.title}</h3>
-                          <p className="mt-2 text-base leading-7 text-white/68">{audience.body}</p>
-                        </div>
-                      </article>
+                      <RevealItem key={audience.title}>
+                        <motion.article
+                          className="landing-audience-card"
+                          whileHover={{ scale: 1.02, y: -2 }}
+                          transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                        >
+                          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-[#f8b65f]">
+                            <audience.icon className="h-5 w-5" />
+                          </div>
+                          <div className="mt-5">
+                            <h3 className="text-xl font-semibold text-white">{audience.title}</h3>
+                            <p className="mt-2 text-base leading-7 text-white/68">{audience.body}</p>
+                          </div>
+                        </motion.article>
+                      </RevealItem>
                     ))}
-                  </div>
+                  </SectionReveal>
                 </div>
+              </FadeIn>
             </div>
           </section>
         </main>
 
+        {/* ── FOOTER ─────────────────────────────────────────────────────── */}
         <footer className="border-t border-slate-200 px-4 py-8 md:px-6">
           <div className="mx-auto flex max-w-6xl flex-col gap-3 text-sm text-slate-500 md:flex-row md:items-center md:justify-between">
             <p>ActivEU</p>
