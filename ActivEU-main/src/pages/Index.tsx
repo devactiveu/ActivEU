@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   BadgeCheck,
@@ -23,6 +23,7 @@ import {
   CursorGlow,
   TextRevealLine,
   SlideIn,
+  ParallaxLayer,
 } from "@/components/activeu/motion-primitives";
 import { PageLoader } from "@/components/activeu/PageLoader";
 import { AmbientField } from "@/components/activeu/AmbientField";
@@ -34,6 +35,10 @@ import {
   DoodleBadge,
   SectionTransition,
 } from "@/components/activeu/DoodleSystem";
+import { CollaborativeSignalField } from "@/components/activeu/CollaborativeSignalField";
+import { JourneyCanvas } from "@/components/activeu/JourneyCanvas";
+import { MixedMediaMotionWall } from "@/components/activeu/MixedMediaMotionWall";
+import { IsometricDecor } from "@/components/activeu/IsometricDecor";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -63,15 +68,16 @@ type SectionIntroProps = {
   eyebrow: string;
   title: string;
   body: string;
+  gradient?: boolean;
 };
 
 // ── SectionIntro — fades in on scroll ─────────────────────────────────────
 
-const SectionIntro = ({ eyebrow, title, body }: SectionIntroProps) => (
+const SectionIntro = ({ eyebrow, title, body, gradient = false }: SectionIntroProps) => (
   <FadeIn>
     <div className="mx-auto mb-10 max-w-3xl text-center md:mb-14">
       <p className="eyebrow mb-4 justify-center">{eyebrow}</p>
-      <h2 className="text-balance text-3xl font-semibold tracking-tight text-slate-950 md:text-5xl">
+      <h2 className={`text-balance text-3xl font-semibold tracking-tight md:text-5xl ${gradient ? "text-gradient-premium-flow" : "text-slate-950"}`}>
         {title}
       </h2>
       <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-600 md:text-lg">
@@ -86,6 +92,7 @@ const SectionIntro = ({ eyebrow, title, body }: SectionIntroProps) => (
 const Index = () => {
   const { lang, setLang, t } = useLanguage();
   const [menuOpen, setMenuOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -311,7 +318,7 @@ const Index = () => {
             <button
               aria-label={t("Abrir menu", "Open menu")}
               className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-950 md:hidden"
-              onClick={() => setMenuOpen((value) => !value)}
+              onClick={() => setMenuOpen((v) => !v)}
               type="button"
             >
               {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -380,36 +387,33 @@ const Index = () => {
         <main className="overflow-hidden">
 
           {/* ═══════════════════════════════════════════════════════════════
-              HERO — ambient background + expressive typography + animated metrics
+              HERO — ambient background + expressive typography + parallax image
           ════════════════════════════════════════════════════════════════ */}
           <section id="hero" className="relative overflow-hidden px-4 pb-16 pt-32 md:px-6 md:pb-24 md:pt-40">
 
-            {/* Ambient motion background */}
+            {/* Ambient motion background (Point 6 — Ambient Background) */}
             <AmbientField variant="hero" className="pointer-events-none absolute inset-0 z-0" />
 
             <div className="relative z-10 mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
 
               {/* ── Left column ── */}
               <div className="max-w-2xl">
-
-                {/* Eyebrow — fades in immediately */}
                 <FadeIn>
                   <p className="eyebrow mb-6">
                     {t("Plataforma de impacto social com clareza", "A social impact platform with clarity")}
                   </p>
                 </FadeIn>
 
-                {/* Headline — line-by-line reveal with blur (Expressive Typography) */}
+                {/* Headline — line-by-line blur reveal (Point 4 — Expressive Typography) */}
                 <h1 className="max-w-[8.5ch] text-4xl font-semibold leading-[0.94] tracking-[-0.04em] text-slate-950 sm:max-w-[9ch] sm:text-5xl md:max-w-xl md:text-6xl lg:text-[5.5rem]">
                   <TextRevealLine className="block">
                     {t("Ligamos juventude,", "We connect youth,")}
                   </TextRevealLine>
-                  <TextRevealLine className="block" delay={0.1}>
+                  <TextRevealLine className="block text-gradient-premium-flow" delay={0.1}>
                     {t("empresas e causas.", "companies and causes.")}
                   </TextRevealLine>
                 </h1>
 
-                {/* Subtitle */}
                 <FadeIn delay={0.38}>
                   <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600 md:text-xl">
                     {t(
@@ -419,7 +423,7 @@ const Index = () => {
                   </p>
                 </FadeIn>
 
-                {/* CTAs — microinteraction hover/tap */}
+                {/* CTAs — spring microinteractions (Point 12) */}
                 <FadeIn delay={0.52}>
                   <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                     <motion.button
@@ -447,7 +451,7 @@ const Index = () => {
                   </div>
                 </FadeIn>
 
-                {/* Metrics — staggered reveal with SparkCounter (animated numbers) */}
+                {/* Metrics — SparkCounter animated numbers (Point 25 inspired) */}
                 <SectionReveal className="mt-10 grid gap-4 sm:grid-cols-3">
                   {metrics.map((metric) => (
                     <RevealItem key={metric.label}>
@@ -465,59 +469,62 @@ const Index = () => {
                 </SectionReveal>
               </div>
 
-              {/* ── Right column — hero image frame ── */}
+              {/* ── Right column — hero image with parallax depth (Point 15) ── */}
               <FadeIn delay={0.22}>
-                <div className="landing-hero-frame relative overflow-hidden">
-                  <img
-                    alt={t("Equipa ActivEU em colaboração", "ActivEU team in collaboration")}
-                    className="absolute inset-0 h-full w-full object-cover"
-                    src="/Imagens/team.jpg"
-                  />
+                {/* ParallaxLayer adds vertical depth on scroll */}
+                <ParallaxLayer offset={40}>
+                  <div className="landing-hero-frame relative overflow-hidden">
+                    <img
+                      alt={t("Equipa ActivEU em colaboração", "ActivEU team in collaboration")}
+                      className="absolute inset-0 h-full w-full object-cover"
+                      src="/Imagens/team.jpg"
+                    />
 
-                  {/* Glass overlay bottom caption */}
-                  <div className="absolute inset-x-6 bottom-6 rounded-[28px] bg-slate-950/82 p-6 text-white shadow-[0_30px_70px_rgba(15,23,42,0.32)] backdrop-blur">
-                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/65">
-                      {t("O que entregamos", "What we deliver")}
-                    </p>
-                    <p className="mt-3 max-w-md text-xl font-semibold leading-tight md:text-2xl">
-                      {t(
-                        "Programas sociais com direção clara, coordenação séria e presença humana.",
-                        "Social programs with clear direction, serious coordination and human presence."
-                      )}
-                    </p>
+                    {/* Glassmorphic overlay caption (Point 28 — Glassmorphic) */}
+                    <div className="absolute inset-x-6 bottom-6 rounded-[28px] bg-slate-950/82 p-6 text-white shadow-[0_30px_70px_rgba(15,23,42,0.32)] backdrop-blur">
+                      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/65">
+                        {t("O que entregamos", "What we deliver")}
+                      </p>
+                      <p className="mt-3 max-w-md text-xl font-semibold leading-tight md:text-2xl">
+                        {t(
+                          "Programas sociais com direção clara, coordenação séria e presença humana.",
+                          "Social programs with clear direction, serious coordination and human presence."
+                        )}
+                      </p>
+                    </div>
+
+                    {/* Glass info panel — glassmorphic (Point 28) */}
+                    <div className="landing-panel absolute right-5 top-5 hidden max-w-[220px] sm:block">
+                      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#f97316]">
+                        {t("Leitura imediata", "Immediate read")}
+                      </p>
+                      <p className="mt-2 text-sm leading-6 text-slate-600">
+                        {t(
+                          "Uma proposta visual mais limpa, mais sólida e mais fácil de compreender em poucos segundos.",
+                          "A cleaner, stronger visual proposition that is easier to understand within seconds."
+                        )}
+                      </p>
+                    </div>
+
+                    {/* Doodle badge — floating (Point 21) */}
+                    <DoodleBadge
+                      text={t("Impacto real", "Real impact")}
+                      className="absolute bottom-[8.5rem] left-5 z-10 hidden sm:block"
+                    />
                   </div>
-
-                  {/* Info panel top-right */}
-                  <div className="landing-panel absolute right-5 top-5 hidden max-w-[220px] sm:block">
-                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#f97316]">
-                      {t("Leitura imediata", "Immediate read")}
-                    </p>
-                    <p className="mt-2 text-sm leading-6 text-slate-600">
-                      {t(
-                        "Uma proposta visual mais limpa, mais sólida e mais fácil de compreender em poucos segundos.",
-                        "A cleaner, stronger visual proposition that is easier to understand within seconds."
-                      )}
-                    </p>
-                  </div>
-
-                  {/* Floating doodle badge — subtle human touch */}
-                  <DoodleBadge
-                    text={t("Impacto real", "Real impact")}
-                    className="absolute bottom-[8.5rem] left-5 z-10 hidden sm:block"
-                  />
-                </div>
+                </ParallaxLayer>
               </FadeIn>
             </div>
           </section>
 
-          {/* ── VALUE MARQUEE — horizontal scrolling brand values ── */}
+          {/* ── VALUE MARQUEE — horizontal scrolling brand values (Point 15) ── */}
           <ValueMarquee labels={marqueeLabels} className="mt-6" />
 
-          {/* ── LIQUID DIVIDER ── */}
+          {/* ── LIQUID DIVIDER (Point 17) ── */}
           <LiquidDivider color="hsl(42 100% 97%)" height={64} />
 
           {/* ═══════════════════════════════════════════════════════════════
-              MODEL — faux 3D tilt cards + staggered step reveal
+              MODEL — collaborative circuit + faux 3D pillar cards
           ════════════════════════════════════════════════════════════════ */}
           <section id="model" className="px-4 py-16 md:px-6 md:py-24">
             <div className="mx-auto max-w-6xl">
@@ -531,16 +538,33 @@ const Index = () => {
                   "Em vez de excesso visual e promessas vagas, a homepage passa a explicar com clareza o que a ActivEU faz e para quem cria valor.",
                   "Instead of visual overload and vague promises, the homepage now explains clearly what ActivEU does and who it creates value for."
                 )}
+                gradient
               />
+            </div>
 
-              {/* Pillar cards — staggered reveal + faux 3D tilt on hover */}
+            {/* Collaborative Signal — living circuit of Youth/Companies/Causes/Community (Point 5) */}
+            <CollaborativeSignalField t={t} section="experience" />
+
+            <div className="mx-auto max-w-6xl">
+              {/* Isometric cubes — decorative accent (Point 19) */}
+              <IsometricDecor density="normal" className="mb-8 opacity-80" />
+
+              {/* Pillar cards — staggered reveal + faux 3D tilt on hover (Point 14) */}
               <SectionReveal className="grid gap-6 lg:grid-cols-3">
                 {pillars.map((pillar) => (
                   <RevealItem key={pillar.title} className="h-full">
                     <Tilt3DCard className="h-full" maxTilt={8} hoverScale={1.02}>
                       <article className="landing-panel h-full p-7">
                         <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#fff1e8] text-[#f97316]">
-                          <pillar.icon className="h-6 w-6" />
+                          {/* Animated icon — bounces in on scroll (Point 11) */}
+                          <motion.div
+                            initial={reduceMotion ? false : { scale: 0, rotate: -12 }}
+                            whileInView={reduceMotion ? {} : { scale: 1, rotate: 0 }}
+                            viewport={{ once: true, amount: 0.5 }}
+                            transition={{ type: "spring", stiffness: 360, damping: 22, delay: 0.1 }}
+                          >
+                            <pillar.icon className="h-6 w-6" />
+                          </motion.div>
                         </div>
                         <h3 className="mt-6 text-2xl font-semibold tracking-tight text-slate-950">
                           {pillar.title}
@@ -552,13 +576,13 @@ const Index = () => {
                 ))}
               </SectionReveal>
 
-              {/* Step cards — staggered reveal + lift on hover */}
+              {/* Step cards — staggered reveal + spring lift on hover */}
               <SectionReveal className="mt-8 grid gap-6 lg:grid-cols-3">
                 {steps.map((step) => (
                   <RevealItem key={step.title}>
                     <motion.article
                       className="rounded-[30px] border border-slate-200 bg-white p-7 shadow-[0_25px_70px_rgba(15,23,42,0.05)]"
-                      whileHover={{ y: -4, boxShadow: "0 36px 80px rgba(15,23,42,0.10)" }}
+                      whileHover={{ y: -4, boxShadow: "0 36px_80px_rgba(15,23,42,0.10)" }}
                       transition={{ type: "spring", stiffness: 300, damping: 24 }}
                     >
                       <div className="flex items-center gap-3">
@@ -575,11 +599,17 @@ const Index = () => {
             </div>
           </section>
 
+          {/* ═══════════════════════════════════════════════════════════════
+              JOURNEY CANVAS — scroll-driven storytelling with line animations
+              Points 2 (Scrollytelling) + 7 (Line Animation) + 8 (Self-Drawing)
+          ════════════════════════════════════════════════════════════════ */}
+          <JourneyCanvas />
+
           {/* ── WAVE TRANSITION → PROOF ── */}
           <SectionTransition variant="wave" />
 
           {/* ═══════════════════════════════════════════════════════════════
-              PROOF — slide-in image (left) + staggered cards (right)
+              PROOF — slide-in image + staggered cards
           ════════════════════════════════════════════════════════════════ */}
           <section id="proof" className="bg-white px-4 py-16 md:px-6 md:py-24">
             <div className="mx-auto max-w-6xl">
@@ -597,7 +627,7 @@ const Index = () => {
 
               <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
 
-                {/* Photo — slides in from left */}
+                {/* Photo — slides in from left (Point 15 — directional scroll) */}
                 <SlideIn direction="left">
                   <div className="landing-proof-photo overflow-hidden">
                     <img
@@ -608,7 +638,7 @@ const Index = () => {
                   </div>
                 </SlideIn>
 
-                {/* Proof cards — staggered + lift on hover */}
+                {/* Proof cards — staggered + lift on hover (Point 26 — hover reveal) */}
                 <SectionReveal className="grid gap-4">
                   {[
                     {
@@ -655,7 +685,7 @@ const Index = () => {
           <SectionTransition variant="ribbon" flip />
 
           {/* ═══════════════════════════════════════════════════════════════
-              STORIES — editorial cards with hover lift + doodle underline
+              STORIES — editorial cards with doodle underline + hover lift
           ════════════════════════════════════════════════════════════════ */}
           <section id="stories" className="px-4 py-16 md:px-6 md:py-24">
             <div className="mx-auto max-w-6xl">
@@ -690,7 +720,7 @@ const Index = () => {
                           <h3 className="text-3xl font-semibold tracking-tight text-slate-950">
                             {story.title}
                           </h3>
-                          {/* Self-drawing doodle underline — hand-made feel */}
+                          {/* Self-drawing doodle underline (Point 8 + 21) */}
                           <DoodleUnderline className="mt-1 w-full max-w-[220px]" />
                         </div>
                         <p className="mt-4 text-base leading-7 text-slate-600">{story.body}</p>
@@ -701,6 +731,15 @@ const Index = () => {
               </SectionReveal>
             </div>
           </section>
+
+          {/* ═══════════════════════════════════════════════════════════════
+              MIXED MEDIA MOTION WALL — photography + doodles + glass + morphing
+              Point 16 (Mixed Media) — MUITO IMPORTANTE
+          ════════════════════════════════════════════════════════════════ */}
+          <MixedMediaMotionWall t={t} />
+
+          {/* ── LIQUID DIVIDER before Contact ── */}
+          <LiquidDivider color="hsl(223 71% 16%)" flip height={56} />
 
           {/* ═══════════════════════════════════════════════════════════════
               CONTACT — CTA panel with staggered audience cards
@@ -762,7 +801,7 @@ const Index = () => {
                     </div>
                   </div>
 
-                  {/* Right — audience cards (staggered reveal) */}
+                  {/* Right — audience cards staggered reveal */}
                   <SectionReveal className="grid gap-4">
                     {audiences.map((audience) => (
                       <RevealItem key={audience.title}>
