@@ -1,32 +1,13 @@
 import { useReducedMotion } from "framer-motion";
 
-type ValueMarqueeProps = {
-  labels: string[];
-  className?: string;
-};
+export function ValueMarquee({ labels, className = "" }: { labels: string[]; className?: string }) {
+  const reduceMotion = useReducedMotion();
 
-function MarqueeRow({ labels, keyPrefix }: { labels: string[]; keyPrefix: string }) {
-  return (
-    <div className="value-marquee-row">
-      {labels.map((label, i) => (
-        <span key={`${keyPrefix}-${i}-${label}`} className="value-marquee-pill">
-          {label}
-        </span>
-      ))}
-    </div>
-  );
-}
+  if (!labels.length) return null;
 
-export function ValueMarquee({ labels, className = "" }: ValueMarqueeProps) {
-  const reduce = useReducedMotion();
-
-  if (!labels.length) {
-    return null;
-  }
-
-  if (reduce) {
+  if (reduceMotion) {
     return (
-      <div className={`value-marquee-shell value-marquee-static ${className}`}>
+      <div className={`value-marquee-shell ${className}`}>
         <div className="flex flex-wrap items-center justify-center gap-3 px-4 py-3">
           {labels.map((label) => (
             <span key={label} className="value-marquee-pill">
@@ -43,9 +24,12 @@ export function ValueMarquee({ labels, className = "" }: ValueMarqueeProps) {
       <div className="value-marquee-fade value-marquee-fade-left" />
       <div className="value-marquee-fade value-marquee-fade-right" />
       <div className="value-marquee-viewport">
-        <div className="value-marquee-inner">
-          <MarqueeRow labels={labels} keyPrefix="a" />
-          <MarqueeRow labels={labels} keyPrefix="b" />
+        <div className="value-marquee-track">
+          {[...labels, ...labels].map((label, index) => (
+            <span key={`${label}-${index}`} className="value-marquee-pill">
+              {label}
+            </span>
+          ))}
         </div>
       </div>
     </div>

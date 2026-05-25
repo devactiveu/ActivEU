@@ -1,104 +1,82 @@
 import { motion, useReducedMotion } from "framer-motion";
+import { MorphingBlob, SparkleStar } from "./MorphingBlob";
 
-type AmbientFieldProps = {
-  className?: string;
-  variant?: "hero" | "journey" | "proof" | "stories" | "cta" | "footer";
-};
-
-const variantClasses = {
-  hero: "ambient-field-hero",
-  journey: "ambient-field-journey",
-  proof: "ambient-field-proof",
-  stories: "ambient-field-stories",
-  cta: "ambient-field-cta",
-  footer: "ambient-field-footer",
-} as const;
-
-export function AmbientField({ className = "", variant = "hero" }: AmbientFieldProps) {
+export function AmbientField({ className = "" }: { className?: string }) {
   const reduceMotion = useReducedMotion();
 
   return (
-    <div className={`ambient-field ${variantClasses[variant]} ${className}`.trim()} aria-hidden="true">
-      <motion.span
-        className="ambient-field-texture ambient-field-texture-a"
-        animate={
-          reduceMotion
-            ? undefined
-            : { x: [0, 18, -12, 0], y: [0, -14, 10, 0], rotate: [0, 4, -3, 0], scale: [1, 1.04, 0.98, 1] }
-        }
-        transition={{ duration: 24, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.span
-        className="ambient-field-texture ambient-field-texture-b"
-        animate={
-          reduceMotion
-            ? undefined
-            : { x: [0, -22, 14, 0], y: [0, 12, -10, 0], rotate: [0, -5, 3, 0], scale: [1, 0.98, 1.05, 1] }
-        }
-        transition={{ duration: 27, repeat: Infinity, ease: "easeInOut", delay: 1.4 }}
-      />
-      <motion.span
-        className="ambient-field-wash ambient-field-wash-a"
-        animate={reduceMotion ? undefined : { opacity: [0.3, 0.55, 0.36], scale: [1, 1.05, 0.98] }}
-        transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.span
-        className="ambient-field-wash ambient-field-wash-b"
-        animate={reduceMotion ? undefined : { opacity: [0.22, 0.46, 0.24], scale: [1, 0.97, 1.04] }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
-      />
-      <motion.span
-        className="ambient-field-orb ambient-field-orb-a"
-        animate={reduceMotion ? undefined : { x: [0, 24, -12, 0], y: [0, -18, 10, 0], scale: [1, 1.06, 0.98, 1] }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.span
-        className="ambient-field-orb ambient-field-orb-b"
-        animate={reduceMotion ? undefined : { x: [0, -20, 12, 0], y: [0, 16, -12, 0], scale: [1, 0.96, 1.04, 1] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
-      />
-      <motion.span
-        className="ambient-field-orb ambient-field-orb-c"
-        animate={reduceMotion ? undefined : { x: [0, 16, -8, 0], y: [0, -12, 16, 0], scale: [1, 1.03, 0.97, 1] }}
-        transition={{ duration: 17, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
-      />
-      <motion.span
-        className="ambient-field-ring ambient-field-ring-a"
-        animate={reduceMotion ? undefined : { rotate: [0, 10, 0], scale: [1, 1.04, 1] }}
-        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.span
-        className="ambient-field-ring ambient-field-ring-b"
-        animate={reduceMotion ? undefined : { rotate: [0, -12, 0], scale: [1, 0.96, 1] }}
-        transition={{ duration: 26, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.span
-        className="ambient-field-beam ambient-field-beam-a"
-        animate={reduceMotion ? undefined : { x: [0, 16, -8, 0], opacity: [0.2, 0.38, 0.22] }}
-        transition={{ duration: 19, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.span
-        className="ambient-field-beam ambient-field-beam-b"
-        animate={reduceMotion ? undefined : { x: [0, -12, 10, 0], opacity: [0.16, 0.32, 0.18] }}
-        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay: 1.1 }}
-      />
-      {[...Array(12)].map((_, index) => (
+    <div className={`ambient-field ${className}`.trim()} aria-hidden="true">
+      {/* Organic morphing background blobs (CSS-based) */}
+      {["a", "b", "c", "d"].map((blob, index) => (
         <motion.span
-          key={index}
-          className={`ambient-field-particle ambient-field-particle-${index + 1}`}
+          key={blob}
+          className={`ambient-blob ambient-blob-${blob}`}
           animate={
             reduceMotion
               ? undefined
               : {
-                  x: [0, index % 2 === 0 ? 10 : -10, 0],
-                  y: [0, -14 - index, 0],
-                  opacity: [0.18, 0.62, 0.2],
-                  scale: [0.92, 1.08, 0.96],
+                  x: [0, index % 2 === 0 ? 28 : -28, 0],
+                  y: [0, index % 2 === 0 ? -22 : 24, 0],
+                  scale: [1, 1.08, 0.95, 1.04, 1],
                 }
           }
-          transition={{ duration: 6 + index * 0.55, repeat: Infinity, ease: "easeInOut", delay: index * 0.24 }}
+          transition={{ duration: 16 + index * 3, repeat: Infinity, ease: "easeInOut" }}
         />
       ))}
+
+      {/* SVG morphing blobs for texture */}
+      <MorphingBlob
+        variant="sunbeam"
+        size={320}
+        duration={14}
+        className="absolute left-[4%] top-[8%] opacity-50 mix-blend-multiply"
+      />
+      <MorphingBlob
+        variant="electric"
+        size={260}
+        duration={18}
+        delay={1.5}
+        className="absolute right-[2%] top-[14%] opacity-45 mix-blend-multiply"
+      />
+      <MorphingBlob
+        variant="magenta"
+        size={220}
+        duration={16}
+        delay={0.8}
+        className="absolute left-[46%] bottom-[-10%] opacity-35 mix-blend-multiply"
+      />
+
+      {/* Colored dots */}
+      {Array.from({ length: 8 }).map((_, index) => (
+        <motion.span
+          key={index}
+          className={`ambient-particle ambient-particle-${index + 1}`}
+          animate={
+            reduceMotion
+              ? undefined
+              : {
+                  y: [0, -14 - index * 1.5, 0],
+                  scale: [1, 1.3, 1],
+                  opacity: [0.25, 0.7, 0.25],
+                }
+          }
+          transition={{ duration: 5 + index * 0.4, repeat: Infinity, ease: "easeInOut", delay: index * 0.2 }}
+        />
+      ))}
+
+      {/* Floating sparkle stars */}
+      <div className="absolute left-[18%] top-[18%]">
+        <SparkleStar size={18} color="#ffb020" />
+      </div>
+      <div className="absolute right-[22%] top-[28%]">
+        <SparkleStar size={22} color="#e94e77" />
+      </div>
+      <div className="absolute left-[62%] bottom-[22%]">
+        <SparkleStar size={16} color="#1e40ff" />
+      </div>
+      <div className="absolute right-[10%] bottom-[34%]">
+        <SparkleStar size={20} color="#b7e934" />
+      </div>
     </div>
   );
 }

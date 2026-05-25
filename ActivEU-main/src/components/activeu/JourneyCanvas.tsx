@@ -1,229 +1,149 @@
 import { BadgeCheck, Building2, HeartHandshake, Sparkles, Users2 } from "lucide-react";
 import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { FadeIn, Reveal3D } from "./motion-primitives";
 import { useRef, useState } from "react";
-import { AnimatedHeading } from "./AnimatedHeading";
+import { useLanguage } from "@/contexts/useLanguage";
+import { FadeIn, SectionReveal, RevealItem } from "./motion-primitives";
 import { ValueMarquee } from "./ValueMarquee";
 
 const steps = [
   {
     icon: Users2,
-    ptTitle: "A juventude entra para ser vista, ouvida e levada a serio",
-    enTitle: "Young people enter to be seen, heard and taken seriously",
-    ptBody: "A ActivEU transforma curiosidade em presenca: abre portas reais, aproxima talento de contextos profissionais e faz a participacao sentir-se consequente desde o primeiro momento.",
-    enBody: "ActivEU turns curiosity into presence: it opens real doors, brings talent closer to professional contexts and makes participation feel meaningful from the very first moment.",
-    angle: "journey-step-a",
+    titlePt: "A juventude entra para participar com voz real.",
+    titleEn: "Young people step in with real voice and space.",
+    bodyPt: "A ActivEU abre contexto, responsabilidade e pertença desde o primeiro contacto.",
+    bodyEn: "ActivEU opens context, responsibility and belonging from the first contact.",
   },
   {
     icon: Building2,
-    ptTitle: "As empresas mostram que responsabilidade social tambem se vive",
-    enTitle: "Companies show that social responsibility can be lived",
-    ptBody: "O encontro deixa de ser simbolico. Equipas, espacos e historias tornam-se parte de uma experiencia concreta onde a solidariedade ganha rosto, escala e credibilidade.",
-    enBody: "The encounter stops being symbolic. Teams, spaces and stories become part of a concrete experience where solidarity gains a face, scale and credibility.",
-    angle: "journey-step-b",
+    titlePt: "As empresas entram para agir, não apenas para aparecer.",
+    titleEn: "Companies step in to act, not just to appear.",
+    bodyPt: "A participação ganha forma concreta no terreno, com equipas e recursos realmente envolvidos.",
+    bodyEn: "Participation becomes concrete on the ground, with teams and resources genuinely involved.",
   },
   {
     icon: HeartHandshake,
-    ptTitle: "As causas recebem impacto verificavel e a comunidade ganha continuidade",
-    enTitle: "Causes receive verifiable impact and the community gains continuity",
-    ptBody: "O valor nao termina no evento. Cada participacao gera retorno documentado, reforca causas concretas e prova que um dia bem desenhado pode deixar lastro social duradouro.",
-    enBody: "Value does not end with the event. Each participation generates documented return, strengthens concrete causes and proves that a well-designed day can leave lasting social impact.",
-    angle: "journey-step-c",
+    titlePt: "As causas recebem retorno visível e continuidade.",
+    titleEn: "Causes receive visible return and continuity.",
+    bodyPt: "O valor fica documentado, partilhável e mais fácil de sustentar depois do momento inicial.",
+    bodyEn: "The value becomes documented, shareable and easier to sustain after the initial moment.",
   },
 ];
 
 export function JourneyCanvas() {
   const { t } = useLanguage();
   const reduceMotion = useReducedMotion();
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const [activeStep, setActiveStep] = useState(0);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-  const coreY = useTransform(scrollYProgress, [0, 0.5, 1], [50, 0, -40]);
-  const noteY = useTransform(scrollYProgress, [0, 0.5, 1], [20, 0, -20]);
-  const progressScaleX = useTransform(scrollYProgress, [0.08, 0.9], [0, 1]);
-  const pathOneLength = useTransform(scrollYProgress, [0.12, 0.36], [0, 1]);
-  const pathTwoLength = useTransform(scrollYProgress, [0.33, 0.58], [0, 1]);
-  const pathThreeLength = useTransform(scrollYProgress, [0.56, 0.82], [0, 1]);
-  const pathFourLength = useTransform(scrollYProgress, [0.7, 0.94], [0, 1]);
+  const ref = useRef<HTMLElement | null>(null);
+  const [active, setActive] = useState(0);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const lineProgress = useTransform(scrollYProgress, [0.15, 0.85], [0, 1]);
 
   useMotionValueEvent(scrollYProgress, "change", (value) => {
-    if (value < 0.38) setActiveStep(0);
-    else if (value < 0.68) setActiveStep(1);
-    else setActiveStep(2);
+    if (value < 0.38) setActive(0);
+    else if (value < 0.68) setActive(1);
+    else setActive(2);
   });
 
   return (
-    <section ref={sectionRef} className="section-shell relative py-24 md:py-28">
+    <section ref={ref} className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-24">
       <FadeIn className="mx-auto max-w-3xl text-center">
-        <AnimatedHeading
-          mode="chapter"
-          className="mx-auto max-w-4xl"
-          eyebrow={<><Sparkles size={14} />{t("Scrollytelling da missao", "Mission scrollytelling")}</>}
-          lines={[
-            t("A missao da ActivEU", "ActivEU's mission"),
-            t("precisa de se revelar", "should unfold"),
-            t("como uma historia em movimento.", "like a story in motion."),
-          ]}
-          body={t(
-            "Em vez de explicar o modelo com blocos estaticos, esta seccao usa o scroll para mostrar uma progressao emocional e funcional: entrada, encontro e impacto. O objetivo e fazer a proposta sentir-se humana antes de ser racionalizada.",
-            "Instead of explaining the model with static blocks, this section uses scroll to show an emotional and functional progression: entry, encounter and impact. The goal is to make the proposition feel human before it is rationalized.",
+        <p className="eyebrow justify-center">
+          <Sparkles className="h-3.5 w-3.5" />
+          {t("trajetória da missão", "mission journey")}
+        </p>
+        <h2 className="mt-5 text-4xl font-semibold tracking-[-0.04em] text-slate-950 md:text-5xl">
+          {t("Da primeira participação ao impacto que fica.", "From first participation to the impact that stays.")}
+        </h2>
+        <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-slate-600 md:text-lg">
+          {t(
+            "Esta secção mostra o que a ActivEU faz de melhor: transformar encontro em ação e ação em valor social perceptível.",
+            "This section shows what ActivEU does best: turn encounters into action and action into social value people can perceive.",
           )}
-        />
+        </p>
       </FadeIn>
 
       <ValueMarquee
-        className="journey-value-marquee mt-8"
+        className="mt-8"
         labels={[
-          t("portas que se abrem", "doors that open"),
-          t("juventude com espaco real", "youth with real space"),
-          t("empresas com gesto visivel", "companies with visible action"),
-          t("causas com retorno documentado", "causes with documented return"),
-          t("solidariedade com presenca", "solidarity with presence"),
-          t("um dia que deixa lastro", "a day that leaves a trace"),
+          t("juventude com espaço", "youth with space"),
+          t("empresas com gesto real", "companies with real action"),
+          t("causas com retorno", "causes with return"),
+          t("impacto verificável", "verifiable impact"),
+          t("comunidade com continuidade", "community with continuity"),
         ]}
       />
 
-      <div className="journey-canvas-shell mt-16">
-        <div className="journey-progress-rail" aria-hidden="true">
-          <motion.div className="journey-progress-fill" style={{ scaleX: progressScaleX }} />
+      <div className="relative mt-12 overflow-hidden rounded-[36px] border-2 border-white bg-gradient-to-br from-white via-[#fffaf0] to-[#f3f6ff] p-6 shadow-[0_24px_70px_rgba(30,64,255,0.10)] md:p-8">
+        <div className="absolute left-1/2 top-[7.75rem] hidden h-[calc(100%-15rem)] w-px -translate-x-1/2 bg-slate-200 lg:block" />
+        {!reduceMotion && (
+          <motion.div
+            className="absolute left-1/2 top-[7.75rem] hidden h-[calc(100%-15rem)] w-1.5 -translate-x-1/2 rounded-full bg-[linear-gradient(180deg,#ffb020_0%,#e94e77_40%,#1e40ff_75%,#b7e934_100%)] shadow-[0_0_16px_rgba(255,176,32,0.55)] lg:block"
+            style={{ scaleY: lineProgress, originY: 0 }}
+          />
+        )}
+
+        <div className="grid gap-6 lg:grid-cols-3">
+          {steps.map((step, index) => {
+            const Icon = step.icon;
+            const isActive = active === index;
+            const activeGradients = [
+              "from-[#ffb020] to-[#ff8a00]",
+              "from-[#1e40ff] to-[#5876ff]",
+              "from-[#e94e77] to-[#ff5e5b]",
+            ];
+            return (
+              <RevealItem key={step.titleEn} variant="pop">
+                <motion.article
+                  className={`relative overflow-hidden rounded-[28px] border-2 p-6 transition ${
+                    isActive
+                      ? `border-transparent bg-gradient-to-br ${activeGradients[index]} text-white shadow-[0_24px_60px_rgba(30,64,255,0.28)]`
+                      : "border-white bg-white/80 text-slate-950 shadow-[0_10px_30px_rgba(30,64,255,0.06)]"
+                  }`}
+                  animate={reduceMotion ? undefined : { y: isActive ? -8 : 0, scale: isActive ? 1.02 : 1 }}
+                  transition={{ type: "spring", stiffness: 220, damping: 22 }}
+                >
+                  {isActive && !reduceMotion && (
+                    <motion.div
+                      className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/20 blur-2xl"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 3, repeat: Infinity }}
+                    />
+                  )}
+                  <div className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl ${isActive ? "bg-white/20 text-white" : "bg-white text-slate-950 shadow-md"}`}>
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <span className={`mt-4 block text-[11px] font-semibold uppercase tracking-[0.22em] ${isActive ? "text-white/80" : "text-slate-500"}`}>
+                    0{index + 1}
+                  </span>
+                  <h3 className="mt-3 text-2xl font-semibold tracking-[-0.03em]">
+                    {t(step.titlePt, step.titleEn)}
+                  </h3>
+                  <p className={`mt-3 text-sm leading-7 ${isActive ? "text-white/90" : "text-slate-600"}`}>
+                    {t(step.bodyPt, step.bodyEn)}
+                  </p>
+                </motion.article>
+              </RevealItem>
+            );
+          })}
         </div>
-        <div className="journey-state-pill" aria-hidden="true">
-          {activeStep === 0 ? t("fase 1: despertar", "phase 1: awakening") : activeStep === 1 ? t("fase 2: encontro", "phase 2: encounter") : t("fase 3: retorno", "phase 3: return")}
-        </div>
-        <svg className="journey-connectors" viewBox="0 0 1200 720" fill="none" aria-hidden="true">
-          <motion.path
-            d="M276 256C376 158 519 134 603 250"
-            stroke="#ffb007"
-            strokeWidth="8"
-            strokeLinecap="round"
-            strokeDasharray="10 18"
-            animate={
-              reduceMotion
-                ? undefined
-                : {
-                    opacity: activeStep === 0 ? 1 : 0.34,
-                    strokeWidth: activeStep === 0 ? 10 : 7,
-                  }
-            }
-            style={reduceMotion ? undefined : { pathLength: pathOneLength }}
-            transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
-          />
-          <motion.path
-            d="M615 287C746 284 862 312 936 421"
-            stroke="#3b82f6"
-            strokeWidth="8"
-            strokeLinecap="round"
-            strokeDasharray="10 18"
-            animate={
-              reduceMotion
-                ? undefined
-                : {
-                    opacity: activeStep === 1 ? 1 : 0.34,
-                    strokeWidth: activeStep === 1 ? 10 : 7,
-                  }
-            }
-            style={reduceMotion ? undefined : { pathLength: pathTwoLength }}
-            transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
-          />
-          <motion.path
-            d="M952 430C818 566 571 602 391 522"
-            stroke="#f97316"
-            strokeWidth="8"
-            strokeLinecap="round"
-            strokeDasharray="12 18"
-            animate={
-              reduceMotion
-                ? undefined
-                : {
-                    opacity: activeStep === 2 ? 1 : 0.34,
-                    strokeWidth: activeStep === 2 ? 10 : 7,
-                  }
-            }
-            style={reduceMotion ? undefined : { pathLength: pathThreeLength }}
-            transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
-          />
-          <motion.path
-            d="M387 510C335 488 297 452 263 387"
-            stroke="#ffb007"
-            strokeWidth="6"
-            strokeLinecap="round"
-            animate={reduceMotion ? undefined : { opacity: activeStep === 2 ? 0.92 : 0.38 }}
-            style={reduceMotion ? undefined : { pathLength: pathFourLength }}
-            transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
-          />
-        </svg>
 
-        <motion.div className="journey-core" style={{ y: reduceMotion ? 0 : coreY }}>
-          <div className="journey-core-ring" />
-          <div className="journey-core-ring journey-core-ring-alt" />
-          <div className="journey-core-card">
-            <span className="journey-core-kicker">{t("nucleo da historia", "story core")}</span>
-            <h3 className="font-display text-[clamp(2.4rem,4vw,4rem)] leading-[0.92] tracking-[-0.05em] text-primary">
-              {t("Um dia liga pessoas, instituicoes e causas num mesmo gesto europeu.", "One day connects people, institutions and causes through a shared European gesture.")}
-            </h3>
-            <p className="mt-4 text-base leading-8 text-foreground/70">
-              {t(
-                "Aqui, o scroll nao serve apenas para avancar. Serve para provar que a ActivEU consegue transformar potencial jovem em encontro concreto e esse encontro em impacto social verificavel.",
-                "Here, scroll does more than move the page forward. It proves that ActivEU can turn youth potential into a concrete encounter and that encounter into verifiable social impact.",
-              )}
-            </p>
-            <div className="journey-core-badges">
-              <span>{t("mais contexto", "more context")}</span>
-              <span>{t("mais ligacao", "more connection")}</span>
-              <span>{t("mais consequencia", "more consequence")}</span>
-            </div>
-          </div>
-        </motion.div>
-
-        {steps.map((step, index) => {
-          const Icon = step.icon;
-          const isActive = index === activeStep;
-          return (
-            <Reveal3D key={step.enTitle} delay={index * 0.08} className={`journey-step ${step.angle}`}>
-              <motion.article
-                className={`journey-step-card ${isActive ? "journey-step-card-active" : ""}`}
-                animate={
-                  reduceMotion
-                    ? undefined
-                    : isActive
-                      ? { scale: 1.04, y: -8, rotate: index === 1 ? -1 : 1 }
-                      : { scale: 1, y: 0, rotate: 0 }
-                }
-                transition={{ type: "spring", stiffness: 230, damping: 20 }}
-              >
-                <div className="journey-step-icon">
-                  <Icon size={18} />
-                </div>
-                <span className="journey-step-index">0{index + 1}</span>
-                <h3 className="mt-5 font-display text-[1.55rem] leading-[0.96] tracking-[-0.04em] text-primary">
-                  {t(step.ptTitle, step.enTitle)}
-                </h3>
-                <p className="mt-3 text-sm leading-7 text-foreground/68">
-                  {t(step.ptBody, step.enBody)}
-                </p>
-              </motion.article>
-            </Reveal3D>
-          );
-        })}
-
-        <motion.div className="journey-proof" style={{ y: reduceMotion ? 0 : noteY }}>
-          <div className="journey-proof-card">
-            <BadgeCheck size={18} />
+        <div className="mt-6 rounded-[28px] border-2 border-[#b7e934]/50 bg-gradient-to-br from-[#f2fbd7] to-white p-5 text-slate-900 shadow-[0_10px_30px_rgba(183,233,52,0.18)]">
+          <div className="flex items-start gap-3">
+            <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-[#b7e934] to-[#9bd41d] text-white shadow-md">
+              <BadgeCheck className="h-4 w-4" />
+            </span>
             <div>
-              <p className="journey-proof-label">{t("por que funciona", "why it works")}</p>
-              <p className="journey-proof-copy">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#4a7a00]">
+                {t("porque funciona", "why it works")}
+              </p>
+              <p className="mt-2 text-sm leading-7 text-slate-700">
                 {t(
-                  "A proposta deixa de parecer um esquema abstrato. Passa a comportar-se como uma narrativa coerente onde cada scroll aprofunda a razao de existir da ActivEU.",
-                  "The proposition stops feeling like an abstract scheme. It starts behaving like a coherent narrative where each scroll deepens ActivEU's reason for existing.",
+                  "A missão deixa de soar abstrata porque cada etapa mostra um papel concreto, uma troca real e um resultado que se consegue contar.",
+                  "The mission stops sounding abstract because each stage shows a concrete role, a real exchange and a result that can be told clearly.",
                 )}
               </p>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

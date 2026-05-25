@@ -1,23 +1,25 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { LanguageProvider } from "@/contexts/LanguageContext";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { LanguageProvider } from "@/contexts/LanguageProvider";
+import { ThemeProvider } from "@/contexts/ThemeContext";
+import { ActiveSectionProvider, useActiveSection } from "@/contexts/ActiveSectionContext";
+import { PageLoader } from "@/components/premium/PageLoader";
+import { CustomCursor } from "@/components/premium/CustomCursor";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
-const AppRoutes = () => {
+function AppRoutes() {
   const location = useLocation();
+  const reduceMotion = useReducedMotion();
 
   return (
     <AnimatePresence mode="wait">
       <motion.div
         key={location.pathname}
-        initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        exit={{ opacity: 0, y: -18, filter: "blur(8px)" }}
-        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+        initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+        animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+        exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
+        transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
       >
         <Routes location={location}>
           <Route path="/" element={<Index />} />
@@ -26,18 +28,29 @@ const AppRoutes = () => {
       </motion.div>
     </AnimatePresence>
   );
-};
+}
 
-const App = () => (
-  <TooltipProvider>
-    <LanguageProvider>
-      <Toaster />
-      <Sonner />
+function AppWithCursor() {
+  const { activeSection } = useActiveSection();
+  return (
+    <>
+      <PageLoader />
+      <CustomCursor activeSection={activeSection} />
       <BrowserRouter>
         <AppRoutes />
       </BrowserRouter>
-    </LanguageProvider>
-  </TooltipProvider>
-);
+    </>
+  );
+}
 
-export default App;
+export default function App() {
+  return (
+    <ThemeProvider>
+      <ActiveSectionProvider>
+        <LanguageProvider>
+          <AppWithCursor />
+        </LanguageProvider>
+      </ActiveSectionProvider>
+    </ThemeProvider>
+  );
+}
