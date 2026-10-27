@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://activ-eu.vercel.app/sitemap.xml
